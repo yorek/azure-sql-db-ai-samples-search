@@ -1,0 +1,43 @@
+.appContainer {
+  padding: 20px;
+  font-family: 'Roboto', sans-serif;
+}
+
+.header {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.title {
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.subtitle {
+  font-size: 18px;
+  margin-top: 10px;
+}
+
+.sampleCount {
+  margin-top: 10px;
+  font-size: 14px;
+}
+
+.searchWrapper {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.inputField {
+  width: 300px;
+  margin-right: 10px;
+}
+
+.searchButton {
+  margin-top: 5px;
+}
+
+.resultCard {
+  margin-bottom: 20px;
+}
