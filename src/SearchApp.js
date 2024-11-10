@@ -8,7 +8,6 @@ import {
   CardFooter,
   CardPreview,
   Text,
-  makeStyles,
   FluentProvider,
   teamsLightTheme,
 } from '@fluentui/react-components';
