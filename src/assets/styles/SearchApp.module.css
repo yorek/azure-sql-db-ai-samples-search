@@ -41,7 +41,8 @@
 
 .searchButton {
   margin-top: 5px;
-  background-color: #0078D4;
+  background-color: #0078D4 !important;
+  color: white; /* Ensure text is visible on the blue background */
 }
 
 .resultCard {
