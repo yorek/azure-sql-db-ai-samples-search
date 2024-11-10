@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   Input,
   Button,
@@ -35,6 +35,11 @@ const useStyles = makeStyles({
     fontSize: '1rem',
     color: '#5c5c5c',
   },
+  sampleCount: {
+    fontSize: '0.9rem',
+    color: '#5c5c5c',
+    marginTop: '5px',
+  },
   resultCard: {
     marginBottom: '10px',
   },
@@ -57,7 +62,20 @@ const SearchApp = () => {
   const [results, setResults] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+  const [sampleCount, setSampleCount] = useState(0);
   const styles = useStyles();
+
+  useEffect(() => {
+    const fetchSampleCount = async () => {
+      setLoading(true)
+      // Mock API call
+      const count = await new Promise((resolve) => setTimeout(() => resolve(42), 1000));
+      setSampleCount(count);
+      setLoading(false);
+    };
+
+    fetchSampleCount();
+  }, []);
 
   const handleSearch = async () => {
     if (!query) return;
@@ -94,6 +112,9 @@ const SearchApp = () => {
           <div className={styles.subtitle}>
             Explore sample data with AI-powered search capabilities 🚀
           </div>
+          <p className={styles.sampleCount}>
+            {loading ? 'Loading...' : `There are ${sampleCount} samples in the database.`}
+          </p>
         </div>
 
         <div className={styles.searchWrapper} style={{ marginBottom: '20px' }}>
