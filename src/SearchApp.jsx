@@ -64,7 +64,7 @@ const SearchApp = () => {
           Azure SQL DB Samples AI Search 💡🔍
         </div>
         <div className={styles.subtitle}>
-          Explore sample data with AI-powered search capabilities 🚀
+          Find samples with AI-powered search capabilities 🚀
         </div>
         <p className={styles.sampleCount}>
           {isSampleCountLoading ? 'Loading...' : `There are ${sampleCount} samples in the database.`}
@@ -104,22 +104,28 @@ const SearchApp = () => {
       )}
 
       <div>
-        {results.map((result, index) => (
-          <Card key={index} className={styles.resultCard}>
-            <CardPreview>
-              <Text block style={{ padding: '0 16px' }}>
-                Preview of {result}
-              </Text>
-            </CardPreview>
-            <CardHeader
-              header={<Text weight="bold">{result}</Text>}
-              description={`Description for ${result}`}
-            />
-            <CardFooter>
-              <Text>{`Footer Info for ${result}`}</Text>
-            </CardFooter>
-          </Card>
-        ))}
+        {results.length === 0 && !loading ? (
+          <Text block style={{ textAlign: 'center', marginTop: '20px' }}>
+            Search something to get started!
+          </Text>
+        ) : (
+          results.map((result, index) => (
+            <Card key={index} className={styles.resultCard}>
+              <CardPreview>
+                <Text block style={{ padding: '0 16px' }}>
+                  Preview of {result}
+                </Text>
+              </CardPreview>
+              <CardHeader
+                header={<Text weight="bold">{result}</Text>}
+                description={`Description for ${result}`}
+              />
+              <CardFooter>
+                <Text>{`Footer Info for ${result}`}</Text>
+              </CardFooter>
+            </Card>
+          ))
+        )}
       </div>
     </div>
   );

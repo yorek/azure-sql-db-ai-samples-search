@@ -5,22 +5,27 @@
 
 .header {
   text-align: center;
+  margin-top: 60px;
   margin-bottom: 20px;
 }
 
 .title {
-  font-size: 24px;
+  font-size: 36px; /* 24px * 1.5 */
+  line-height: 1.5; /* Add this line */
   font-weight: bold;
+  color: #0078D4;
 }
 
 .subtitle {
-  font-size: 18px;
-  margin-top: 10px;
+  font-size: 27px; /* 18px * 1.5 */
+  line-height: 1.5; /* Add this line */
+  margin-top: 10px;  
 }
 
 .sampleCount {
+  font-size: 21px; /* 14px * 1.5 */
+  line-height: 1.5; /* Add this line */
   margin-top: 10px;
-  font-size: 14px;
 }
 
 .searchWrapper {
@@ -36,6 +41,7 @@
 
 .searchButton {
   margin-top: 5px;
+  background-color: #0078D4;
 }
 
 .resultCard {
