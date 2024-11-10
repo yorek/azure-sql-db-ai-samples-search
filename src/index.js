@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { FluentProvider, teamsLightTheme } from '@fluentui/react-components';
 import SearchApp from './SearchApp';
+import './SearchApp.styles'; // Import the styles to apply global styles
 
 // Dynamically load the Roboto font
 const fontLink = document.createElement('link');
