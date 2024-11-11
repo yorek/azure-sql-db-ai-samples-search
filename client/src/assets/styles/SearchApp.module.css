@@ -1,48 +1,57 @@
 .appContainer {
   padding: 20px;
   font-family: 'Roboto', sans-serif;
+  font-size: x-large;
 }
 
-.header {
+.header {  
   text-align: center;
   margin-top: 60px;
   margin-bottom: 20px;
 }
 
 .title {
-  font-size: 36px; /* 24px * 1.5 */
-  line-height: 1.5; /* Add this line */
+  font-size: xx-large;
   font-weight: bold;
   color: #0078D4;
 }
 
 .subtitle {
-  font-size: 27px; /* 18px * 1.5 */
-  line-height: 1.5; /* Add this line */
+  font-size: large;
   margin-top: 10px;  
 }
 
 .sampleCount {
-  font-size: 21px; /* 14px * 1.5 */
-  line-height: 1.5; /* Add this line */
+  font-size: medium;
   margin-top: 10px;
 }
 
-.searchWrapper {
+.searchWrapper {  
   display: flex;
   justify-content: center;
   margin-bottom: 20px;
 }
 
 .inputField {
-  width: 300px;
-  margin-right: 10px;
+  width: 50%;
+  margin-right: 10px;  
 }
 
 .searchButton {
   margin-top: 5px;
   background-color: #0078D4 !important;
   color: white; /* Ensure text is visible on the blue background */
+}
+
+.results {
+  font-size: large;
+  width: 75%; /* Add this line to set the width to 75% */
+  margin: 40px auto; /* Center the results */
+}
+
+.resultCardHeader {
+  font-weight: bold;
+  margin-bottom: 10px;
 }
 
 .resultCard {

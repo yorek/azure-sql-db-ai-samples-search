@@ -8,6 +8,8 @@ import {
   CardFooter,
   CardPreview,
   Text,
+  Link,
+  Label,
 } from '@fluentui/react-components';
 import { Search24Regular } from '@fluentui/react-icons';
 import styles from './assets/styles/SearchApp.module.css'; // Import the CSS module
@@ -38,13 +40,11 @@ const SearchApp = () => {
     setError('');
     setResults([]);
 
-    // Mock API Call (replace with real API)
     try {
-      const response = await new Promise((resolve) =>
-        setTimeout(() => resolve(['Result 1', 'Result 2', 'Result 3']), 1000)
-      );
-      setResults(response);
-    } catch (err) {
+      const response = await fetch('/api/Search');
+      const data = await response.json();
+      setResults(data);
+    } catch (error) {
       setError('Failed to fetch results. Please try again.');
     } finally {
       setLoading(false);
@@ -71,9 +71,9 @@ const SearchApp = () => {
         </p>
       </div>
 
-      <div className={styles.searchWrapper} style={{ marginBottom: '20px' }}>
+      <div className={styles.searchWrapper}>
         <Input
-          placeholder="Type your query..."
+          placeholder="Type your query in natural language. The AI will do the rest..."
           value={query}
           onChange={(e) => setQuery(e.target.value)}
           onKeyDown={handleKeyPress}
@@ -103,25 +103,26 @@ const SearchApp = () => {
         </Text>
       )}
 
-      <div>
+      <div className={styles.results}>
         {results.length === 0 && !loading ? (
-          <Text block style={{ textAlign: 'center', marginTop: '20px' }}>
+          <Text block style={{ textAlign: 'center' }}>
             Search something to get started!
           </Text>
         ) : (
           results.map((result, index) => (
             <Card key={index} className={styles.resultCard}>
-              <CardPreview>
-                <Text block style={{ padding: '0 16px' }}>
-                  Preview of {result}
-                </Text>
-              </CardPreview>
               <CardHeader
-                header={<Text weight="bold">{result}</Text>}
-                description={`Description for ${result}`}
+                header={
+                  <div className={styles.resultCardHeader}>
+                    {result.title}                  
+                  </div>
+                }
+                description={result.description}
               />
               <CardFooter>
-                <Text>{`Footer Info for ${result}`}</Text>
+                <Link href={result.url} target="_blank" rel="noopener noreferrer">
+                  {result.url}
+                </Link>
               </CardFooter>
             </Card>
           ))
