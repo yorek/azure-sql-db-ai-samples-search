@@ -166,6 +166,79 @@ exec dbo.add_sample '
 }
 ';
 
+exec dbo.add_sample '
+{
+    "name": "Similar Content Finder", 
+    "description": "Build a recommender using OpenAI, Azure Functions, Azure Static Web Apps, Azure SQL DB, Data API builder and Text Embeddings",
+    "notes": "OpenAI embeddings, and thus vectors, can be used to perform similarity search and create solution that provide customer with a better user experience, better search results and in general a more natural way to find relevant data in a reference dataset. Due to ability to provide an answer even when search request do not perfectly match a given content, similary search is ideal for creating recommenders. In this specific sample we''re creating a conference session recommender.",
+    "url": "https://github.com/Azure-Samples/azure-sql-db-session-recommender",
+    "details": {
+        "author": "Davide Mauri",
+        "languages": ["T-SQL"],
+        "services": ["Azure SQL", "Azure Functions", "Azure Static Web Apps", "Data API Builder"],
+        "license": "MIT",
+        "tags": ["End-to-End"]
+    }
+}
+';
+
+exec dbo.add_sample '
+{
+    "name": "Session Conference Assistant", 
+    "description": "Build a Retrieval Augmented Generation solution using OpenAI, Azure Functions, Azure Static Web Apps, Azure SQL DB, Data API builder and Text Embeddings",
+    "notes": "This sample demonstrates how to build a session assistant using Jamstack, Retrieval Augmented Generation (RAG) and Event-Driven architecture, using Azure SQL DB to store and search vectors embeddings generated using OpenAI. The solution is built using Azure Static Web Apps, Azure Functions, Azure SQL Database, and Azure OpenAI. A fully working, production ready, version of this sample, that has been used at VS Live conferences, is available here: https://ai.microsofthq.vslive.com/",
+    "url": "https://github.com/azure-samples/azure-sql-db-session-recommender-v2",
+    "details": {
+        "author": "Davide Mauri",
+        "languages": ["T-SQL"],
+        "services": ["Azure SQL", "Azure Functions", "Azure Static Web Apps", "Data API Builder"],
+        "license": "MIT",
+        "tags": ["End-to-End"],
+        "related-links": {
+            "live-demo": "https://ai.microsofthq.vslive.com/"
+        }
+    }
+}
+';
+
+exec dbo.add_sample '
+{
+    "name": "Chatbot on your own data with LangChain and Chainlit", 
+    "description": "Sample RAG pattern using Azure SQL DB, Langchain and Chainlit",
+    "notes": "Sample RAG pattern, with full UX, using Azure SQL DB, Langchain and Chainlit as demonstrated in the #RAGHack conference. Full details and video recording available here: https://github.com/microsoft/RAG_Hack/discussions/53.",
+    "url": "https://github.com/Azure-Samples/azure-sql-db-rag-langchain-chainlit",
+    "details": {
+        "author": "Davide Mauri",
+        "languages": ["T-SQL", "Python"],
+        "services": ["Azure SQL", "Azure Open AI", "Azure Functions"],
+        "license": "MIT",
+        "tags": ["End-to-End"],
+        "related-links": {
+            "blog": "https://devblogs.microsoft.com/azure-sql/build-a-chatbot-on-your-own-data-in-1-hour-with-azure-sql-langchain-and-chainlit/"
+        }
+    }
+}
+';
+
+exec dbo.add_sample '
+{
+    "name": "Session Conference Assistant", 
+    "description": "Build a Retrieval Augmented Generation solution using OpenAI, Azure Functions, Azure Static Web Apps, Azure SQL DB, Data API builder and Text Embeddings",
+    "notes": "This sample demonstrates how to build a session assistant using Jamstack, Retrieval Augmented Generation (RAG) and Event-Driven architecture, using Azure SQL DB to store and search vectors embeddings generated using OpenAI. The solution is built using Azure Static Web Apps, Azure Functions, Azure SQL Database, and Azure OpenAI. A fully working, production ready, version of this sample, that has been used at VS Live conferences, is available here: https://ai.microsofthq.vslive.com/",
+    "url": "https://github.com/azure-samples/azure-sql-db-session-recommender-v2",
+    "details": {
+        "author": "Davide Mauri",
+        "languages": ["T-SQL"],
+        "services": ["Azure SQL", "Azure Functions", "Azure Static Web Apps", "Data API Builder"],
+        "license": "MIT",
+        "tags": ["End-to-End"],
+        "related-links": {
+            "live-demo": "https://ai.microsofthq.vslive.com/"
+        }
+    }
+}
+';
+
 
 select * from dbo.samples;
 
