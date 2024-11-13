@@ -57,7 +57,7 @@ json_object(
             ),
         json_object(
             'role':'assistant',
-            'content': @s
+            'content': coalesce(@s, 'No samples found for the requested search text.')
             ),
         json_object(
             'role':'user',
