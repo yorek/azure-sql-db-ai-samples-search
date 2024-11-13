@@ -210,6 +210,7 @@ exec dbo.add_sample '
     "details": {
         "author": "Davide Mauri",
         "languages": ["T-SQL", "Python"],
+        "frameworks": ["LangChain", "ChainLit"],
         "services": ["Azure SQL", "Azure Open AI", "Azure Functions"],
         "license": "MIT",
         "tags": ["End-to-End"],
@@ -222,14 +223,15 @@ exec dbo.add_sample '
 
 exec dbo.add_sample '
 {
-    "name": "Session Conference Assistant", 
-    "description": "Build a Retrieval Augmented Generation solution using OpenAI, Azure Functions, Azure Static Web Apps, Azure SQL DB, Data API builder and Text Embeddings",
-    "notes": "This sample demonstrates how to build a session assistant using Jamstack, Retrieval Augmented Generation (RAG) and Event-Driven architecture, using Azure SQL DB to store and search vectors embeddings generated using OpenAI. The solution is built using Azure Static Web Apps, Azure Functions, Azure SQL Database, and Azure OpenAI. A fully working, production ready, version of this sample, that has been used at VS Live conferences, is available here: https://ai.microsofthq.vslive.com/",
-    "url": "https://github.com/azure-samples/azure-sql-db-session-recommender-v2",
+    "name": "Chatbot on structured and unstructured data with Semantic Kernel", 
+    "description": "Using Azure SQL and Semantic Kernel to chat with your own data using a mix of NL2SQL and RAG",
+    "notes": "A chatbot that can answer using RAG and using SQL Queries to answer any question you may want to ask it, be it on unstructured data (eg: what is the common issue raised for product XYZ) or on structured data (eg: how many customers from Canada called the support line?). Built using Semantic Kernel.",
+    "url": "https://github.com/Azure-Samples/azure-sql-db-chat-sk",
     "details": {
         "author": "Davide Mauri",
-        "languages": ["T-SQL"],
-        "services": ["Azure SQL", "Azure Functions", "Azure Static Web Apps", "Data API Builder"],
+        "languages": ["T-SQL", "C#", ".NET"],
+        "frameworks": ["Semantic Kernel"],
+        "services": ["Azure SQL", "Azure Functions", "Azure Static Web Apps"],
         "license": "MIT",
         "tags": ["End-to-End"],
         "related-links": {
@@ -239,6 +241,89 @@ exec dbo.add_sample '
 }
 ';
 
+exec dbo.add_sample '
+{
+    "name": "SQL Server Database Development using Prompts as T-SQL Development", 
+    "description": "In this notebook, we will learn how to use prompts as a way to develop and test Transact-SQL (T-SQL) code for SQL Server databases. Prompts are natural language requests that can be converted into T-SQL statements by using Generative AI models, such as GPT-4. This can help us write code faster, easier, and more accurately, as well as learn from the generated code examples.",
+    "url": "https://github.com/Azure-Samples/SQL-AI-samples/tree/main/AzureSQLDatabase/Prompt-Based%20T-SQL%20Database%20Development",
+    "details": {
+        "languages": ["T-SQL"],
+        "services": ["Azure SQL"],
+        "license": "MIT",
+        "tags": ["End-to-End"]
+    }
+}
+';
 
-select * from dbo.samples;
+exec dbo.add_sample '
+{
+    "name": "Redis Vector Search Demo Application using ACRE and Cache Prefetching from Azure SQL with Azure Functions", 
+    "description": "We based this project from our Product Search Demo which showcase how to use Redis as a Vector Db. We modified the demo by adding a Cache Prefetching pattern from Azure SQL to ACRE using Azure Functions. The Azure Function uses a SQL Trigger that will trigger for any updates that happen in the table.",
+    "url": "https://github.com/AzureSQLDB/redis-azure-ai-demo",
+    "details": {
+        "author": "Brian Spendolini",
+        "languages": ["T-SQL", "Python", "Node", "Typescript"],        
+        "services": ["Azure SQL", "Azure Redis"],
+        "license": "MIT",
+        "tags": ["End-to-End"],
+        "related-links": {
+            "blog": "https://aka.ms/azuresql-faiss"
+        }
+    }
+}
+';
+
+exec dbo.add_sample '
+{
+    "name": "Similarity Search with FAISS and Azure SQL", 
+    "description": "This contains Python notebooks that integrate Azure SQL Database with FAISS for efficient similarity search. The notebooks demonstrate how to store and query data in Azure SQL, leveraging FAISS for fast similarity search. We will be demonstrating it with Wikipedia movie plots data stored in Azure SQL. We’ll encode these movie plots into dense vectors using a pre-trained model and then create a FAISS index to perform similarity searches. Learn more in the detail blog and video: https://aka.ms/azuresql-faiss",
+    "url": "https://github.com/Azure-Samples/SQL-AI-samples/tree/main/AzureSQLFaiss",
+    "details": {
+        "author": "Muazma Zahid",
+        "languages": ["T-SQL", "Python"],        
+        "services": ["Azure SQL"],
+        "license": "MIT",
+        "tags": ["End-to-End"]
+    }
+}
+';
+
+exec dbo.add_sample '
+{
+    "name": "Azure SQL DB Vector - KMeans Compute Node", 
+    "description": "Use KMeans clustering to speed up vector search in Azure SQL DB",
+    "notes": "Perform Approximate Nearest Neighbor (ANN) search on a vector column in Azure SQL DB using KMeans clustering. As KMeans clustering is a compute intensive operation, this project uses SciKit Learn library to perform the clustering and stores the results in a SQL DB table. The results are then used to perform ANN search on the vector column.",
+    "url": "https://github.com/Azure-Samples/azure-sql-db-vectors-kmeans",
+    "details": {
+        "author": "Davide Mauri",
+        "languages": ["T-SQL", "Python"],        
+        "frameworks": ["Scikit-Learn"],
+        "services": ["Azure SQL"],
+        "license": "MIT",
+        "tags": ["End-to-End"]
+    }
+}
+';
+
+
+exec dbo.add_sample '
+{
+    "name": "Native Vector Support in Azure SQL and SQL Server", 
+    "description": "This repo hosts samples meant to help use the new Native Vector Support in Azure SQL DB feature. We illustrate key technical concepts and demonstrate how you can store and query embeddings in Azure SQL data to enhance your application with AI capabilities.",
+    "notes": "Getting Started: A simple getting started to get familiar with common vector functions is available here: Getting-Started; Embeddings: Learn how to get embeddings from OpenAI directly from Azure SQL using the sample available the Embeddings/T-SQL folder; Vector Search: The Vector-Search example illustrates the implementation of Vector Similarity Search within an SQL database, highlighting the capabilities of semantic search. By leveraging vector representations of text, the system can identify reviews that share contextual similarities with a given search query, transcending the limitations of keyword exact matches. Additionally, it demonstrates the integration of Keyword Search to guarantee the inclusion of specific terms within the search outcomes; Hybrid Search: The Python sample in the Hybrid-Search folder shows how to combine Fulltext search in Azure SQL database with BM25 ranking and cosine similarity ranking to do hybrid search; Retrieval Augmented Generation: The RAG pattern is a powerful way to generate text using a pre-trained language model and a retrieval mechanism. The Retrieval Augmented Generation folder contains a sample that demonstrates how to use the RAG pattern with Azure SQL and Azure OpenAI, using Python notebooks; Entity Framework Core: If you are using .NET EF Core, you can use the EF-Core sample to see how to use the new vector functions in your application; Semantic Kernel: Semantic Kernel is an SDK that simplifies the creation of enterprise AI-enabled applications. Details on support for SQL Server and Azure SQL as vectors stores are available in the folder.",
+    "url": "https://github.com/Azure-Samples/azure-sql-db-vector-search",
+    "details": {
+        "authors": ["Davide Mauri", "Pooja Kamath"],
+        "languages": ["T-SQL", "Python", ".NET", "C#"],                
+        "services": ["Azure SQL"],
+        "license": "MIT"
+    }
+}
+';
+
+select * from dbo.samples 
+--where [url] like '%kmeans%'
+
+
+
 

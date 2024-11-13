@@ -16,6 +16,7 @@ import ReactMarkdown from 'react-markdown';
 import styles from './assets/styles/SearchApp.module.css'; // Import the CSS module
 
 const SearchApp = () => {
+  const [searchCompleted, setSearchCompleted] = useState(false);
   const [query, setQuery] = useState('');
   const [results, setResults] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -41,6 +42,7 @@ const SearchApp = () => {
     setLoading(true);
     setError('');
     setResults([]);
+    setSearchCompleted(false);
     //console.log('Query:', query);
     try {
       const response = await fetch('./data-api/rest/findSamples', {
@@ -51,12 +53,13 @@ const SearchApp = () => {
         body: JSON.stringify({text: query})
       });      
       const data = await response.json();
-      //console.log(data);
+      //console.log(data);      
       setResults(data.value);
     } catch (error) {
       setError('Failed to fetch results. Please try again.');
     } finally {
       setLoading(false);
+      setSearchCompleted(true);
     }
   };
 
@@ -114,7 +117,7 @@ const SearchApp = () => {
 
       <div className={styles.results}>
         {results.length === 0 && !loading ? (
-          query ? (
+          query && searchCompleted == true ? (
             <Text block style={{ textAlign: 'center' }}>
               No results found. Try a different query!
             </Text>
