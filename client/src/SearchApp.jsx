@@ -76,10 +76,10 @@ const SearchApp = () => {
           Azure SQL DB Samples AI Search 💡🔍
         </div>
         <div className={styles.subtitle}>
-          Find samples with AI-powered search capabilities 🚀
+          Find samples using AI-powered search capabilities 🚀
         </div>
         <p className={styles.sampleCount}>
-          {isSampleCountLoading ? 'Loading...' : `There are ${sampleCount} samples in the database.`}
+          {isSampleCountLoading ? 'Finding how many samples are available...' : `There are ${sampleCount} samples in the database.`}
         </p>
       </div>
 
