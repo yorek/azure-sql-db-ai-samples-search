@@ -30,7 +30,7 @@ declare @s nvarchar(max) = (
         [id], [name], [description], [notes], [details], 
         cast((1-distance_score)*100 as int) as similiarity_score
     from #s 
-    where distance_score < 0.5 
+    where distance_score < 0.75
     order by distance_score for json path
 )
 --select @s
@@ -127,10 +127,15 @@ exec @retval = sp_invoke_external_rest_endpoint
     @response = @response output;
 --select @response
 
+if @retval != 0 begin
+    select 'Error calling the OpenAI API' as [error], @retval as [error_code], @response as [response]
+    return
+end
+
 declare @refusal nvarchar(max) = (select coalesce(json_value(@response, '$.result.choices[0].refusal'), ''));
 
 if @refusal != '' begin
-    select 'I don''t know' as [error]
+    select 'Error while generating the answer' as [error], @refusal as [refusal], @response as [response]
     return
 end
 

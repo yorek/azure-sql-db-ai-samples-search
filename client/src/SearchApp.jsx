@@ -41,7 +41,7 @@ const SearchApp = () => {
     setLoading(true);
     setError('');
     setResults([]);
-    console.log('Query:', query);
+    //console.log('Query:', query);
     try {
       const response = await fetch('./data-api/rest/findSamples', {
         method: 'POST',
@@ -51,7 +51,7 @@ const SearchApp = () => {
         body: JSON.stringify({text: query})
       });      
       const data = await response.json();
-      console.log(data);
+      //console.log(data);
       setResults(data.value);
     } catch (error) {
       setError('Failed to fetch results. Please try again.');
@@ -114,38 +114,60 @@ const SearchApp = () => {
 
       <div className={styles.results}>
         {results.length === 0 && !loading ? (
-          <Text block style={{ textAlign: 'center' }}>
-            Search something to get started!
-          </Text>
+          query ? (
+            <Text block style={{ textAlign: 'center' }}>
+              No results found. Try a different query!
+            </Text>
+          ) : (
+            <Text block style={{ textAlign: 'center' }}>
+              Start searching to get results!
+            </Text>
+          )
         ) : (
-          results.map((result, index) => (
-            <Card key={index} className={styles.resultCard}>
-              <CardHeader
-                header={
-                  <div className={styles.resultCardHeader}>
-                    {result.name}                  
+          results.map((result, index) => {
+            let responseStatus;
+            if (result.error) {
+              console.log(JSON.parse(result.response));
+              responseStatus = JSON.parse(result.response).response.status.http;
+            }          
+            return (
+              <Card key={index} className={styles.resultCard}>
+                {result.error ? (
+                  <div className={styles.error}>
+                    {result.error}<br />
+                    {responseStatus.code} - {responseStatus.description}
                   </div>
-                }
-                description={
-                  <div>
-                    <div className={styles.resultDescription}>
-                      <ReactMarkdown>
-                        {result.sample_summary}
-                      </ReactMarkdown>
-                    </div>
-                    <div className={styles.resultThoughts}>
-                      {result.thoughts}
-                    </div>                  
-                  </div>
-                }
-              />
-              <CardFooter>
-                <Link href={result.url} target="_blank" rel="noopener noreferrer">
-                  {result.url}
-                </Link>
-              </CardFooter>
-            </Card>
-          ))
+                ) : (
+                  <>
+                    <CardHeader
+                      header={
+                        <div className={styles.resultCardHeader}>
+                          {result.name}
+                        </div>
+                      }
+                      description={
+                        <div>
+                          <div className={styles.resultDescription}>
+                            <ReactMarkdown>
+                              {result.sample_summary}
+                            </ReactMarkdown>
+                          </div>
+                          <div className={styles.resultThoughts}>
+                            {result.thoughts}
+                          </div>
+                        </div>
+                      }
+                    />
+                    <CardFooter>
+                      <Link href={result.url} target="_blank" rel="noopener noreferrer">
+                        {result.url}
+                      </Link>
+                    </CardFooter>
+                  </>
+                )}
+              </Card>
+            );
+          })
         )}
       </div>
     </div>
