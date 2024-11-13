@@ -113,8 +113,7 @@ exec @retval = sp_invoke_external_rest_endpoint
     @timeout = 120,
     @payload = @p,
     @response = @response output;
-
-select @response
+--select @response
 
 declare @refusal nvarchar(max) = (select coalesce(json_value(@response, '$.result.choices[0].refusal'), ''));
 
