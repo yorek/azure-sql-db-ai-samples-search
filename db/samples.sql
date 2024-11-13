@@ -321,6 +321,21 @@ exec dbo.add_sample '
 }
 ';
 
+exec dbo.add_sample '
+{
+    "name": "Smart Resume Matching: Document RAG with Azure SQL DB & Document Intelligence", 
+    "description": "Leveraging Azure SQL DB’s Native Vector Capabilities for Enhanced Resume Matching with Azure Document Intelligence and RAG.",
+    "notes": "In this tutorial, we will explore how to leverage Azure SQL DB’s new vector data type to store embeddings and perform similarity searches using built-in vector functions, enabling advanced resume matching to identify the most suitable candidates. By extracting and chunking content from PDF resumes using Azure Document Intelligence, generating embeddings with Azure OpenAI, and storing these embeddings in Azure SQL DB, we can perform sophisticated vector similarity searches and retrieval-augmented generation (RAG) to identify the most suitable candidates based on their resumes.",
+    "url": "https://github.com/Azure-Samples/azure-sql-db-vector-search/blob/main/RAG-with-Documents/RAG-with-resumes.ipynb",
+    "details": {
+        "authors": ["Pooja Kamath"],
+        "languages": ["T-SQL", "Python"],                
+        "services": ["Azure SQL"],
+        "license": "MIT"
+    }
+}
+';
+
 select * from dbo.samples 
 --where [url] like '%kmeans%'
 
