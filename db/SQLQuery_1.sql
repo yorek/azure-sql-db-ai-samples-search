@@ -8,6 +8,7 @@ exec dbo.add_sample '
         "author": "Davide Mauri",
         "languages": [".NET"],
         "license": "MIT",
+        "services": ["Azure SQL"],
         "tags": ["Azure", "SQL", "Embeddings", "Vectorizer"]
     }
 }
@@ -22,6 +23,7 @@ exec dbo.add_sample '
     "details": {
         "author": "Davide Mauri",
         "languages": ["T-SQL", ".NET", "Python"],
+        "services": ["Azure SQL"],
         "license": "MIT"        
     }
 }
@@ -36,6 +38,7 @@ exec dbo.add_sample '
     "details": {
         "author": "Arvind Shyamsundar",
         "languages": ["T-SQL"],
+        "services": ["Azure SQL"],
         "license": "MIT"        
     }
 }
@@ -50,6 +53,7 @@ exec dbo.add_sample '
     "details": {
         "author": "Davide Mauri",
         "languages": ["T-SQL"],
+        "services": ["Azure SQL"],
         "license": "MIT",        
         "related-repos": [{
                 "name": "Fast Data Loading in Azure SQL DB using Azure Databricks",
@@ -59,6 +63,109 @@ exec dbo.add_sample '
     }
 }
 ';
+
+exec dbo.add_sample '
+{
+    "name": "Azure SQL + Azure Cognitive Services", 
+    "description": "We will create a small example of an AI application that responds to users'' queries based on a SQL table of Amazon product reviews.", 
+    "url": "https://github.com/Azure-Samples/SQL-AI-samples/blob/main/AzureSQLACSSamples/src/AzureSQL_CogSearch_IntegratedVectorization.ipynb",
+    "notes": "The AzureSQL_CogSearch_IntegratedVectorization sample notebook shows a simple AI application that recommends products based on a database of user reviews, using Azure Cognitive Search to store and search the relevant data. It highlights new preview features of Azure Cognitive Search, including automatic chunking and integrated vectorization of user queries.",
+    "details": {
+        "languages": ["T-SQL", "Python"],
+        "services": ["Azure SQL", "Azure Cognitive Services"],        
+        "license": "MIT"        
+    }
+}
+';
+
+exec dbo.add_sample '
+{
+    "name": "Azure SQL + Azure Promptflow", 
+    "description": "This is the code repository for Azure SQL Promptflow Demo. It demonstrates how to create a chatbot that can query the data from your own Azure SQL database.", 
+    "url": "https://github.com/Azure-Samples/SQL-AI-samples/blob/main/AzureSQLACSSamples/src/AzureSQL_CogSearch_IntegratedVectorization.ipynb",
+    "notes": "The AzureSQL_Prompt_Flow sample shows an E2E example of how to build AI applications with Prompt Flow, Azure Cognitive Search, and your own data in Azure SQL database. It includes instructions on how to index your data with Azure Cognitive Search, a sample Prompt Flow local development that links everything together with Azure OpenAI connections, and also how to create an endpoint of the flow to an Azure ML workspace.",
+    "details": {
+        "languages": ["T-SQL", "Python"],
+        "services": ["Azure SQL", "Azure Promptflow"],
+        "license": "MIT"        
+    }
+}
+';
+
+exec dbo.add_sample '
+{
+    "name": "Vector similarity search with Azure SQL & Azure OpenAI", 
+    "description": "This example shows how to use Azure OpenAI from Azure SQL database to get the vector embeddings of any chosen text, and then calculate the cosine similarity against the Wikipedia articles (for which vector embeddings have been already calculated,) to find the articles that covers topics that are close - or similar - to the provided text.", 
+    "url": "https://github.com/Azure-Samples/azure-sql-db-openai",
+    "details": {
+        "languages": ["T-SQL", "Python"],
+        "services": ["Azure SQL"],
+        "license": "MIT"        
+    }
+}
+';
+
+exec dbo.add_sample '
+{
+    "name": "Generating SQL for Azure SQL Database using Vanna.AI", 
+    "description": "This notebook runs through the process of using the vanna Python package to generate SQL using AI (RAG + LLMs) including connecting to a database and training.", 
+    "url": "https://github.com/Azure-Samples/SQL-AI-samples/blob/main/AzureSQLDatabase/Vanna.ai/vanna_and_sql.ipynb",
+    "details": {
+        "author": "Brian Spendolini",
+        "languages": ["T-SQL", "Python"],
+        "services": ["Azure SQL"],
+        "license": "MIT",        
+        "related-links": {
+            "blog": "https://devblogs.microsoft.com/azure-sql/vanna-ai-and-azure-sql-database/"
+        }
+    }
+}
+';
+
+exec dbo.add_sample '
+{
+    "name": "Azure SQL DB - Retrieval Augmented Generation (RAG) with OpenAI", 
+    "description": "Implement a RAG solution and call OpenAI right from Azure SQL DB to ask questions about your data", 
+    "notes": "In this repo you will find a step-by-step guide on how to use Azure SQL Database to do Retrieval Augmented Generation (RAG) using the data you have in Azure SQL and integrating with OpenAI, directly from the Azure SQL database itself. You''ll be able to ask queries in natural language and get answers from the OpenAI GPT model, using the data you have in Azure SQL Database. The sample data is the Walmart US Product dataset, so that you can you RAG on product data and ask question like \"What are some good products to organize a birthday party for teenager boy?\" or \"Show me the best product for cleaning my car\" and get answers from the OpenAI model using the product data. The sample is using only and pure T-SQL.",
+    "url": "https://github.com/Azure-Samples/azure-sql-db-chatbot",
+    "details": {
+        "authors": ["Davide Mauri", "Sanjay Mishra"],
+        "languages": ["T-SQL"],
+        "services": ["Azure SQL"],
+        "license": "MIT",        
+        "related-links": {
+            "blog": "https://devblogs.microsoft.com/azure-sql/unleashing-the-potential-of-generative-ai-in-azure-sql-database/"
+        }
+    }
+}
+';
+
+exec dbo.add_sample '
+{
+    "name": "Content Moderation", 
+    "description": "In this folder are two T-SQL scripts that call Azure OpenAI Content Safety and Language AI. The Content Safety example will analyze a text string and return a severity in four categories: violence, sexual, self-harm, and hate. The Language AI script will analyze text and return what PII it found, what category of PII it is, and redact the results to obfuscate the PII in the original text string.",
+    "url": "https://github.com/Azure-Samples/SQL-AI-samples/tree/main/AzureSQLDatabase/ContentModeration",
+    "details": {
+        "languages": ["T-SQL"],
+        "services": ["Azure SQL"],
+        "license": "MIT"
+    }
+}
+';
+
+exec dbo.add_sample '
+{
+    "name": "LangChain and Azure SQL Database", 
+    "description": "This folder contains 2 python notebooks that use LangChain to create a NL2SQL agent against an Azure SQL Database. The notebooks use either Azure OpenAI or OpenAI for the LLM. To get started immedietly, you can create a codespace on this repository, use the terminal to change to the LangChain directory and follow one of the notebooks.",
+    "url": "https://github.com/Azure-Samples/SQL-AI-samples/tree/main/AzureSQLDatabase/LangChain",
+    "details": {
+        "languages": ["T-SQL"],
+        "services": ["Azure SQL"],
+        "license": "MIT"
+    }
+}
+';
+
 
 select * from dbo.samples;
 
