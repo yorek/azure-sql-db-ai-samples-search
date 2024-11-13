@@ -23,13 +23,13 @@ namespace AzureSQL.AISearch.API
             {
                 new
                 {
-                    title = "The Ultimate Chatbot",
+                    name = "The Ultimate Chatbot",
                     url = "https://github.com/Azure-Samples/azure-sql-db-chat-sk",
                     description = "Using Azure SQL and Semantic Kernel to chat with your own data using a mix of NL2SQL and RAG."
                 },
                 new
                 {
-                    title = "RAG with AzureSQL, LangChain and Chainlit",
+                    name = "RAG with AzureSQL, LangChain and Chainlit",
                     url = "https://github.com/Azure-Samples/azure-sql-db-rag-langchain-chainlit",
                     description = "Sample RAG pattern using Azure SQL DB, Langchain and Chainlit."
                 }

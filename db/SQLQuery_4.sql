@@ -1,11 +1,5 @@
-drop table if exists dbo.samples_embeddings;
-create table dbo.samples_embeddings
-(
-    [id] int primary key,
-    [embedding] vector(1536) not null
-)
-go
 
+/*
 -- iterate over the samples table using cursor
 set nocount on;
 declare @id int, @name nvarchar(100), @description nvarchar(1000);
@@ -32,4 +26,4 @@ go
 
 select * from dbo.samples_embeddings;
 go
-
+*/

@@ -24,9 +24,10 @@ const SearchApp = () => {
 
   useEffect(() => {
     const fetchSampleCount = async () => {
-      setIsSampleCountLoading(true);
-      // Mock API call
-      const count = await new Promise((resolve) => setTimeout(() => resolve(42), 1000));
+      setIsSampleCountLoading(true);      
+      const response = await fetch('./data-api/rest/countSamples');
+      const data = await response.json();
+      const count = data.value[0].total_sample_count;
       setSampleCount(count);
       setIsSampleCountLoading(false);
     };
@@ -39,11 +40,18 @@ const SearchApp = () => {
     setLoading(true);
     setError('');
     setResults([]);
-
+    console.log('Query:', query);
     try {
-      const response = await fetch('/api/Search');
+      const response = await fetch('./data-api/rest/findSamples', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({text: query})
+      });      
       const data = await response.json();
-      setResults(data);
+      console.log(data);
+      setResults(data.value);
     } catch (error) {
       setError('Failed to fetch results. Please try again.');
     } finally {
@@ -93,7 +101,7 @@ const SearchApp = () => {
 
       {loading && (
         <div style={{ textAlign: 'center', margin: '20px 0' }}>
-          <Spinner label="Loading..." />
+          <Spinner label="Searching..." />
         </div>
       )}
 
@@ -114,10 +122,19 @@ const SearchApp = () => {
               <CardHeader
                 header={
                   <div className={styles.resultCardHeader}>
-                    {result.title}                  
+                    {result.name}                  
                   </div>
                 }
-                description={result.description}
+                description={
+                  <div>
+                    <div className={styles.resultDescription}>
+                      {result.sample_summary}
+                    </div>
+                    <div className={styles.resultThoughts}>
+                      {result.thoughts}
+                    </div>                  
+                  </div>
+                }
               />
               <CardFooter>
                 <Link href={result.url} target="_blank" rel="noopener noreferrer">

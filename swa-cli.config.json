@@ -3,10 +3,8 @@
   "configurations": {
     "azure-sql-db-ai-samples-search": {
       "appLocation": "client",
-      "apiLocation": "api",
       "outputLocation": "dist",
-      "apiLanguage": "dotnetisolated",
-      "apiVersion": "8.0",
+      "dataApiLocation": "swa-db-connections",
       "appBuildCommand": "npm run build",
       "apiBuildCommand": "dotnet publish -c Release",
       "run": "npm run dev",

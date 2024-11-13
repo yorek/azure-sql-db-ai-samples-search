@@ -32,28 +32,46 @@
   margin-bottom: 20px;
 }
 
-.inputField {
-  width: 50%;
+.inputField {  
+  width: 50%;  
   margin-right: 10px;  
 }
 
+.inputField input {
+  width: 100%;
+  padding: 10px;
+  height: 40px;
+  font-size: large;
+}
+
 .searchButton {
+  font-size: large !important;
   margin-top: 5px;
   background-color: #0078D4 !important;
   color: white; /* Ensure text is visible on the blue background */
 }
 
 .results {
-  font-size: large;
+  font-size: medium;
   width: 75%; /* Add this line to set the width to 75% */
   margin: 40px auto; /* Center the results */
 }
 
 .resultCardHeader {
+  font-size: large;
   font-weight: bold;
   margin-bottom: 10px;
 }
 
 .resultCard {
   margin-bottom: 20px;
+}
+
+.resultDescription {
+  margin-top: 10px;
+}
+
+.resultThoughts {
+  margin-top: 10px;
+  color: #555555;
 }
