@@ -12,6 +12,7 @@ import {
   Label,
 } from '@fluentui/react-components';
 import { Search24Regular } from '@fluentui/react-icons';
+import ReactMarkdown from 'react-markdown';
 import styles from './assets/styles/SearchApp.module.css'; // Import the CSS module
 
 const SearchApp = () => {
@@ -128,7 +129,9 @@ const SearchApp = () => {
                 description={
                   <div>
                     <div className={styles.resultDescription}>
-                      {result.sample_summary}
+                      <ReactMarkdown>
+                        {result.sample_summary}
+                      </ReactMarkdown>
                     </div>
                     <div className={styles.resultThoughts}>
                       {result.thoughts}
