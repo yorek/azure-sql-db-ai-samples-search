@@ -6,6 +6,7 @@ declare @retval int, @response nvarchar(max);
 declare @qv vector(1536)
 exec web.get_embedding @text, @qv output
 
+delete from [dbo].[semantic_cache] where query_date < dateadd(hour, -1, sysdatetime())
 select top(1) *, vector_distance('cosine', @qv, embedding) as d 
 into #c 
 from [dbo].[semantic_cache] order by d
