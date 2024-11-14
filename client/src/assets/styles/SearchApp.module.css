@@ -75,3 +75,17 @@
   margin-top: 10px;
   color: #555555;
 }
+
+.nav {
+  margin-top: 10px;
+}
+
+.navLink {
+  margin-right: 15px;
+  text-decoration: none; 
+  font-weight: bold;
+}
+
+.navLink:hover {
+  text-decoration: underline;
+}

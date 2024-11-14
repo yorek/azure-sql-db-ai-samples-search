@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 import {
   Input,
   Button,
@@ -7,8 +8,8 @@ import {
   CardHeader,
   CardFooter,
   Text,
-  Link,
 } from '@fluentui/react-components';
+import { Link } from 'react-router-dom';
 import { Search24Regular } from '@fluentui/react-icons';
 import ReactMarkdown from 'react-markdown';
 import styles from './assets/styles/SearchApp.module.css'; // Import the CSS module
@@ -21,42 +22,46 @@ const SearchApp = () => {
   const [error, setError] = useState('');
   const [sampleCount, setSampleCount] = useState(0);
   const [isSampleCountLoading, setIsSampleCountLoading] = useState(true); // For sample count loading
+  const location = useLocation();
 
   useEffect(() => {
     const fetchSampleCount = async () => {
-      setIsSampleCountLoading(true);      
+      setIsSampleCountLoading(true);
       const response = await fetch('./data-api/rest/countSamples');
       const data = await response.json();
       const count = data.value[0].total_sample_count;
       setSampleCount(count);
       setIsSampleCountLoading(false);
     };
-    
+
     fetchSampleCount();
 
-    const params = new URLSearchParams(window.location.search);
+    const params = new URLSearchParams(location.search);
     const q = params.get('q');
+    console.log('Query:', q);
     if (q) {
-      setQuery(q);
-      handleSearch();
-    }    
-  }, []);
+      handleSearch(q);
+    }
+  }, [location]);
 
-  const handleSearch = async () => {
-    if (!query) return;
+  const handleSearch = async (searchQuery) => {
+    if ((!query) && (!searchQuery)) return;
+    if (!searchQuery) {
+      searchQuery = query;
+    }
     setLoading(true);
     setError('');
     setResults([]);
     setSearchCompleted(false);
-    //console.log('Query:', query);
+    //console.log('searchQuery:', searchQuery);
     try {
       const response = await fetch('./data-api/rest/findSamples', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify({text: query})
-      });      
+        body: JSON.stringify({ text: searchQuery })
+      });
       const data = await response.json();
       //console.log(data);      
       setResults(data.value);
@@ -140,7 +145,7 @@ const SearchApp = () => {
               if (responseStatus.code === 429) {
                 responseStatus.description = "Too many requests. Please try again later.";
               }
-            }          
+            }
             return (
               <Card key={index} className={styles.resultCard}>
                 {result.error ? (
