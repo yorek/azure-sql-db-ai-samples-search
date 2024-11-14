@@ -235,7 +235,8 @@ exec dbo.add_sample '
         "license": "MIT",
         "tags": ["End-to-End"],
         "related-links": {
-            "live-demo": "https://ai.microsofthq.vslive.com/"
+            "video": "https://www.youtube.com/watch?v=BuaKzm7Kq9Q",
+            "blog": "https://devblogs.microsoft.com/azure-sql/the-ultimate-chatbot/"
         }
     }
 }

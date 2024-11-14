@@ -43,3 +43,12 @@ go
 alter table dbo.samples_details_embeddings
 add constraint fk__samples_details_embeddings__samples foreign key ([id]) references dbo.samples([id]) 
 go
+
+create table dbo.semantic_cache
+(
+    [id] int identity primary key,    
+    [query] nvarchar(max) not null,
+    [embedding] vector(1536) not null,
+    [results] nvarchar(max) not null,    
+)
+go
