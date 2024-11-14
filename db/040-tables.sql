@@ -1,3 +1,4 @@
+drop table if exists dbo.semantic_cache;
 drop table if exists dbo.samples_embeddings;
 drop table if exists dbo.samples_notes_embeddings;
 drop table if exists dbo.samples_details_embeddings;
@@ -46,9 +47,11 @@ go
 
 create table dbo.semantic_cache
 (
-    [id] int identity primary key,    
+    [id] int identity primary key nonclustered,    
     [query] nvarchar(max) not null,
     [embedding] vector(1536) not null,
-    [results] nvarchar(max) not null,    
+    [query_date] datetime2(0) not null,
+    [response] nvarchar(max) not null,    
 )
 go
+create clustered index ixc__semantic_cache on dbo.semantic_cache(query_date desc)
