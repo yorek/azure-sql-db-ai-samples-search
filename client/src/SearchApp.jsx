@@ -6,10 +6,8 @@ import {
   Card,
   CardHeader,
   CardFooter,
-  CardPreview,
   Text,
   Link,
-  Label,
 } from '@fluentui/react-components';
 import { Search24Regular } from '@fluentui/react-icons';
 import ReactMarkdown from 'react-markdown';
@@ -33,8 +31,15 @@ const SearchApp = () => {
       setSampleCount(count);
       setIsSampleCountLoading(false);
     };
-
+    
     fetchSampleCount();
+
+    const params = new URLSearchParams(window.location.search);
+    const q = params.get('q');
+    if (q) {
+      setQuery(q);
+      handleSearch();
+    }    
   }, []);
 
   const handleSearch = async () => {
@@ -132,6 +137,9 @@ const SearchApp = () => {
             if (result.error) {
               console.log(JSON.parse(result.response));
               responseStatus = JSON.parse(result.response).response.status.http;
+              if (responseStatus.code === 429) {
+                responseStatus.description = "Too many requests. Please try again later.";
+              }
             }          
             return (
               <Card key={index} className={styles.resultCard}>
