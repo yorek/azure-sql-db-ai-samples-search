@@ -8,8 +8,8 @@ import {
   CardHeader,
   CardFooter,
   Text,
+  Link
 } from '@fluentui/react-components';
-import { Link } from 'react-router-dom';
 import { Search24Regular } from '@fluentui/react-icons';
 import ReactMarkdown from 'react-markdown';
 import styles from './assets/styles/SearchApp.module.css'; // Import the CSS module
