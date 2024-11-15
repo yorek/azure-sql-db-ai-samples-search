@@ -12,9 +12,9 @@ import {
 } from '@fluentui/react-components';
 import { Search24Regular } from '@fluentui/react-icons';
 import ReactMarkdown from 'react-markdown';
-import styles from './assets/styles/SearchApp.module.css'; // Import the CSS module
+import styles from './assets/styles/SearchPage.module.css'; // Import the CSS module
 
-const SearchApp = () => {
+const SearchPage = () => {
   const [searchCompleted, setSearchCompleted] = useState(false);
   const [query, setQuery] = useState('');
   const [results, setResults] = useState([]);
@@ -191,4 +191,4 @@ const SearchApp = () => {
   );
 };
 
-export default SearchApp;
+export default SearchPage;
