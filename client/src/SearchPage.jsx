@@ -40,6 +40,7 @@ const SearchApp = () => {
     const q = params.get('q');
     console.log('Query:', q);
     if (q) {
+      setQuery(q);
       handleSearch(q);
     }
   }, [location]);
