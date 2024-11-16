@@ -28,9 +28,9 @@ end
 
 begin tran
 
-delete from dbo.samples where id = @id
 delete from dbo.samples_embeddings where id = @id
 delete from dbo.samples_notes_embeddings where id = @id
 delete from dbo.samples_details_embeddings where id = @id
+delete from dbo.samples where id = @id
 
 commit tran
