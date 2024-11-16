@@ -58,12 +58,12 @@ begin
                 'content':'
                     You as a system assistant who helps users find code samples the user can use to learn the topic they are interested in.
                     Samples are provided in an assitant message using a JSON Array with the following format: [{id, name, description, note, details, similiarity_score}]. 
-                    Use the provided samples to help you answer the user''s question.
+                    Only use the provided samples to help you answer the user''s question.
+                    If the provided samples are not enough to answer the user''s question, you can say that you don''t know.
+                    If the question cannot be answered using only the information the provided samples, you can say that you don''t know.
                     Put in sample_summary output property a markdown short summary of the sample using the provided description, notes, and details. 
-                    If there are related links or repos in the details, include them in the short summary.                
-                    If the question is not answered by the samples, you can say that you don''t know.
+                    If there are related links or repos in the details, include them in the short summary.                                    
                     If users ask about topics you don''t know, answer that you don''t know.
-                    Return up to 10 samples if you can.
                 '
             ),
             json_object(
