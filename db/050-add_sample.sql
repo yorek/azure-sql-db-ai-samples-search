@@ -34,10 +34,9 @@ when matched then
 
 declare @sampleId int = (select [id] from dbo.samples where [url] = (select [url] from #samples));
 
-delete from dbo.samples_details_embeddings
-delete from dbo.samples_notes_embeddings
-delete from dbo.samples_embeddings
-
+delete from dbo.samples_details_embeddings where [id] = @sampleId
+delete from dbo.samples_notes_embeddings where [id] = @sampleId
+delete from dbo.samples_embeddings where [id] = @sampleId
 
 /*
     Get the embeddings for the sample name and description
