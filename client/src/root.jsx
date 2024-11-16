@@ -4,7 +4,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { FluentProvider, webLightTheme } from '@fluentui/react-components';
 import SearchPage from './SearchPage';
 import AboutPage from './AboutPage'; 
-import EditSessionPage from './EditSessionPage';
+import EditPage from './EditPage';
 import './assets/styles/global.css'; // Global styles (optional)
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
@@ -14,7 +14,7 @@ root.render(
       <Routes>
         <Route path="/" element={<SearchPage />} />
         <Route path="/about" element={<AboutPage />} />
-        <Route path="/edit-session/:sessionId" element={<EditSessionPage />} />
+        <Route path="/sample/:sampleId" element={<EditPage />} />
       </Routes>
     </BrowserRouter>
   </FluentProvider>

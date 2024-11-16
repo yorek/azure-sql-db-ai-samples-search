@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { json, useParams } from 'react-router-dom';
 import { Button, Textarea, Text } from '@fluentui/react-components';
-import styles from './assets/styles/EditSessionPage.module.css';
+import MonacoEditor from 'react-monaco-editor';
+import styles from './assets/styles/EditPage.module.css';
 
-const EditSessionPage = () => {
-  const { sessionId } = useParams();
+const EditPage = () => {
+  const { sampleId } = useParams();
   const [jsonInput, setJsonInput] = useState('');
   const [responseMessage, setResponseMessage] = useState('');
   const [error, setError] = useState('');
@@ -12,34 +13,40 @@ const EditSessionPage = () => {
   useEffect(() => {
     const fetchSessionData = async () => {
       try {
-        const response = await fetch(`./data-api/rest/getSession/${sessionId}`);
+        //console.log(sampleId);
+        const response = await fetch(`/data-api/rest/get-sample?id=${sampleId}`);
         if (!response.ok) {
           throw new Error('Failed to fetch session data');
         }
         const data = await response.json();
-        setJsonInput(JSON.stringify(data, null, 2));
+        var sample = data.value[0];
+        //console.log(sample);
+        sample.details = JSON.parse(sample.details);
+        setJsonInput(JSON.stringify(sample, null, 2));
       } catch (err) {
         setError(err.message);
       }
     };
 
-    if (sessionId) {
-      //fetchSessionData();
+    if (sampleId) {
+      if (!jsonInput)
+       fetchSessionData();
     }
-  }, [sessionId]);
+  }, [sampleId, jsonInput]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
     setResponseMessage('');
-
+    //setJsonInput(MonacoEditor.value);
+    console.log(jsonInput);
     try {
-      const response = await fetch('./data-api/rest/upsertSession', {
+      const response = await fetch('/data-api/rest/add-sample', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
         },
-        body: jsonInput
+        body: JSON.stringify({ 'payload': jsonInput })
       });
 
       if (!response.ok) {
@@ -47,7 +54,7 @@ const EditSessionPage = () => {
       }
 
       const data = await response.json();
-      setResponseMessage('Session added successfully');
+      setResponseMessage('Sample added successfully');
     } catch (err) {
       setError(err.message);
     }
@@ -57,11 +64,13 @@ const EditSessionPage = () => {
     <div className={styles.container}>
       <h1>Edit Session</h1>
       <form onSubmit={handleSubmit}>
-        <Textarea
+        <MonacoEditor
           value={jsonInput}
-          onChange={(e) => setJsonInput(e.target.value)}
-          placeholder="Enter JSON here"
-          className={styles.textarea}
+          language='json'
+          width="800"
+          height="600"
+          onChange={(newValue) => setJsonInput(newValue)}
+          placeholder="Enter JSON here"          
         />
         <Button appearance="primary" type="submit" className={styles.submitButton}>
           Submit
@@ -73,4 +82,4 @@ const EditSessionPage = () => {
   );
 };
 
-export default EditSessionPage;
+export default EditPage;

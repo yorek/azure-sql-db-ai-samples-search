@@ -1,0 +1,32 @@
+POST http://localhost:4280/data-api/rest/add-sample
+Content-Type: 'application/json'
+
+{ 
+    "payload": {
+        "name": "AI Sample Search",
+        "description": "This site",
+        "url": "https://github.com/yorek/azure-sql-db-ai-samples-search",
+        "notes": "This site",
+        "details": {
+            "author": "Davide Mauri",
+            "languages": [
+                "T-SQL",
+                "Javascript"
+            ],
+            "frameworks": [
+                "React"
+            ],
+            "services": [
+                "Azure SQL",
+                "Azure Open AI"
+            ],
+            "middleware": [
+                "Data API builder"
+            ],
+            "license": "MIT",
+            "tags": [
+                "End-to-End"
+            ]
+        }
+    }
+}

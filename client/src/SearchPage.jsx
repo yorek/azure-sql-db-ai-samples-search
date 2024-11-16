@@ -27,7 +27,7 @@ const SearchPage = () => {
   useEffect(() => {
     const fetchSampleCount = async () => {
       setIsSampleCountLoading(true);
-      const response = await fetch('./data-api/rest/countSamples');
+      const response = await fetch('./data-api/rest/count-samples');
       const data = await response.json();
       const count = data.value[0].total_sample_count;
       setSampleCount(count);
@@ -56,7 +56,7 @@ const SearchPage = () => {
     setSearchCompleted(false);
     //console.log('searchQuery:', searchQuery);
     try {
-      const response = await fetch('./data-api/rest/findSamples', {
+      const response = await fetch('./data-api/rest/find-samples', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -178,6 +178,9 @@ const SearchPage = () => {
                     <CardFooter>
                       <Link href={result.url} target="_blank" rel="noopener noreferrer">
                         {result.url}
+                      </Link>
+                      <Link href={'/sample/' + result.id} target="_blank" rel="noopener noreferrer">
+                        Edit
                       </Link>
                     </CardFooter>
                   </>

@@ -49,9 +49,78 @@
       },
       "rest": {
         "enabled": true,
-        "path": "/findSamples",
+        "path": "/find-samples",
         "methods": [
           "post", "get"
+        ]
+      },
+      "permissions": [
+        {
+          "role": "anonymous",
+          "actions": [
+            {
+              "action": "*"
+            }
+          ]
+        }
+      ]
+    },
+    "AddSample": {
+      "source": {
+        "object": "dbo.add_sample",
+        "type": "stored-procedure",
+        "parameters": {
+          "payload": ""          
+        }
+      },
+      "graphql": {
+        "enabled": false,
+        "operation": "query",
+        "type": {
+          "singular": "AddSample",
+          "plural": "AddSamples"
+        }
+      },
+      "rest": {
+        "enabled": true,
+        "path": "/add-sample",
+        "methods": [
+          "post"
+        ]
+      },
+      "permissions": [
+        {
+          "role": "anonymous",
+          "actions": [
+            {
+              "action": "*"
+            }
+          ]
+        }
+      ]
+    },
+    "GetSample": {
+      "source": {
+        "object": "dbo.get_sample",
+        "type": "stored-procedure",
+        "parameters": {
+          "id": 0,   
+          "url": ""
+        }
+      },
+      "graphql": {
+        "enabled": false,
+        "operation": "query",
+        "type": {
+          "singular": "GetSample",
+          "plural": "GetSamples"
+        }
+      },
+      "rest": {
+        "enabled": true,
+        "path": "/get-sample",
+        "methods": [
+          "get"
         ]
       },
       "permissions": [
@@ -80,7 +149,7 @@
       },
       "rest": {
         "enabled": true,
-        "path": "/countSamples",
+        "path": "/count-samples",
         "methods": [
           "post", "get"
         ]
