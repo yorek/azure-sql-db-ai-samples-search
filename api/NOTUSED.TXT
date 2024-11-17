@@ -1,1 +1,0 @@
-This was used only to mock data for the frontend. It is not used in the final version of the application.
