@@ -123,13 +123,13 @@ const SearchPage = () => {
               <TeachingPopoverBody>
                 <TeachingPopoverTitle>AI-Powered Search</TeachingPopoverTitle>
                 <div>
-                  This search engine uses AI to find samples from the Azure SQL Database Samples repository using a RAG pattern with structured output. 
+                  This search engine uses AI to find samples from the <Link href="https://aka.ms/sqlai-samples" target="_blank">Azure SQL Database Samples repository</Link> using a RAG pattern with structured output. 
                   <ul>
-                    <li>Similiarity search across all available resources is done using the newly introduced vector support in Azure SQL Database.</li>
-                    <li>Results are then passed to a GPT-4o model to generate a sample summary and thoughts with a defined structured output.</li>                   
-                    <li>Semantic caching is used to improve the performance of the search engine and reduce LLM calls costs.</li>
+                    <li>Similiarity search across all available resources is done using the newly introduced <Link href='https://devblogs.microsoft.com/azure-sql/exciting-announcement-public-preview-of-native-vector-support-in-azure-sql-database/' target="_blank">vector support in Azure SQL Database</Link>.</li>
+                    <li>Results are then passed to a GPT-4o model to generate a sample summary and thoughts with a defined <Link href='https://learn.microsoft.com/en-us/azure/ai-services/openai/how-to/structured-outputs?tabs=rest' target="_blank">structured output</Link>.</li>                   
+                    <li><strong>Semantic caching</strong> is used to improve the performance of the search engine and reduce LLM calls costs.</li>
                   </ul>
-                  If you want to have more details and get the source code of this sample, just ask about "this sample".                                     
+                  If you want to have more details and get the source code of this sample, just ask about "this sample". Read more about creating AI apps with Azure SQL here: <Link href="https://aka.ms/sqlai" target="_blank">https://aka.ms/sqlai</Link>                               
                 </div>
               </TeachingPopoverBody>
               <TeachingPopoverFooter primary="Got it" />
