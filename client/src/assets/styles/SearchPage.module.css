@@ -18,12 +18,13 @@
 
 .subtitle {
   font-size: large;
-  margin-top: 10px;  
+  margin-top: 15px;  
 }
 
 .sampleCount {
   font-size: medium;
   margin-top: 10px;
+  margin-bottom: 15px;  
 }
 
 .searchWrapper {  
@@ -32,13 +33,12 @@
   margin-bottom: 20px;
 }
 
-.inputField {  
-  width: 50%;  
+.searchBox {  
+  width: 100%;  
   margin-right: 10px;  
 }
 
-.inputField input {
-  width: 100%;
+.searchBox input {
   padding: 10px;
   height: 40px;
   font-size: large;
@@ -46,10 +46,20 @@
 
 .searchButton {
   font-size: large !important;
-  margin-top: 5px;
+  margin-top: 5px;  
   background-color: #0078D4 !important;
   color: white; /* Ensure text is visible on the blue background */
 }
+
+.teachingPopover {  
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.popOverSurface {
+  width: 50%;
+} 
 
 .results {
   font-size: medium;

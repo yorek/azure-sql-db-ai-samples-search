@@ -8,10 +8,19 @@ import {
   CardHeader,
   CardFooter,
   Text,
-  Link
+  Link,
+  SearchBox,
+  TeachingPopover,
+  TeachingPopoverBody,
+  TeachingPopoverHeader,
+  TeachingPopoverTitle,
+  TeachingPopoverSurface,
+  TeachingPopoverTrigger,
+  TeachingPopoverFooter,
 } from '@fluentui/react-components';
 import { Search24Regular } from '@fluentui/react-icons';
 import ReactMarkdown from 'react-markdown';
+import Cookies from 'js-cookie';
 import styles from './assets/styles/SearchPage.module.css'; // Import the CSS module
 
 const SearchPage = () => {
@@ -23,6 +32,7 @@ const SearchPage = () => {
   const [sampleCount, setSampleCount] = useState(0);
   const [isSampleCountLoading, setIsSampleCountLoading] = useState(true); // For sample count loading
   const location = useLocation();
+  const [popOverOpen, setPopOverOpen] = useState(false);
 
   useEffect(() => {
     const fetchSampleCount = async () => {
@@ -33,18 +43,25 @@ const SearchPage = () => {
       setSampleCount(count);
       setIsSampleCountLoading(false);
     };
-
+   
     fetchSampleCount();
 
     const params = new URLSearchParams(location.search);
     const q = params.get('q');
-    console.log('Query:', q);
+    //console.log('Query:', q);
     if (q) {
       setQuery(q);
       handleSearch(q);
     }
   }, [location]);
 
+  //console.log('PopOverOpen:', Cookies.get('popOverOpen'));
+  if (!Cookies.get('popOverOpen')) 
+  {
+    setPopOverOpen(true);
+    Cookies.set('popOverOpen', 'true');
+  } 
+  
   const handleSearch = async (searchQuery) => {
     if ((!query) && (!searchQuery)) return;
     if (!searchQuery) {
@@ -54,7 +71,7 @@ const SearchPage = () => {
     setError('');
     setResults([]);
     setSearchCompleted(false);
-    //console.log('searchQuery:', searchQuery);
+    console.log('searchQuery:', searchQuery);
     try {
       const response = await fetch('./data-api/rest/findSamples', {
         method: 'POST',
@@ -80,6 +97,10 @@ const SearchPage = () => {
     }
   };
 
+  const handleSearchClick = (event) => {
+    handleSearch();
+  }
+
   return (
     <div className={styles.appContainer}>
       <div className={styles.header}>
@@ -89,24 +110,46 @@ const SearchPage = () => {
         <div className={styles.subtitle}>
           Find samples using AI-powered search capabilities 🚀
         </div>
-        <p className={styles.sampleCount}>
+        <div className={styles.sampleCount}>
           {isSampleCountLoading ? 'Finding how many samples are available...' : `There are ${sampleCount} samples in the database.`}
-        </p>
+        </div>
+        <div className={styles.teachingPopover}>
+          <TeachingPopover defaultOpen={popOverOpen}>
+            <TeachingPopoverTrigger>
+              <Button>How does it work?</Button>
+            </TeachingPopoverTrigger>
+            <TeachingPopoverSurface className={styles.popOverSurface}>
+              <TeachingPopoverHeader>Tips</TeachingPopoverHeader>
+              <TeachingPopoverBody>
+                <TeachingPopoverTitle>AI-Powered Search</TeachingPopoverTitle>
+                <div>
+                  This search engine uses AI to find samples from the Azure SQL Database Samples repository using a RAG pattern with structured output. 
+                  <ul>
+                    <li>Similiarity search across all available resources is done using the newly introduced vector support in Azure SQL Database.</li>
+                    <li>Results are then passed to a GPT-4o model to generate a sample summary and thoughts with a defined structured output.</li>                   
+                    <li>Semantic caching is used to improve the performance of the search engine and reduce LLM calls costs.</li>
+                  </ul>
+                  If you want to have more details and get the source code of this sample, just ask about "this sample".                                     
+                </div>
+              </TeachingPopoverBody>
+              <TeachingPopoverFooter primary="Got it" />
+            </TeachingPopoverSurface>
+          </TeachingPopover>
+        </div>
       </div>
-
       <div className={styles.searchWrapper}>
-        <Input
+        <SearchBox
           placeholder="Type your query in natural language. The AI will do the rest..."
           value={query}
           onChange={(e) => setQuery(e.target.value)}
           onKeyDown={handleKeyPress}
           contentBefore={<Search24Regular />}
           appearance="outline"
-          className={styles.inputField}
+          className={styles.searchBox}
         />
         <Button
           appearance="primary"
-          onClick={handleSearch}
+          onClick={handleSearchClick}
           disabled={loading}
           className={styles.searchButton}
         >
