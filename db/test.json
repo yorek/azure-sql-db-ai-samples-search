@@ -1,12 +1,32 @@
 {
-    "name": "Native Vector Support in Azure SQL and SQL Server", 
-    "description": "This repo hosts samples meant to help use the new Native Vector Support in Azure SQL DB feature. We illustrate key technical concepts and demonstrate how you can store and query embeddings in Azure SQL data to enhance your application with AI capabilities.",
-    "notes": "Getting Started: A simple getting started to get familiar with common vector functions is available here: Getting-Started; Embeddings: Learn how to get embeddings from OpenAI directly from Azure SQL using the sample available the Embeddings/T-SQL folder; Vector Search: The Vector-Search example illustrates the implementation of Vector Similarity Search within an SQL database, highlighting the capabilities of semantic search. By leveraging vector representations of text, the system can identify reviews that share contextual similarities with a given search query, transcending the limitations of keyword exact matches. Additionally, it demonstrates the integration of Keyword Search to guarantee the inclusion of specific terms within the search outcomes; Hybrid Search: The Python sample in the Hybrid-Search folder shows how to combine Fulltext search in Azure SQL database with BM25 ranking and cosine similarity ranking to do hybrid search; Retrieval Augmented Generation: The RAG pattern is a powerful way to generate text using a pre-trained language model and a retrieval mechanism. The Retrieval Augmented Generation folder contains a sample that demonstrates how to use the RAG pattern with Azure SQL and Azure OpenAI, using Python notebooks; Entity Framework Core: If you are using .NET EF Core, you can use the EF-Core sample to see how to use the new vector functions in your application; Semantic Kernel: Semantic Kernel is an SDK that simplifies the creation of enterprise AI-enabled applications. Details on support for SQL Server and Azure SQL as vectors stores are available in the folder.",
-    "url": "https://github.com/Azure-Samples/azure-sql-db-vector-search",
+    "name": "Azure SQL DB Samples AI Search",
+    "description": "This website, where you can search for AI samples using Azure SQL DB",
+    "url": "https://github.com/yorek/azure-sql-db-ai-samples-search",
+    "notes": "This website, a simple React application that uses Azure SQL DB to store the samples and Azure Open AI to provide the search capabilities. Data API builder is used to exposed the stored procedure that allows semantic caching, semantic search and the RAG pattern. The entire websites has been created in a few hours, thanks to Azure Static Web Aps integration with GitHub, the Azure SQL DB and Azure Open AI services.",
     "details": {
-        "authors": ["Davide Mauri", "Pooja Kamath"],
-        "languages": ["T-SQL", "Python", ".NET", "C#"],                
-        "services": ["Azure SQL"],
-        "license": "MIT"
+        "author": "Davide Mauri",
+        "languages": [
+            "T-SQL",
+            "Javascript"
+        ],
+        "frameworks": [
+            "React"
+        ],
+        "services": [
+            "Azure SQL",
+            "Azure Open AI",
+            "Azure Static Web Apps"
+        ],
+        "middleware": [
+            "Data API builder"
+        ],
+        "patterns": [
+            "RAG",
+            "Semantic Caching",
+        ],
+        "license": "MIT",
+        "tags": [
+            "End-to-End"
+        ]
     }
 }

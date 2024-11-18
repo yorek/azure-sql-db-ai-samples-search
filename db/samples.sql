@@ -337,6 +337,42 @@ exec dbo.add_sample '
 }
 ';
 
+exec dbo.add_sample '
+{
+    "name": "Azure SQL DB Samples AI Search",
+    "description": "This website, where you can search for AI samples using Azure SQL DB",
+    "url": "https://github.com/yorek/azure-sql-db-ai-samples-search",
+    "notes": "This website, a simple React application that uses Azure SQL DB to store the samples and Azure Open AI to provide the search capabilities. Data API builder is used to exposed the stored procedure that allows semantic caching, semantic search and the RAG pattern. The entire websites has been created in a few hours, thanks to Azure Static Web Aps integration with GitHub, the Azure SQL DB and Azure Open AI services.",
+    "details": {
+        "author": "Davide Mauri",
+        "languages": [
+            "T-SQL",
+            "Javascript"
+        ],
+        "frameworks": [
+            "React"
+        ],
+        "services": [
+            "Azure SQL",
+            "Azure Open AI",
+            "Azure Static Web Apps"
+        ],
+        "middleware": [
+            "Data API builder"
+        ],
+        "patterns": [
+            "RAG",
+            "Semantic Caching"
+        ],
+        "license": "MIT",
+        "tags": [
+            "End-to-End"
+        ]
+    }
+}
+';
+
+
 select * from dbo.samples 
 --where [url] like '%kmeans%'
 
