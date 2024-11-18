@@ -41,11 +41,9 @@
 .searchBox input {
   padding: 10px;
   height: 40px;
-  font-size: medium;
 }
 
 .searchButton {
-  font-size: medium !important;
   margin-top: 5px;  
   background-color: #0078D4 !important;
   color: white; /* Ensure text is visible on the blue background */
