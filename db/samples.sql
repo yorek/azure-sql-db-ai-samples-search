@@ -366,11 +366,13 @@ exec dbo.add_sample '
         ],
         "license": "MIT",
         "tags": [
-            "End-to-End"
+            "End-to-End",
+            "Full Stack"
         ]
     }
 }
 ';
+
 
 
 select * from dbo.samples 
