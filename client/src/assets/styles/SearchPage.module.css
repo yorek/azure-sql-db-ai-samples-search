@@ -51,10 +51,11 @@
   color: white; /* Ensure text is visible on the blue background */
 }
 
-.teachingPopover {  
+.buttonsArea {  
   display: flex;
   justify-content: center;
   margin-bottom: 20px;
+  gap: 10px;
 }
 
 .popOverSurface {

@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import {
-  Input,
   Button,
   Spinner,
   Card,
@@ -22,6 +21,7 @@ import { Search24Regular } from '@fluentui/react-icons';
 import ReactMarkdown from 'react-markdown';
 import Cookies from 'js-cookie';
 import styles from './assets/styles/SearchPage.module.css'; // Import the CSS module
+
 
 const SearchPage = () => {
   const [searchCompleted, setSearchCompleted] = useState(false);
@@ -101,6 +101,10 @@ const SearchPage = () => {
     handleSearch();
   }
 
+  const handleGoToGithub = (even) => {
+    window.open("https://github.com/yorek/azure-sql-db-ai-samples-search", '_blank', 'noopener,noreferrer');
+  }
+
   return (
     <div className={styles.appContainer}>
       <div className={styles.header}>
@@ -113,7 +117,7 @@ const SearchPage = () => {
         <div className={styles.sampleCount}>
           {isSampleCountLoading ? 'Finding how many samples are available...' : `There are ${sampleCount} samples in the database.`}
         </div>
-        <div className={styles.teachingPopover}>
+        <div className={styles.buttonsArea}>
           <TeachingPopover defaultOpen={popOverOpen}>
             <TeachingPopoverTrigger>
               <Button>How does it work?</Button>
@@ -135,6 +139,8 @@ const SearchPage = () => {
               <TeachingPopoverFooter primary="Got it" />
             </TeachingPopoverSurface>
           </TeachingPopover>
+        
+          <Button onClick={handleGoToGithub} target="_blank">Go to GitHub Repo</Button>
         </div>
       </div>
       <div className={styles.searchWrapper}>
