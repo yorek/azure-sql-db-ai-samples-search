@@ -94,10 +94,14 @@ The easiest way to deploy the full-stack application is to fork the repository a
 Make sure you give the user thay you are using to connect to the database the permission to run the needed stored procedures:
 
 ```sql
-GRANT EXECUTE ON SCHEMA::[web] TO [your user]
+GRANT EXECUTE ON SCHEMA::[web] TO [<your user>]
+GRANT EXECUTE ANY EXTERNAL ENDPOINT TO [<your user>];
+GRANT REFERENCES ON DATABASE SCOPED CREDENTIAL::[<openai_url>] TO [sql-aisearch];
 ```
 
-and that's it! You can now access the full-stack application deployed in Azure Static Web Apps.
+replace `<your user>` with the user you are using to connect to the database and `<openai_url>` with the name of the database scoped credential you are using to connect to Azure OpenAI, which is the same as the value you used for the `OPENAI_URL` variable in the `.env` file.
+
+That's it! You can now access the full-stack application deployed in Azure Static Web Apps.
 
 ## Sample Data
 
