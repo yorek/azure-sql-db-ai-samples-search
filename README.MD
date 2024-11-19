@@ -97,3 +97,8 @@ Make sure you give the user thay you are using to connect to the database the pe
 GRANT EXECUTE ON SCHEMA::[web] TO [your user]
 ```
 
+and that's it! You can now access the full-stack application deployed in Azure Static Web Apps.
+
+## Sample Data
+
+You can add some data do play with using the `sample-data.sql` file in the `db/sample` folder.
