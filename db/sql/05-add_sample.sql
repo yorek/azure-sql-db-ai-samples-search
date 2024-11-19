@@ -1,7 +1,9 @@
-create or alter procedure dbo.add_sample
-@payload json
+create or alter procedure [dbo].[add_sample]
+@payload nvarchar(max)
 as
 set nocount on;
+set xact_abort on;
+begin tran;
 
 declare @dummy nvarchar(max) = cast(@payload as nvarchar(max)); -- Need to cast to nvarchar(max) to avoid error during JSON preview
 
@@ -22,11 +24,15 @@ merge into dbo.samples as t
 using #samples as s
 on t.[url] = s.[url]
 when not matched then
-    insert ([name], [description], [notes], [details], [url]) values (s.[name], s.[description], s.[notes], s.[details], s.[url])
+    insert ([name], [description], [notes], [details], [url], [created_on], [updated_on]) values (s.[name], s.[description], s.[notes], s.[details], s.[url], sysdatetime(), sysdatetime())
 when matched then
-    update set [description] = s.[description], [notes] = s.[notes], [details] = s.[details], [url] = s.[url];
+    update set [name] = s.[name], [description] = s.[description], [notes] = s.[notes], [details] = s.[details], [url] = s.[url], [updated_on] = sysdatetime();
 
 declare @sampleId int = (select [id] from dbo.samples where [url] = (select [url] from #samples));
+
+delete from dbo.samples_details_embeddings where [id] = @sampleId
+delete from dbo.samples_notes_embeddings where [id] = @sampleId
+delete from dbo.samples_embeddings where [id] = @sampleId
 
 /*
     Get the embeddings for the sample name and description
@@ -39,13 +45,8 @@ select @name = [name], @description = [description] from #samples;
 declare @sample nvarchar(max) = @name + ': ' + @description;
 exec web.get_embedding @sample, @embedding output;
 
-merge into dbo.samples_embeddings as t
-using (select @sampleId as id, @embedding as [embedding]) as s
-on t.id = s.id
-when not matched then
-    insert ([embedding]) values (s.[embedding])
-when matched then
-    update set [embedding] = s.[embedding];
+insert into dbo.samples_embeddings (id, embedding, updated_on)
+select @sampleId as id, @embedding as [embedding], sysdatetime() as [updated_on];
 
 /*
     Get the embeddings for the sample notes 
@@ -58,13 +59,8 @@ if (exists(select * from #samples where [notes] is not null)) begin
     
     exec web.get_embedding @notes, @notes_embedding output;
 
-    merge into dbo.samples_notes_embeddings as t
-    using (select @sampleId as id, @notes_embedding as [embedding]) as s
-    on t.id = s.id
-    when not matched then
-        insert ([embedding]) values (s.[embedding])
-    when matched then
-        update set [embedding] = s.[embedding];
+    insert into dbo.samples_notes_embeddings (id, embedding, updated_on)
+    select @sampleId as id, @notes_embedding as [embedding], sysdatetime() as [updated_on]
 end
 
 /*
@@ -78,11 +74,11 @@ if (exists(select * from #samples where [details] is not null)) begin
     
     exec web.get_embedding @details, @details_embedding output;
 
-    merge into dbo.samples_details_embeddings as t
-    using (select @sampleId as id, @details_embedding as [embedding]) as s
-    on t.id = s.id
-    when not matched then
-        insert ([embedding]) values (s.[embedding])
-    when matched then
-        update set [embedding] = s.[embedding];
+    insert into dbo.samples_details_embeddings (id, embedding, updated_on) 
+    select @sampleId as id, @details_embedding as [embedding], sysdatetime() as [updated_on]
 end
+
+select @sampleId as sample_id;
+
+commit tran;
+GO

@@ -3,7 +3,6 @@ drop table if exists dbo.samples_embeddings;
 drop table if exists dbo.samples_notes_embeddings;
 drop table if exists dbo.samples_details_embeddings;
 drop table if exists dbo.samples;
-go
 
 create table dbo.samples
 (
@@ -12,14 +11,17 @@ create table dbo.samples
     [description] nvarchar(max) not null,
     [notes] nvarchar(max) null,
     [details] json null,
-    [url] nvarchar(1000) not null
+    [url] nvarchar(1000) not null,
+    [created_on] datetime2(0) not null,
+    [updated_on] datetime2(0) not null
 )
 go
 
 create table dbo.samples_embeddings
 (
-    [id] int identity primary key,    
-    [embedding] vector(1536) not null
+    [id] int,    
+    [embedding] vector(1536) not null,
+    [updated_on] datetime2(0) not null
 )
 go
 alter table dbo.samples_embeddings
@@ -28,8 +30,9 @@ go
 
 create table dbo.samples_notes_embeddings
 (
-    [id] int identity primary key,    
-    [embedding] vector(1536) not null
+    [id] int,    
+    [embedding] vector(1536) not null,
+    [updated_on] datetime2(0) not null
 )
 go
 alter table dbo.samples_notes_embeddings
@@ -38,8 +41,9 @@ go
 
 create table dbo.samples_details_embeddings
 (
-    [id] int identity primary key,    
-    [embedding] vector(1536) not null
+    [id] int,    
+    [embedding] vector(1536) not null,
+    [updated_on] datetime2(0) not null
 )
 go
 alter table dbo.samples_details_embeddings
