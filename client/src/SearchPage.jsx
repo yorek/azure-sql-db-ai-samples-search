@@ -190,10 +190,14 @@ const SearchPage = () => {
           results.map((result, index) => {
             let responseStatus;
             if (result.error) {
-              console.log(JSON.parse(result.response));
-              responseStatus = JSON.parse(result.response).response.status.http;
-              if (responseStatus.code === 429) {
-                responseStatus.description = "Too many requests. Please try again later.";
+              console.log(error);
+              if (result.response) {                
+                responseStatus = JSON.parse(result.response).response.status.http;
+                if (responseStatus.code === 429) {
+                  responseStatus.description = "Too many requests. Please try again later.";
+                }
+              } else {
+                responseStatus = { code: error.error_code, description: error_message };
               }
             }
             return (
