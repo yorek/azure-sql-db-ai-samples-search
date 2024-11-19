@@ -3,6 +3,7 @@ drop table if exists dbo.samples_embeddings;
 drop table if exists dbo.samples_notes_embeddings;
 drop table if exists dbo.samples_details_embeddings;
 drop table if exists dbo.samples;
+go
 
 create table dbo.samples
 (
