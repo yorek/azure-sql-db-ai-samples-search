@@ -14,13 +14,13 @@ begin try
         @response = @response output;
 end try
 begin catch
-    select 'REST' as [error], ERROR_NUMBER() as [error_code], ERROR_MESSAGE() as [error_message]
-    return
+    select 'Embedding:REST' as [error], ERROR_NUMBER() as [error_code], ERROR_MESSAGE() as [error_message]
+    return -1
 end catch
 
 if @retval != 0 begin
-    select 'OpenAI' as [error], @retval as [error_code], @response as [response]
-    return
+    select 'Embedding:OpenAI' as [error], @retval as [error_code], @response as [response]
+    return @retval
 end
 
 declare @re nvarchar(max) = json_query(@response, '$.result.data[0].embedding')
