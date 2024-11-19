@@ -3,9 +3,11 @@ as
 declare @cached_response nvarchar(max)
 declare @retval int, @response nvarchar(max);
 
+/* Get the embedding for the requested text */
 declare @qv vector(1536)
 exec web.get_embedding @text, @qv output
 
+/* Check in the semantic cache to see if a similar question has been already answered */
 delete from [dbo].[semantic_cache] where query_date < dateadd(hour, -1, sysdatetime())
 select top(1) *, vector_distance('cosine', @qv, embedding) as d 
 into #c 
@@ -18,6 +20,7 @@ begin
 end 
 else 
 begin
+    /* Find the samples most similar to the requested topic */
     drop table if exists #s;
     select top(@k) 
         s.id, [name], [description], [url], [notes], [details],
@@ -40,16 +43,18 @@ begin
         distance_score asc
     --select * from #s
 
+    /* Prepare the JSON string with relevant results to be sent to LLM for evaluation */
     declare @s nvarchar(max) = (
         select 
             [id], [name], [description], [notes], [details], 
             cast((1-distance_score)*100 as int) as similiarity_score
         from #s 
-        where distance_score < 0.75
+        where distance_score < 0.85
         order by distance_score for json path
     )
     --select @s
 
+    /* Create the prompt for the LLM */
     declare @p nvarchar(max) = 
     json_object(
         'messages': json_array(
@@ -127,29 +132,35 @@ begin
         }        
     }'
 
-
     set @p = json_modify(@p, '$.response_format', json_query(@js))
     ---select @p
     
-    exec @retval = sp_invoke_external_rest_endpoint
-        @url = 'https://dm-open-ai-3.openai.azure.com/openai/deployments/gpt-4o/chat/completions?api-version=2024-08-01-preview',
-        @headers = '{"Content-Type":"application/json"}',
-        @method = 'POST',
-        @credential = [https://dm-open-ai-3.openai.azure.com],
-        @timeout = 120,
-        @payload = @p,
-        @response = @response output;
+    /* Send request to LLM */
+    begin try
+        exec @retval = sp_invoke_external_rest_endpoint
+            @url = 'https://dm-open-ai-3.openai.azure.com/openai/deployments/$OPENAI_CHAT_DEPLOYMENT_NAME$/chat/completions?api-version=2024-08-01-preview',
+            @headers = '{"Content-Type":"application/json"}',
+            @method = 'POST',
+            @credential = [https://dm-open-ai-3.openai.azure.com],
+            @timeout = 120,
+            @payload = @p,
+            @response = @response output;
+    end try
+    begin catch
+        select 'REST' as [error], ERROR_NUMBER() as [error_code], ERROR_MESSAGE() as [error_message]
+        return
+    end catch
     --select @response
 
     if @retval != 0 begin
-        select 'Error calling the OpenAI API' as [error], @retval as [error_code], @response as [response]
+        select 'OpenAI' as [error], @retval as [error_code], @response as [response]
         return
     end
 
     declare @refusal nvarchar(max) = (select coalesce(json_value(@response, '$.result.choices[0].refusal'), ''));
 
     if @refusal != '' begin
-        select 'Error while generating the answer' as [error], @refusal as [refusal], @response as [response]
+        select 'OpenAI/Refusal' as [error], @refusal as [refusal], @response as [response]
         return
     end
 
