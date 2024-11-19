@@ -32,7 +32,7 @@
   "entities": {
     "FindSamples": {
       "source": {
-        "object": "dbo.find_samples",
+        "object": "web.find_samples",
         "type": "stored-procedure",
         "parameters": {
           "text": "",
@@ -67,7 +67,7 @@
     },
     "SamplesCount": {
       "source": {
-        "object": "dbo.get_total_sample_count",
+        "object": "web.get_total_sample_count",
         "type": "stored-procedure"
       },
       "graphql": {

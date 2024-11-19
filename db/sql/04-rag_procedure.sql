@@ -1,4 +1,4 @@
-create or alter procedure [dbo].[find_samples] @text nvarchar(max), @k int = 50
+create or alter procedure [web].[find_samples] @text nvarchar(max), @k int = 50
 as
 declare @cached_response nvarchar(max)
 declare @retval int, @response nvarchar(max);

@@ -1,4 +1,4 @@
-create or alter procedure dbo.get_total_sample_count
+create or alter procedure [web].[get_total_sample_count]
 as
 select 
     count(*) as total_sample_count
