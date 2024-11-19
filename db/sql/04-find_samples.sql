@@ -5,7 +5,8 @@ declare @retval int, @response nvarchar(max);
 
 /* Get the embedding for the requested text */
 declare @qv vector(1536)
-exec web.get_embedding @text, @qv output
+exec @retval = web.get_embedding @text, @qv output
+if (@retval != 0) return;
 
 /* Check in the semantic cache to see if a similar question has been already answered */
 delete from [dbo].[semantic_cache] where query_date < dateadd(hour, -1, sysdatetime())

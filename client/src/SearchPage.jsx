@@ -170,7 +170,7 @@ const SearchPage = () => {
       )}
 
       {error && (
-        <Text block style={{ color: 'red', marginBottom: '20px' }}>
+        <Text block style={{ textAlign: 'center', color: 'red', marginBottom: '20px' }}>
           {error}
         </Text>
       )}
@@ -200,7 +200,7 @@ const SearchPage = () => {
               <Card key={index} className={styles.resultCard}>
                 {result.error ? (
                   <div className={styles.error}>
-                    {result.error}<br />
+                    {result.error} error<br />
                     {responseStatus.code} - {responseStatus.description}
                   </div>
                 ) : (
