@@ -16,6 +16,8 @@ create table dbo.samples
     [updated_on] datetime2(0) not null
 )
 go
+alter table dbo.samples
+add constraint uq__samples__url unique([url])
 
 create table dbo.samples_embeddings
 (
