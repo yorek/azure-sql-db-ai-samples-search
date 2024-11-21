@@ -57,10 +57,8 @@ const SearchPage = () => {
 
   //console.log('PopOverOpen:', Cookies.get('popOverOpen'));
   if (!Cookies.get('popOverOpen')) 
-  {
     setPopOverOpen(true);
-    Cookies.set('popOverOpen', 'true');
-  } 
+  Cookies.set('popOverOpen', 'true', { expires: 30 });
   
   const handleSearch = async (searchQuery) => {
     if ((!query) && (!searchQuery)) return;
