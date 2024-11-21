@@ -376,7 +376,19 @@ exec dbo.add_sample '
 }
 ';
 
-
+exec dbo.add_sample '
+{
+    "name": "Live360 2024 Orlando Demos", 
+    "description": "Samples and demos used in the Live360 2024 Orlando conference for the following sessions", 
+    "url": "https://github.com/yorek/live360-2024-orlando",
+    "details": {
+        "author": "Davide Mauri",
+        "languages": ["T-SQL"],
+        "license": "MIT",
+        "services": ["Azure SQL"]
+    }
+}
+';
 select * from dbo.samples 
 --where [url] like '%kmeans%'
 
