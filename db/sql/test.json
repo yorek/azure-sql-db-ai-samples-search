@@ -1,32 +1,26 @@
 {
-    "name": "Azure SQL DB Samples AI Search",
-    "description": "This website, where you can search for AI samples using Azure SQL DB",
-    "url": "https://github.com/yorek/azure-sql-db-ai-samples-search",
-    "notes": "This website, a simple React application that uses Azure SQL DB to store the samples and Azure Open AI to provide the search capabilities. Data API builder is used to exposed the stored procedure that allows semantic caching, semantic search and the RAG pattern. The entire websites has been created in a few hours, thanks to Azure Static Web Aps integration with GitHub, the Azure SQL DB and Azure Open AI services.",
+    "name": "LangChain samples with langchain_sqlserver",
+    "description": "Samples using LangChain library with Azure SQL and SQL Server to build AI solutions on your own data",
+    "notes": "The tutorials from LangChain, but written using the langchain_sqlserver library, that allows to use LangChain with Azure SQL and SQL Server. 
+    The samples covers the following topics:
+        - Build a semantic search engine: Build a semantic search engine over a PDF with document loaders, embedding models, and vector stores.
+        - Build a Retrieval Augmented Generation (RAG) App: Part 1: Introduces RAG and walks through a minimal implementation.
+        - Build a Retrieval Augmented Generation (RAG) App: Part 2: Extends the implementation to accommodate conversation-style interactions and multi-step retrieval processes.
+    ",
     "details": {
         "author": "Davide Mauri",
         "languages": [
             "T-SQL",
-            "Javascript"
-        ],
-        "frameworks": [
-            "React"
-        ],
-        "services": [
-            "Azure SQL",
-            "Azure Open AI",
-            "Azure Static Web Apps"
-        ],
-        "middleware": [
-            "Data API builder"
-        ],
-        "patterns": [
-            "RAG",
-            "Semantic Caching",
+            "Python"
         ],
         "license": "MIT",
-        "tags": [
-            "End-to-End"
+        "services": [
+            "Azure SQL"
+        ],
+        "frameworks": [
+            "LangChain",
+            "LangGraph"
         ]
-    }
+    },
+    "url": "https://github.com/Azure-Samples/azure-sql-langchain"
 }

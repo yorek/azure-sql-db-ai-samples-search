@@ -395,6 +395,30 @@ exec dbo.add_sample '{
     },
     "url": "https://github.com/yorek/live360-2024-orlando"
 }';
+
+
+exec dbo.add_sample '{
+    "name": "LangChain samples with langchain_sqlserver",
+    "description": "Samples using LangChain library with Azure SQL and SQL Server to build AI solutions on your own data",
+    "notes": "The tutorials from LangChain, but written using the langchain_sqlserver library, that allows to use LangChain with Azure SQL and SQL Server. The samples covers the following topics: - Build a semantic search engine: Build a semantic search engine over a PDF with document loaders, embedding models, and vector stores. - Build a Retrieval Augmented Generation (RAG) App: Part 1: Introduces RAG and walks through a minimal implementation. - Build a Retrieval Augmented Generation (RAG) App: Part 2: Extends the implementation to accommodate conversation-style interactions and multi-step retrieval processes. ",
+    "details": {
+        "author": "Davide Mauri",
+        "languages": [
+            "T-SQL",
+            "Python"
+        ],
+        "license": "MIT",
+        "services": [
+            "Azure SQL"
+        ],
+        "frameworks": [
+            "LangChain",
+            "LangGraph"
+        ]
+    },
+    "url": "https://github.com/Azure-Samples/azure-sql-langchain"
+}';
+
 select * from dbo.samples 
 --where [url] like '%kmeans%'
 
