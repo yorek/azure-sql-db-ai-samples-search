@@ -376,19 +376,23 @@ exec dbo.add_sample '
 }
 ';
 
-exec dbo.add_sample '
-{
-    "name": "Live360 2024 Orlando Demos", 
-    "description": "Samples and demos used in the Live360 2024 Orlando conference for the following sessions", 
-    "url": "https://github.com/yorek/live360-2024-orlando",
+exec dbo.add_sample '{
+    "name": "Live360 2024 Orlando Demos",
+    "description": "Samples and demos used in the Live360 2024 Orlando conference for the following sessions",
+    "notes": "The samples covers the two sessions: \"DPW07 Azure SQL loves Open AI\" and \"How to Build Secure and Scalable Applications with Microsoft SQL Using the Power of AI\" and also the workshop \"The SQL AI Workshop\". The samples shows how to build chatbots and RAG applications and also NL2SQL solutions. They also cover how to connect to Azure SQL database using a passwordless approach for maximum security and easy of use, using Entra ID for authentication. Row-Level Security is also shown in the example.",
     "details": {
         "author": "Davide Mauri",
-        "languages": ["T-SQL"],
+        "languages": [
+            "T-SQL"
+        ],
         "license": "MIT",
-        "services": ["Azure SQL"]
-    }
-}
-';
+        "services": [
+            "Azure SQL",            
+            "Azure Functions"
+        ]
+    },
+    "url": "https://github.com/yorek/live360-2024-orlando"
+}';
 select * from dbo.samples 
 --where [url] like '%kmeans%'
 
