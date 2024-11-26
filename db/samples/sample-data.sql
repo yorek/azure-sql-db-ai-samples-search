@@ -176,7 +176,8 @@ exec dbo.add_sample '
     "details": {
         "author": "Davide Mauri",
         "languages": ["T-SQL"],
-        "services": ["Azure SQL", "Azure Functions", "Azure Static Web Apps", "Data API Builder"],
+        "services": ["Azure SQL", "Azure Functions", "Azure Static Web Apps"],
+        "tools": ["Data API Builder"],
         "license": "MIT",
         "tags": ["End-to-End"]
     }
@@ -187,13 +188,14 @@ exec dbo.add_sample '
 {
     "name": "Session Conference Assistant", 
     "description": "Build a Retrieval Augmented Generation solution using OpenAI, Azure Functions, Azure Static Web Apps, Azure SQL DB, Data API builder and Text Embeddings",
-    "notes": "This sample demonstrates how to build a session assistant using Jamstack, Retrieval Augmented Generation (RAG) and Event-Driven architecture, using Azure SQL DB to store and search vectors embeddings generated using OpenAI. The solution is built using Azure Static Web Apps, Azure Functions, Azure SQL Database, and Azure OpenAI. A fully working, production ready, version of this sample, that has been used at VS Live conferences, is available here: https://ai.microsofthq.vslive.com/",
+    "notes": "This sample demonstrates how to build a session assistant using Jamstack, Retrieval Augmented Generation (RAG) and Event-Driven architecture, using Azure SQL DB to store and search vectors embeddings generated using OpenAI. The solution is built using Azure Static Web Apps, Azure Functions, Azure SQL Database, and Azure OpenAI. A fully working, production ready, version of this sample, that has been used at VS Live conferences, is available here: https://ai.microsofthq.vslive.com/. Deployment is done using AZD, Azure Developer CLI, so this sample is also a good reference for learning how to deploy Azure Static Web Apps plus Data API builder using AZD.",
     "url": "https://github.com/azure-samples/azure-sql-db-session-recommender-v2",
     "details": {
         "author": "Davide Mauri",
         "languages": ["T-SQL"],
-        "services": ["Azure SQL", "Azure Functions", "Azure Static Web Apps", "Data API Builder"],
+        "services": ["Azure SQL", "Azure Functions", "Azure Static Web Apps"],        
         "license": "MIT",
+        "tools": ["AZD", "Data API Builder"],
         "tags": ["End-to-End"],
         "related-links": {
             "live-demo": "https://ai.microsofthq.vslive.com/"
