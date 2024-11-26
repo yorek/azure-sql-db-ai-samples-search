@@ -66,7 +66,8 @@ begin
                     Samples are provided in an assitant message using a JSON Array with the following format: [{id, name, description, note, details, similiarity_score}]. 
                     Put in sample_summary output property a markdown short summary of the sample using the provided description, notes, and details. 
                     Use only the provided samples to help you answer the user''s question.
-                    If there are related links or repos in the details, include them in the short summary.                
+                    Only return samples that are for sure related to the user''s question.
+                    If there are related links or repos in the details, include them in the short summary. Include links only if they are related to the sample and if they are available in the note or details of that sample.               
                     If the question cannot be answered by the provided samples, you must say that you don''t know.
                     If asked question is about topics you don''t know, answer that you don''t know.
                 '
