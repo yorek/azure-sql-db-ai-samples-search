@@ -9,6 +9,7 @@ import {
   Text,
   Link,
   SearchBox,
+  Tag,
   TeachingPopover,
   TeachingPopoverBody,
   TeachingPopoverHeader,
@@ -95,16 +96,44 @@ const SearchPage = () => {
     }
   };
 
-  const handleSearchClick = (event) => {
+  const handleSearchClick = () => {
+    console.log('Search button clicked');
     handleSearch();
   }
 
-  const handleGoToGithub = (even) => {
+  const handleOpenLink = (event, result) => {
+    window.open(result.url, '_blank', 'noopener,noreferrer');
+  }
+
+  const handleGoToGithub = () => {
     window.open("https://github.com/yorek/azure-sql-db-ai-samples-search", '_blank', 'noopener,noreferrer');
   }
 
+  const getResponseStatusFromResult = (result) => {
+    let responseStatus = { code: 0, description: '' };
+    if (result.error) {
+      console.log(error);
+      if (result.response) {                
+        responseStatus = JSON.parse(result.response).response.status.http;
+        if (responseStatus.code === 429) {
+          responseStatus.description = "Too many requests. Please try again later.";
+        }
+      } else {
+        responseStatus = { code: error.error_code, description: error_message };
+      }
+    }
+    return responseStatus;
+  }
+
+  let pageStatus = "first_load";
+  if (results.length === 0 && !loading && searchCompleted) pageStatus = "no_results";
+  if (results.length > 0) pageStatus = "results_found";
+  //console.log('Page Status:', pageStatus);
+  //console.log('Search Completed:', searchCompleted);
+
   return (
     <div className={styles.appContainer}>
+
       <div className={styles.header}>
         <div className={styles.title}>
           Azure SQL DB Samples AI Search 💡🔍
@@ -141,6 +170,7 @@ const SearchPage = () => {
           <Button onClick={handleGoToGithub} target="_blank">Go to GitHub Repo</Button>
         </div>
       </div>
+
       <div className={styles.searchWrapper}>
         <SearchBox
           placeholder="Type your query in natural language. The AI will do the rest..."
@@ -173,31 +203,27 @@ const SearchPage = () => {
         </Text>
       )}
 
+      {(pageStatus === "first_load") && 
+        (
+          <Text block style={{ textAlign: 'center' }}>
+            Start searching to get results!
+          </Text>
+        )
+      }
+
+      {(pageStatus === "no_results") && 
+        (
+          <Text block style={{ textAlign: 'center' }}>
+            No results found. Please try another query.
+          </Text>
+        )
+      }
+
       <div className={styles.results}>
-        {results.length === 0 && !loading ? (
-          query && searchCompleted == true ? (
-            <Text block style={{ textAlign: 'center' }}>
-              No results found. Try a different query!
-            </Text>
-          ) : (
-            <Text block style={{ textAlign: 'center' }}>
-              Start searching to get results!
-            </Text>
-          )
-        ) : (
+        {
           results.map((result, index) => {
-            let responseStatus;
-            if (result.error) {
-              console.log(error);
-              if (result.response) {                
-                responseStatus = JSON.parse(result.response).response.status.http;
-                if (responseStatus.code === 429) {
-                  responseStatus.description = "Too many requests. Please try again later.";
-                }
-              } else {
-                responseStatus = { code: error.error_code, description: error_message };
-              }
-            }
+            let responseStatus=getResponseStatusFromResult(result);
+            
             return (
               <Card key={index} className={styles.resultCard}>
                 {result.error ? (
@@ -226,17 +252,15 @@ const SearchPage = () => {
                         </div>
                       }
                     />
-                    <CardFooter>
-                      <Link href={result.url} target="_blank" rel="noopener noreferrer">
-                        {result.url}
-                      </Link>
+                    <CardFooter className={styles.resultCardFooter}>                   
+                      <Button onClick={(event) => handleOpenLink(event, result)}>Open Link</Button>
                     </CardFooter>
                   </>
                 )}
               </Card>
             );
           })
-        )}
+        }
       </div>
     </div>
   );
