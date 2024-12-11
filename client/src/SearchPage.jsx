@@ -70,7 +70,7 @@ const SearchPage = () => {
     setError('');
     setResults([]);
     setSearchCompleted(false);
-    console.log('searchQuery:', searchQuery);
+    //console.log('searchQuery:', searchQuery);
     try {
       const response = await fetch('./data-api/rest/findSamples', {
         method: 'POST',
@@ -126,9 +126,12 @@ const SearchPage = () => {
   }
 
   let pageStatus = "first_load";
+  if (results.length === 0 && loading == true) pageStatus = "searching";
   if (results.length === 0 && !loading && searchCompleted) pageStatus = "no_results";
   if (results.length > 0) pageStatus = "results_found";
-  //console.log('Page Status:', pageStatus);
+  if (error) pageStatus = "error";
+  
+  console.log('Page Status:', pageStatus);
   //console.log('Search Completed:', searchCompleted);
 
   return (
@@ -191,19 +194,19 @@ const SearchPage = () => {
         </Button>
       </div>
 
-      {loading && (
+      {(pageStatus == "searching") && (
         <div style={{ textAlign: 'center', margin: '20px 0' }}>
           <Spinner label="Searching..." />
         </div>
       )}
 
-      {error && (
+      {(pageStatus == "error") && (
         <Text block style={{ textAlign: 'center', color: 'red', marginBottom: '20px' }}>
           {error}
         </Text>
       )}
 
-      {(pageStatus === "first_load") && 
+      {(pageStatus === "first_load") &&
         (
           <Text block style={{ textAlign: 'center' }}>
             Start searching to get results!
