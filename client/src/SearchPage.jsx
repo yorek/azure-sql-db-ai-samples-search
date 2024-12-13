@@ -145,7 +145,7 @@ const SearchPage = () => {
           Find samples using AI-powered search capabilities 🚀
         </div>
         <div className={styles.sampleCount}>
-          {isSampleCountLoading ? 'Finding how many samples are available...' : `There are ${sampleCount} samples in the database.`}
+          {isSampleCountLoading ? 'Finding how many samples are available...' : (<span>There are <Link href="https://aka.ms/sqlai-samples" target="_blank">{sampleCount} samples</Link> in the database.</span>)}
         </div>
         <div className={styles.buttonsArea}>
           <TeachingPopover defaultOpen={popOverOpen}>
