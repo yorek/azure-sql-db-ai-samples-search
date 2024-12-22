@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams } from 'react-router';
 import { Button, Textarea, Text } from '@fluentui/react-components';
 import styles from './assets/styles/EditSessionPage.module.css';
 
