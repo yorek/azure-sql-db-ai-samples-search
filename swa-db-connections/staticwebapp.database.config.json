@@ -14,7 +14,7 @@
       "request-body-strict": true
     },
     "graphql": {
-      "enabled": true,
+      "enabled": false,
       "path": "/graphql",
       "allow-introspection": true
     },
@@ -30,6 +30,27 @@
     }
   },
   "entities": {
+    "Samples": {
+      "source": {
+        "object": "dbo.samples",
+        "type": "table"
+      },
+      "rest": {
+        "enabled": true,
+        "path": "/samples",
+        "methods": [ "get" ]
+      },
+      "permissions": [
+        {
+          "role": "anonymous",
+          "actions": [
+            {
+              "action": "read"
+            }
+          ]
+        }
+      ]
+    },
     "FindSamples": {
       "source": {
         "object": "web.find_samples",

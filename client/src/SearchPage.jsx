@@ -29,7 +29,7 @@ const SearchPage = () => {
   const [query, setQuery] = useState('');
   const [results, setResults] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState('');
+  const [error, setError] = useState([]);
   const [sampleCount, setSampleCount] = useState(0);
   const [isSampleCountLoading, setIsSampleCountLoading] = useState(true); // For sample count loading
   const location = useLocation();
@@ -60,14 +60,46 @@ const SearchPage = () => {
   if (!Cookies.get('popOverOpen')) 
     setPopOverOpen(true);
   Cookies.set('popOverOpen', 'true', { expires: 30 });
+
+  const getLatestSamples = async () => {
+    const response = await fetch('./data-api/rest/samples?$first=6');
+    const data = await response.json();     
+    setResults(data.value);
+  }
   
+  const getResponseStatusFromResult = (result) => {
+    let responseStatus = { code: 0, description: '' };
+
+    console.log("Result", result);
+
+    let payload = {};
+    if (result.value) payload = result.value[0];
+    if (result.error) payload = result;
+    console.log("Payload:", payload);
+
+    if (payload.error) {
+      if (payload.response) {                
+        responseStatus = JSON.parse(payload.response).response.status.http;
+        if (responseStatus.code === 429) {
+          responseStatus.description = "Too many requests. Please try again later.";
+        }
+      } 
+      if (payload.error) {
+        responseStatus = { code: payload.error.code, description: payload.error.message };
+      }
+    }
+    
+    console.log("ResponseStatus", responseStatus);
+    return responseStatus;
+  }
+
   const handleSearch = async (searchQuery) => {
     if ((!query) && (!searchQuery)) return;
     if (!searchQuery) {
       searchQuery = query;
     }
     setLoading(true);
-    setError('');
+    setError([]);
     setResults([]);
     setSearchCompleted(false);
     //console.log('searchQuery:', searchQuery);
@@ -79,11 +111,16 @@ const SearchPage = () => {
         },
         body: JSON.stringify({ text: searchQuery })
       });
-      const data = await response.json();
-      //console.log(data);      
-      setResults(data.value);
+      const data = await response.json();   
+      let responseStatus=getResponseStatusFromResult(data);
+      if (responseStatus.code != 0) {
+        setError([responseStatus]);
+      } else {
+        setResults(data.value);
+      }
     } catch (error) {
-      setError('Failed to fetch results. Please try again.');
+      console.log(error);
+      setError([{ code: error.code, description: error.message }]);
     } finally {
       setLoading(false);
       setSearchCompleted(true);
@@ -109,34 +146,18 @@ const SearchPage = () => {
     window.open("https://github.com/yorek/azure-sql-db-ai-samples-search", '_blank', 'noopener,noreferrer');
   }
 
-  const getResponseStatusFromResult = (result) => {
-    let responseStatus = { code: 0, description: '' };
-    if (result.error) {
-      console.log(error);
-      if (result.response) {                
-        responseStatus = JSON.parse(result.response).response.status.http;
-        if (responseStatus.code === 429) {
-          responseStatus.description = "Too many requests. Please try again later.";
-        }
-      } else {
-        responseStatus = { code: error.error_code, description: error_message };
-      }
-    }
-    return responseStatus;
-  }
-
   let pageStatus = "first_load";
   if (results.length === 0 && loading == true) pageStatus = "searching";
   if (results.length === 0 && !loading && searchCompleted) pageStatus = "no_results";
-  if (results.length > 0) pageStatus = "results_found";
-  if (error) pageStatus = "error";
+  if (results.length > 0 && !loading && searchCompleted) pageStatus = "results_found";
+  if (results.length > 0 && pageStatus != "first_load") pageStatus = "latest_samples";
+  if (error.length > 0) pageStatus = "error";
   
   console.log('Page Status:', pageStatus);
   //console.log('Search Completed:', searchCompleted);
 
   return (
-    <div className={styles.appContainer}>
-
+    <>
       <div className={styles.header}>
         <div className={styles.title}>
           Azure SQL DB Samples AI Search 💡🔍
@@ -202,7 +223,7 @@ const SearchPage = () => {
 
       {(pageStatus == "error") && (
         <Text block style={{ textAlign: 'center', color: 'red', marginBottom: '20px' }}>
-          {error}
+          {error[0].code} - {error[0].description} 
         </Text>
       )}
 
@@ -222,20 +243,13 @@ const SearchPage = () => {
         )
       }
 
+      {(pageStatus === "results_found") && 
+      (
       <div className={styles.results}>
         {
           results.map((result, index) => {
-            let responseStatus=getResponseStatusFromResult(result);
-            
             return (
               <Card key={index} className={styles.resultCard}>
-                {result.error ? (
-                  <div className={styles.error}>
-                    {result.error} error<br />
-                    {responseStatus.code} - {responseStatus.description}
-                  </div>
-                ) : (
-                  <>
                     <CardHeader
                       header={
                         <div className={styles.resultCardHeader}>
@@ -257,15 +271,14 @@ const SearchPage = () => {
                     />
                     <CardFooter className={styles.resultCardFooter}>                   
                       <Button onClick={(event) => handleOpenLink(event, result)}>Open Link</Button>
-                    </CardFooter>
-                  </>
-                )}
+                    </CardFooter>                  
               </Card>
             );
           })
         }
       </div>
-    </div>
+      )}
+    </>
   );
 };
 
