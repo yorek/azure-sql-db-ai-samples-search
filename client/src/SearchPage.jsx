@@ -23,6 +23,7 @@ import ReactMarkdown from 'react-markdown';
 import Cookies from 'js-cookie';
 import styles from './assets/styles/SearchPage.module.css'; // Import the CSS module
 
+let pageStatus = "first_load";
 
 const SearchPage = () => {
   const [searchCompleted, setSearchCompleted] = useState(false);
@@ -53,6 +54,8 @@ const SearchPage = () => {
     if (q) {
       setQuery(q);
       handleSearch(q);
+    } else {
+      getLatestSamples();
     }
   }, [location]);
 
@@ -63,11 +66,12 @@ const SearchPage = () => {
 
   const getLatestSamples = async () => {
     const response = await fetch('./data-api/rest/samples?$first=6');
-    const data = await response.json();     
+    const data = await response.json();  
+    pageStatus = "latest_samples";   
     setResults(data.value);
   }
   
-  const getResponseStatusFromResult = (result) => {
+  const getError = (result) => {
     let responseStatus = { code: 0, description: '' };
 
     console.log("Result", result);
@@ -80,7 +84,7 @@ const SearchPage = () => {
       }
     }
 
-    if (result.value != null)
+    if (result.value != null && result.value.length > 0 && result.value[0].error_code != null)
     {
       responseStatus = {
         code: result.value[0].error_code,
@@ -111,9 +115,9 @@ const SearchPage = () => {
         body: JSON.stringify({ text: searchQuery })
       });
       const data = await response.json();   
-      let responseStatus = getResponseStatusFromResult(data);
-      if (responseStatus.code != 0) {
-        setError([responseStatus]);
+      let errorStatus = getError(data);
+      if (errorStatus.code != 0) {
+        setError([errorStatus]);
       } else {
         setResults(data.value);
       }
@@ -145,11 +149,9 @@ const SearchPage = () => {
     window.open("https://github.com/yorek/azure-sql-db-ai-samples-search", '_blank', 'noopener,noreferrer');
   }
 
-  let pageStatus = "first_load";
   if (results.length === 0 && loading == true) pageStatus = "searching";
   if (results.length === 0 && !loading && searchCompleted) pageStatus = "no_results";
   if (results.length > 0 && !loading && searchCompleted) pageStatus = "results_found";
-  if (results.length > 0 && pageStatus != "first_load") pageStatus = "latest_samples";
   if (error.length > 0) pageStatus = "error";
   
   console.log('Page Status:', pageStatus);
@@ -242,7 +244,7 @@ const SearchPage = () => {
         )
       }
 
-      {(pageStatus === "results_found") && 
+      {(pageStatus === "results_found" || pageStatus === "latest_samples") && 
       (
       <div className={styles.results}>
         {
