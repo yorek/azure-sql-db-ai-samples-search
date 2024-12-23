@@ -116,6 +116,29 @@
           ]
         }
       ]
+    },
+    "FindLatestSamples": {
+      "source": {
+        "object": "web.get_latest_samples",
+        "type": "stored-procedure"
+      },
+      "rest": {
+        "enabled": true,
+        "path": "/latestSamples",
+        "methods": [
+          "post", "get"
+        ]
+      },
+      "permissions": [
+        {
+          "role": "anonymous",
+          "actions": [
+            {
+              "action": "*"
+            }
+          ]
+        }
+      ]
     }
   }
 }

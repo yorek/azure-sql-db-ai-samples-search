@@ -39,13 +39,20 @@ const SearchPage = () => {
   useEffect(() => {
     const fetchSampleCount = async () => {
       setIsSampleCountLoading(true);
-      const response = await fetch('./data-api/rest/countSamples');
-      const data = await response.json();
-      const count = data.value[0].total_sample_count;
-      setSampleCount(count);
-      setIsSampleCountLoading(false);
+      try {
+        const response = await fetch('./data-api/rest/countSamples');
+        if (response.ok) {
+          const data = await response.json();
+          const count = data.value[0].total_sample_count;
+          setSampleCount(count);
+        }        
+      } catch (error) {
+        console.log(error);
+      } finally {
+        setIsSampleCountLoading(false);
+      }
     };
-   
+
     fetchSampleCount();
 
     const params = new URLSearchParams(location.search);
@@ -60,32 +67,41 @@ const SearchPage = () => {
   }, [location]);
 
   //console.log('PopOverOpen:', Cookies.get('popOverOpen'));
-  if (!Cookies.get('popOverOpen')) 
+  if (!Cookies.get('popOverOpen'))
     setPopOverOpen(true);
   Cookies.set('popOverOpen', 'true', { expires: 30 });
 
   const getLatestSamples = async () => {
-    const response = await fetch('./data-api/rest/samples?$first=6');
-    const data = await response.json();  
-    pageStatus = "latest_samples";   
-    setResults(data.value);
+    try {
+      const response = await fetch('./data-api/rest/latestSamples');
+      if (response.ok) {
+        const data = await response.json();
+        console.log(data.value);
+        setResults(data.value);
+      } else {
+        console.log(response);
+        setError([{ code: response.status, description: response.statusText }]);
+      }
+      pageStatus = "latest_samples";
+    } catch (error) {
+      setError([{ code: error.code, description: error.message }]);
+      console.log(error);
+    }
   }
-  
+
   const getError = (result) => {
     let responseStatus = { code: 0, description: '' };
 
     console.log("Result", result);
 
-    if (result.error != null)
-    {
+    if (result.error != null) {
       responseStatus = {
         code: result.error.status,
         description: result.error.message
       }
     }
 
-    if (result.value != null && result.value.length > 0 && result.value[0].error_code != null)
-    {
+    if (result.value != null && result.value.length > 0 && result.value[0].error_code != null) {
       responseStatus = {
         code: result.value[0].error_code,
         description: result.value[0].error_message
@@ -114,7 +130,7 @@ const SearchPage = () => {
         },
         body: JSON.stringify({ text: searchQuery })
       });
-      const data = await response.json();   
+      const data = await response.json();
       let errorStatus = getError(data);
       if (errorStatus.code != 0) {
         setError([errorStatus]);
@@ -149,11 +165,13 @@ const SearchPage = () => {
     window.open("https://github.com/yorek/azure-sql-db-ai-samples-search", '_blank', 'noopener,noreferrer');
   }
 
-  if (results.length === 0 && loading == true) pageStatus = "searching";
-  if (results.length === 0 && !loading && searchCompleted) pageStatus = "no_results";
-  if (results.length > 0 && !loading && searchCompleted) pageStatus = "results_found";
+  if (results != null) {
+    if (results.length === 0 && loading == true) pageStatus = "searching";
+    if (results.length === 0 && !loading && searchCompleted) pageStatus = "no_results";
+    if (results.length > 0 && !loading && searchCompleted) pageStatus = "results_found";
+  }
   if (error.length > 0) pageStatus = "error";
-  
+
   console.log('Page Status:', pageStatus);
   //console.log('Search Completed:', searchCompleted);
 
@@ -179,19 +197,19 @@ const SearchPage = () => {
               <TeachingPopoverBody>
                 <TeachingPopoverTitle>AI-Powered Search</TeachingPopoverTitle>
                 <div>
-                  This search engine uses AI to find samples from the <Link href="https://aka.ms/sqlai-samples" target="_blank">Azure SQL Database Samples repository</Link> using a RAG pattern with structured output. 
+                  This search engine uses AI to find samples from the <Link href="https://aka.ms/sqlai-samples" target="_blank">Azure SQL Database Samples repository</Link> using a RAG pattern with structured output.
                   <ul>
                     <li>Similiarity search across all available resources is done using the newly introduced <Link href='https://devblogs.microsoft.com/azure-sql/exciting-announcement-public-preview-of-native-vector-support-in-azure-sql-database/' target="_blank">vector support in Azure SQL Database</Link>.</li>
-                    <li>Results are then passed to a GPT-4o model to generate a sample summary and thoughts with a defined <Link href='https://learn.microsoft.com/en-us/azure/ai-services/openai/how-to/structured-outputs?tabs=rest' target="_blank">structured output</Link>.</li>                   
+                    <li>Results are then passed to a GPT-4o model to generate a sample summary and thoughts with a defined <Link href='https://learn.microsoft.com/en-us/azure/ai-services/openai/how-to/structured-outputs?tabs=rest' target="_blank">structured output</Link>.</li>
                     <li><strong>Semantic caching</strong> is used to improve the performance of the search engine and reduce LLM calls costs.</li>
                   </ul>
-                  If you want to have more details and get the source code of this sample, just ask about "this sample". Read more about creating AI apps with Azure SQL here: <Link href="https://aka.ms/sqlai" target="_blank">https://aka.ms/sqlai</Link>                               
+                  If you want to have more details and get the source code of this sample, just ask about "this sample". Read more about creating AI apps with Azure SQL here: <Link href="https://aka.ms/sqlai" target="_blank">https://aka.ms/sqlai</Link>
                 </div>
               </TeachingPopoverBody>
               <TeachingPopoverFooter primary="Got it" />
             </TeachingPopoverSurface>
           </TeachingPopover>
-        
+
           <Button onClick={handleGoToGithub} target="_blank">Go to GitHub Repo</Button>
         </div>
       </div>
@@ -224,7 +242,7 @@ const SearchPage = () => {
 
       {(pageStatus == "error") && (
         <Text block style={{ textAlign: 'center', color: 'red', marginBottom: '20px' }}>
-          {error[0].code} - {error[0].description} 
+          {error[0].code} - {error[0].description}
         </Text>
       )}
 
@@ -236,7 +254,7 @@ const SearchPage = () => {
         )
       }
 
-      {(pageStatus === "no_results") && 
+      {(pageStatus === "no_results") &&
         (
           <Text block style={{ textAlign: 'center' }}>
             No results found. Please try another query.
@@ -244,13 +262,13 @@ const SearchPage = () => {
         )
       }
 
-      {(pageStatus === "results_found" || pageStatus === "latest_samples") && 
-      (
-      <div className={styles.results}>
-        {
-          results.map((result, index) => {
-            return (
-              <Card key={index} className={styles.resultCard}>
+      {(pageStatus === "results_found" || pageStatus === "latest_samples") &&
+        (
+          <div className={styles.results}>
+            {
+              results.map((result, index) => {
+                return (
+                  <Card key={index} className={styles.resultCard}>
                     <CardHeader
                       header={
                         <div className={styles.resultCardHeader}>
@@ -270,15 +288,15 @@ const SearchPage = () => {
                         </div>
                       }
                     />
-                    <CardFooter className={styles.resultCardFooter}>                   
+                    <CardFooter className={styles.resultCardFooter}>
                       <Button onClick={(event) => handleOpenLink(event, result)}>Open Link</Button>
-                    </CardFooter>                  
-              </Card>
-            );
-          })
-        }
-      </div>
-      )}
+                    </CardFooter>
+                  </Card>
+                );
+              })
+            }
+          </div>
+        )}
     </>
   );
 };
