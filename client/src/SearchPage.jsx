@@ -72,23 +72,22 @@ const SearchPage = () => {
 
     console.log("Result", result);
 
-    let payload = {};
-    if (result.value) payload = result.value[0];
-    if (result.error) payload = result;
-    console.log("Payload:", payload);
-
-    if (payload.error) {
-      if (payload.response) {                
-        responseStatus = JSON.parse(payload.response).response.status.http;
-        if (responseStatus.code === 429) {
-          responseStatus.description = "Too many requests. Please try again later.";
-        }
-      } 
-      if (payload.error) {
-        responseStatus = { code: payload.error.code, description: payload.error.message };
+    if (result.error != null)
+    {
+      responseStatus = {
+        code: result.error.status,
+        description: result.error.message
       }
     }
-    
+
+    if (result.value != null)
+    {
+      responseStatus = {
+        code: result.value[0].error_code,
+        description: result.value[0].error_message
+      }
+    }
+
     console.log("ResponseStatus", responseStatus);
     return responseStatus;
   }
@@ -112,7 +111,7 @@ const SearchPage = () => {
         body: JSON.stringify({ text: searchQuery })
       });
       const data = await response.json();   
-      let responseStatus=getResponseStatusFromResult(data);
+      let responseStatus = getResponseStatusFromResult(data);
       if (responseStatus.code != 0) {
         setError([responseStatus]);
       } else {
