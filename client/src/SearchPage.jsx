@@ -76,10 +76,10 @@ const SearchPage = () => {
       const response = await fetch('./data-api/rest/latestSamples');
       if (response.ok) {
         const data = await response.json();
-        console.log(data.value);
+        //console.log(data.value);
         setResults(data.value);
       } else {
-        console.log(response);
+        //console.log(response);
         setError([{ code: response.status, description: response.statusText }]);
       }
       pageStatus = "latest_samples";
@@ -92,7 +92,7 @@ const SearchPage = () => {
   const getError = (result) => {
     let responseStatus = { code: 0, description: '' };
 
-    console.log("Result", result);
+    //console.log("Result", result);
 
     if (result.error != null) {
       responseStatus = {
@@ -108,7 +108,7 @@ const SearchPage = () => {
       }
     }
 
-    console.log("ResponseStatus", responseStatus);
+    //console.log("ResponseStatus", responseStatus);
     return responseStatus;
   }
 
@@ -249,7 +249,15 @@ const SearchPage = () => {
       {(pageStatus === "first_load") &&
         (
           <Text block style={{ textAlign: 'center' }}>
-            Start searching to get results!
+            Start searching to get results.
+          </Text>
+        )
+      }
+
+      {(pageStatus === "latest_samples") &&
+        (
+          <Text block style={{ textAlign: 'center' }}>
+            Start searching to get results, or check out the latest samples below.
           </Text>
         )
       }
@@ -263,8 +271,8 @@ const SearchPage = () => {
       }
 
       {(pageStatus === "results_found" || pageStatus === "latest_samples") &&
-        (
-          <div className={styles.results}>
+        (         
+          <div className={pageStatus === "results_found" ? styles.results : styles.latests}>
             {
               results.map((result, index) => {
                 return (

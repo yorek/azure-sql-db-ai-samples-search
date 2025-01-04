@@ -53,9 +53,19 @@
   width: 50%;
 } 
 
+.latests {
+  font-size: small;
+  width: 75%; 
+  margin: 40px auto; /* Center the results */
+  display: grid;
+  justify-content: center;
+  margin-bottom: 20px;
+  gap: 10px;
+}
+
 .results {
   font-size: small;
-  width: 75%; /* Add this line to set the width to 75% */
+  width: 75%; 
   margin: 40px auto; /* Center the results */
   display: grid;
   grid-template-columns: auto auto auto;
@@ -70,7 +80,7 @@
 }
 
 .resultCard {
-  width: 400px;
+  width: 100%;
 }
 
 .resultDescription {
