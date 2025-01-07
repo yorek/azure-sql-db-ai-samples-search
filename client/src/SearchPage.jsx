@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation } from 'react-router';
 import {
   Button,
   Spinner,
@@ -23,13 +23,14 @@ import ReactMarkdown from 'react-markdown';
 import Cookies from 'js-cookie';
 import styles from './assets/styles/SearchPage.module.css'; // Import the CSS module
 
+let pageStatus = "first_load";
 
 const SearchPage = () => {
   const [searchCompleted, setSearchCompleted] = useState(false);
   const [query, setQuery] = useState('');
   const [results, setResults] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState('');
+  const [error, setError] = useState([]);
   const [sampleCount, setSampleCount] = useState(0);
   const [isSampleCountLoading, setIsSampleCountLoading] = useState(true); // For sample count loading
   const location = useLocation();
@@ -38,13 +39,20 @@ const SearchPage = () => {
   useEffect(() => {
     const fetchSampleCount = async () => {
       setIsSampleCountLoading(true);
-      const response = await fetch('./data-api/rest/countSamples');
-      const data = await response.json();
-      const count = data.value[0].total_sample_count;
-      setSampleCount(count);
-      setIsSampleCountLoading(false);
+      try {
+        const response = await fetch('./data-api/rest/countSamples');
+        if (response.ok) {
+          const data = await response.json();
+          const count = data.value[0].total_sample_count;
+          setSampleCount(count);
+        }        
+      } catch (error) {
+        console.log(error);
+      } finally {
+        setIsSampleCountLoading(false);
+      }
     };
-   
+
     fetchSampleCount();
 
     const params = new URLSearchParams(location.search);
@@ -53,21 +61,64 @@ const SearchPage = () => {
     if (q) {
       setQuery(q);
       handleSearch(q);
+    } else {
+      getLatestSamples();
     }
   }, [location]);
 
   //console.log('PopOverOpen:', Cookies.get('popOverOpen'));
-  if (!Cookies.get('popOverOpen')) 
+  if (!Cookies.get('popOverOpen'))
     setPopOverOpen(true);
   Cookies.set('popOverOpen', 'true', { expires: 30 });
-  
+
+  const getLatestSamples = async () => {
+    try {
+      const response = await fetch('./data-api/rest/latestSamples');
+      if (response.ok) {
+        const data = await response.json();
+        //console.log(data.value);
+        setResults(data.value);
+      } else {
+        //console.log(response);
+        setError([{ code: response.status, description: response.statusText }]);
+      }
+      pageStatus = "latest_samples";
+    } catch (error) {
+      setError([{ code: error.code, description: error.message }]);
+      console.log(error);
+    }
+  }
+
+  const getError = (result) => {
+    let responseStatus = { code: 0, description: '' };
+
+    //console.log("Result", result);
+
+    if (result.error != null) {
+      responseStatus = {
+        code: result.error.status,
+        description: result.error.message
+      }
+    }
+
+    if (result.value != null && result.value.length > 0 && result.value[0].error_code != null) {
+      responseStatus = {
+        code: result.value[0].error_code,
+        description: result.value[0].error_message
+      }
+    }
+
+    //console.log("ResponseStatus", responseStatus);
+    return responseStatus;
+  }
+
   const handleSearch = async (searchQuery) => {
     if ((!query) && (!searchQuery)) return;
     if (!searchQuery) {
       searchQuery = query;
     }
     setLoading(true);
-    setError('');
+    setError([]);
     setResults([]);
     setSearchCompleted(false);
     //console.log('searchQuery:', searchQuery);
@@ -80,10 +131,15 @@ const SearchPage = () => {
         body: JSON.stringify({ text: searchQuery })
       });
       const data = await response.json();
-      //console.log(data);      
-      setResults(data.value);
+      let errorStatus = getError(data);
+      if (errorStatus.code != 0) {
+        setError([errorStatus]);
+      } else {
+        setResults(data.value);
+      }
     } catch (error) {
-      setError('Failed to fetch results. Please try again.');
+      console.log(error);
+      setError([{ code: error.code, description: error.message }]);
     } finally {
       setLoading(false);
       setSearchCompleted(true);
@@ -109,34 +165,18 @@ const SearchPage = () => {
     window.open("https://github.com/yorek/azure-sql-db-ai-samples-search", '_blank', 'noopener,noreferrer');
   }
 
-  const getResponseStatusFromResult = (result) => {
-    let responseStatus = { code: 0, description: '' };
-    if (result.error) {
-      console.log(error);
-      if (result.response) {                
-        responseStatus = JSON.parse(result.response).response.status.http;
-        if (responseStatus.code === 429) {
-          responseStatus.description = "Too many requests. Please try again later.";
-        }
-      } else {
-        responseStatus = { code: error.error_code, description: error_message };
-      }
-    }
-    return responseStatus;
+  if (results != null) {
+    if (results.length === 0 && loading == true) pageStatus = "searching";
+    if (results.length === 0 && !loading && searchCompleted) pageStatus = "no_results";
+    if (results.length > 0 && !loading && searchCompleted) pageStatus = "results_found";
   }
+  if (error.length > 0) pageStatus = "error";
 
-  let pageStatus = "first_load";
-  if (results.length === 0 && loading == true) pageStatus = "searching";
-  if (results.length === 0 && !loading && searchCompleted) pageStatus = "no_results";
-  if (results.length > 0) pageStatus = "results_found";
-  if (error) pageStatus = "error";
-  
   console.log('Page Status:', pageStatus);
   //console.log('Search Completed:', searchCompleted);
 
   return (
-    <div className={styles.appContainer}>
-
+    <>
       <div className={styles.header}>
         <div className={styles.title}>
           Azure SQL DB Samples AI Search 💡🔍
@@ -157,19 +197,19 @@ const SearchPage = () => {
               <TeachingPopoverBody>
                 <TeachingPopoverTitle>AI-Powered Search</TeachingPopoverTitle>
                 <div>
-                  This search engine uses AI to find samples from the <Link href="https://aka.ms/sqlai-samples" target="_blank">Azure SQL Database Samples repository</Link> using a RAG pattern with structured output. 
+                  This search engine uses AI to find samples from the <Link href="https://aka.ms/sqlai-samples" target="_blank">Azure SQL Database Samples repository</Link> using a RAG pattern with structured output.
                   <ul>
                     <li>Similiarity search across all available resources is done using the newly introduced <Link href='https://devblogs.microsoft.com/azure-sql/exciting-announcement-public-preview-of-native-vector-support-in-azure-sql-database/' target="_blank">vector support in Azure SQL Database</Link>.</li>
-                    <li>Results are then passed to a GPT-4o model to generate a sample summary and thoughts with a defined <Link href='https://learn.microsoft.com/en-us/azure/ai-services/openai/how-to/structured-outputs?tabs=rest' target="_blank">structured output</Link>.</li>                   
+                    <li>Results are then passed to a GPT-4o model to generate a sample summary and thoughts with a defined <Link href='https://learn.microsoft.com/en-us/azure/ai-services/openai/how-to/structured-outputs?tabs=rest' target="_blank">structured output</Link>.</li>
                     <li><strong>Semantic caching</strong> is used to improve the performance of the search engine and reduce LLM calls costs.</li>
                   </ul>
-                  If you want to have more details and get the source code of this sample, just ask about "this sample". Read more about creating AI apps with Azure SQL here: <Link href="https://aka.ms/sqlai" target="_blank">https://aka.ms/sqlai</Link>                               
+                  If you want to have more details and get the source code of this sample, just ask about "this sample". Read more about creating AI apps with Azure SQL here: <Link href="https://aka.ms/sqlai" target="_blank">https://aka.ms/sqlai</Link>
                 </div>
               </TeachingPopoverBody>
               <TeachingPopoverFooter primary="Got it" />
             </TeachingPopoverSurface>
           </TeachingPopover>
-        
+
           <Button onClick={handleGoToGithub} target="_blank">Go to GitHub Repo</Button>
         </div>
       </div>
@@ -202,19 +242,27 @@ const SearchPage = () => {
 
       {(pageStatus == "error") && (
         <Text block style={{ textAlign: 'center', color: 'red', marginBottom: '20px' }}>
-          {error}
+          {error[0].code} - {error[0].description}
         </Text>
       )}
 
       {(pageStatus === "first_load") &&
         (
           <Text block style={{ textAlign: 'center' }}>
-            Start searching to get results!
+            Start searching to get results.
           </Text>
         )
       }
 
-      {(pageStatus === "no_results") && 
+      {(pageStatus === "latest_samples") &&
+        (
+          <Text block style={{ textAlign: 'center' }}>
+            Start searching to get results, or check out the latest samples below.
+          </Text>
+        )
+      }
+
+      {(pageStatus === "no_results") &&
         (
           <Text block style={{ textAlign: 'center' }}>
             No results found. Please try another query.
@@ -222,20 +270,13 @@ const SearchPage = () => {
         )
       }
 
-      <div className={styles.results}>
-        {
-          results.map((result, index) => {
-            let responseStatus=getResponseStatusFromResult(result);
-            
-            return (
-              <Card key={index} className={styles.resultCard}>
-                {result.error ? (
-                  <div className={styles.error}>
-                    {result.error} error<br />
-                    {responseStatus.code} - {responseStatus.description}
-                  </div>
-                ) : (
-                  <>
+      {(pageStatus === "results_found" || pageStatus === "latest_samples") &&
+        (         
+          <div className={pageStatus === "results_found" ? styles.results : styles.latests}>
+            {
+              results.map((result, index) => {
+                return (
+                  <Card key={index} className={styles.resultCard}>
                     <CardHeader
                       header={
                         <div className={styles.resultCardHeader}>
@@ -255,17 +296,16 @@ const SearchPage = () => {
                         </div>
                       }
                     />
-                    <CardFooter className={styles.resultCardFooter}>                   
+                    <CardFooter className={styles.resultCardFooter}>
                       <Button onClick={(event) => handleOpenLink(event, result)}>Open Link</Button>
                     </CardFooter>
-                  </>
-                )}
-              </Card>
-            );
-          })
-        }
-      </div>
-    </div>
+                  </Card>
+                );
+              })
+            }
+          </div>
+        )}
+    </>
   );
 };
 

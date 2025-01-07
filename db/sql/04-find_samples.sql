@@ -139,10 +139,10 @@ begin
     /* Send request to LLM */
     begin try
         exec @retval = sp_invoke_external_rest_endpoint
-            @url = 'https://dm-open-ai-3.openai.azure.com/openai/deployments/$OPENAI_CHAT_DEPLOYMENT_NAME$/chat/completions?api-version=2024-08-01-preview',
+            @url = '$OPENAI_URL$/openai/deployments/$OPENAI_CHAT_DEPLOYMENT_NAME$/chat/completions?api-version=2024-08-01-preview',
             @headers = '{"Content-Type":"application/json"}',
             @method = 'POST',
-            @credential = [https://dm-open-ai-3.openai.azure.com],
+            @credential = [$OPENAI_URL$],
             @timeout = 120,
             @payload = @p,
             @response = @response output;

@@ -1,16 +1,16 @@
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams } from 'react-router';
 import { Button, Textarea, Text } from '@fluentui/react-components';
-import styles from './assets/styles/EditSessionPage.module.css';
+import styles from './assets/styles/EditSamplesPage.module.css';
 
-const EditSessionPage = () => {
+const EditSamplesPage = () => {
   const { sessionId } = useParams();
   const [jsonInput, setJsonInput] = useState('');
   const [responseMessage, setResponseMessage] = useState('');
   const [error, setError] = useState('');
 
   useEffect(() => {
-    const fetchSessionData = async () => {
+    const fetchSampleData = async () => {
       try {
         const response = await fetch(`./data-api/rest/getSession/${sessionId}`);
         if (!response.ok) {
@@ -73,4 +73,4 @@ const EditSessionPage = () => {
   );
 };
 
-export default EditSessionPage;
+export default EditSamplesPage;

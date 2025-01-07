@@ -14,7 +14,7 @@
       "request-body-strict": true
     },
     "graphql": {
-      "enabled": true,
+      "enabled": false,
       "path": "/graphql",
       "allow-introspection": true
     },
@@ -30,6 +30,27 @@
     }
   },
   "entities": {
+    "Samples": {
+      "source": {
+        "object": "dbo.samples",
+        "type": "table"
+      },
+      "rest": {
+        "enabled": true,
+        "path": "/samples",
+        "methods": [ "get" ]
+      },
+      "permissions": [
+        {
+          "role": "anonymous",
+          "actions": [
+            {
+              "action": "read"
+            }
+          ]
+        }
+      ]
+    },
     "FindSamples": {
       "source": {
         "object": "web.find_samples",
@@ -81,6 +102,29 @@
       "rest": {
         "enabled": true,
         "path": "/countSamples",
+        "methods": [
+          "post", "get"
+        ]
+      },
+      "permissions": [
+        {
+          "role": "anonymous",
+          "actions": [
+            {
+              "action": "*"
+            }
+          ]
+        }
+      ]
+    },
+    "FindLatestSamples": {
+      "source": {
+        "object": "web.get_latest_samples",
+        "type": "stored-procedure"
+      },
+      "rest": {
+        "enabled": true,
+        "path": "/latestSamples",
         "methods": [
           "post", "get"
         ]
