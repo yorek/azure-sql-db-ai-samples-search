@@ -419,6 +419,30 @@ exec dbo.add_sample '{
     "url": "https://github.com/Azure-Samples/azure-sql-langchain"
 }';
 
+exec dbo.add_sample '
+{
+    "name": "SQL Database in Microsoft Fabric, Langchain and Chainlit", 
+    "description": "Sample chatbot application built using SQL database in Microsoft Fabric as a vector store and search, Langchain and Chainlit for interacting with LLM and providing a chat interface.",
+    "notes": "Sample RAG pattern, with full UX, using Fabric SQL Database, Langchain and Chainlit",
+    "url": "https://github.com/Azure-Samples/fabric-rag-langchain-chainlit",
+    "details": {
+        "author": "Arun Vijayraghavan",
+        "languages": ["T-SQL", "Python"],
+        "frameworks": ["LangChain", "ChainLit"],
+        "services": ["Fabric SQL Database", "Azure Open AI", "Azure Functions"],
+        "license": "MIT",
+        "tags": ["End-to-End"],
+        "related-links": {
+            "blog": "https://blog.fabric.microsoft.com/en-US/blog/building-a-smart-chatbot-with-sql-database-in-microsoft-fabric-langchain-and-chainlit/"
+        },
+         "frameworks": [
+            "LangChain",
+            "Chainlit"
+        ]
+    }
+}
+';
+
 select * from dbo.samples 
 --where [url] like '%kmeans%'
 
