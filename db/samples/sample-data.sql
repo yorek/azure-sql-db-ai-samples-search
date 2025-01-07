@@ -297,7 +297,7 @@ exec dbo.add_sample '
 {
     "name": "Azure SQL DB Vector - KMeans Compute Node", 
     "description": "Use KMeans clustering to speed up vector search in Azure SQL DB",
-    "notes": "Perform Approximate Nearest Neighbor (ANN) search on a vector column in Azure SQL DB using KMeans clustering. As KMeans clustering is a compute intensive operation, this project uses SciKit Learn library to perform the clustering and stores the results in a SQL DB table. The results are then used to perform ANN search on the vector column.",
+    "notes": "Perform Approximate Nearest Neighbor (ANN) search on a vector column in Azure SQL DB using KMeans clustering. As KMeans clustering is a compute intensive operation, this project uses SciKit Learn library to perform the clustering and stores the results in a SQL DB table. The results are then used to perform ANN search on the vector column. This technique is also known as IVFFlat or Cell-Probing.",
     "url": "https://github.com/Azure-Samples/azure-sql-db-vectors-kmeans",
     "details": {
         "author": "Davide Mauri",
@@ -305,7 +305,7 @@ exec dbo.add_sample '
         "frameworks": ["Scikit-Learn"],
         "services": ["Azure SQL"],
         "license": "MIT",
-        "tags": ["End-to-End"]
+        "tags": ["End-to-End", "Index", "IVFFlat"]
     }
 }
 ';
