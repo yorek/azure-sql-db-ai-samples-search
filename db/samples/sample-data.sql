@@ -321,7 +321,23 @@ exec dbo.add_sample '
         "authors": ["Davide Mauri", "Pooja Kamath"],
         "languages": ["T-SQL", "Python", ".NET", "C#"],                
         "services": ["Azure SQL"],
-        "license": "MIT"
+        "license": "MIT"        
+    }
+}
+';
+
+exec dbo.add_sample '
+{
+    "name": "Hybrid Search", 
+    "description": "This sample shows how to combine Fulltext search in Azure SQL database with BM25 ranking and cosine similarity ranking to do hybrid search.",
+    "notes": "In this sample the local model multi-qa-MiniLM-L6-cos-v1 to generate embeddings. The Python script ./python/hybrid_search.py shows how to use Python to generate the embedding do similarity search in Azure SQL databaseuse Fulltext search in Azure SQL database with BM25 rankingdo re-ranking applying Reciprocal Rank Fusion (RRF) to combine the BM25 ranking with the cosine similarity ranking.",
+    "url": "https://github.com/Azure-Samples/azure-sql-db-vector-search/tree/main/Hybrid-Search",
+    "details": {
+        "authors": ["Davide Mauri"],
+        "languages": ["T-SQL", "Python"],
+        "services": ["Azure SQL"],
+        "license": "MIT",
+        "tags": ["BM25", "RRF"]
     }
 }
 ';
