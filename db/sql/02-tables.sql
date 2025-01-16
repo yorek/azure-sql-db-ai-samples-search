@@ -56,6 +56,8 @@ create table dbo.semantic_cache
 (
     [id] int identity primary key nonclustered,    
     [query] nvarchar(max) not null,
+    [action] nvarchar(max) not null,
+    [samples] nvarchar(max) not null,
     [embedding] vector(1536) not null,
     [query_date] datetime2(0) not null,
     [response] nvarchar(max) not null,    

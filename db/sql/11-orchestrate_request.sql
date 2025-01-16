@@ -1,4 +1,13 @@
-create or alter procedure [web].[handle_request] @text nvarchar(max)
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+
+CREATE    procedure [web].[orchestrate_request] 
+@text nvarchar(max),
+@result_type varchar(50) output,
+@result_query nvarchar(max) output
 as
 declare @retval int, @response nvarchar(max);
 
@@ -15,13 +24,13 @@ json_object(
                 create table dbo.samples
                 (
                     [id] int identity primary key,
-                    [name] nvarchar(100) not null,
-                    [description] nvarchar(max) not null,
                     [created_on] datetime2(0) not null,
                     [updated_on] datetime2(0) not null
                 )
                 
                 The use question is provided in the next message. If the user question cannot be answered using the dbo.samples table and using a T-SQL query only, you should respond with an empty string.
+                The generated T-SQL query must return a JSON document using the FOR JSON AUTO statement. Return the top 10 results if you can. Do not use semicolon to terminate the T-SQL statement.                
+                You can generate only SELECT statements. If the user is asking something that will generate INSERT, UPDATE, DELETE, CREATE, ALTER or DROP statement, refuse to generate the query.
             '
         ),
         json_object(
@@ -72,39 +81,40 @@ declare @js nvarchar(max) = N'{
 }'
 
 set @p = json_modify(@p, '$.response_format', json_query(@js))
----select @p
+--select @p
 
 /* Send request to LLM */
 begin try
     exec @retval = sp_invoke_external_rest_endpoint
-        @url = 'https://dm-open-ai-3.openai.azure.com/openai/deployments/gpt-4o/chat/completions?api-version=2024-08-01-preview',
+        @url = '$OPENAI_URL$/openai/deployments/$OPENAI_CHAT_DEPLOYMENT_NAME$/chat/completions?api-version=2024-08-01-preview',        
         @headers = '{"Content-Type":"application/json"}',
         @method = 'POST',
-        @credential = [https://dm-open-ai-3.openai.azure.com/],
+        @credential = [$OPENAI_URL$],
         @timeout = 120,
         @payload = @p,
         @response = @response output;
 end try
 begin catch
-    select 'REST' as [error], ERROR_NUMBER() as [error_code], ERROR_MESSAGE() as [error_message]
-    return
+    select 'Orchestrator:REST' as [error], ERROR_NUMBER() as [error_code], ERROR_MESSAGE() as [error_message]
+    return -1
 end catch
 --select @response
 
 if @retval != 0 begin
-    select 'OpenAI' as [error], @retval as [error_code], @response as [response]
-    return
+    select 'Orchestrator:OpenAI' as [error], @retval as [error_code], @response as [response]
+    return -1
 end
 
 declare @refusal nvarchar(max) = (select coalesce(json_value(@response, '$.result.choices[0].refusal'), ''));
 
 if @refusal != '' begin
-    select 'OpenAI/Refusal' as [error], @refusal as [refusal], @response as [response]
-    return
+    select 'Orchestrator:OpenAI/Refusal' as [error], @refusal as [refusal], @response as [response]
+    return -1
 end
 
-select 
-    sr.*
+select top(1)
+    @result_type = sr.response_type,
+    @result_query = sr.sql_query
 from 
     openjson(@response, '$.result.choices[0].message') with (
         content nvarchar(max) '$.content'
@@ -114,4 +124,11 @@ cross apply
         response_type varchar(10),
         sql_query nvarchar(max)
     ) as sr
+
+if (@result_type = 'NONE') begin
+    set @result_type = 'SEMANTIC'
+    set @result_query = @text
+end
+
+return 0
 GO
