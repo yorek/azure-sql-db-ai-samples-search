@@ -388,7 +388,10 @@ exec dbo.add_sample '
         "license": "MIT",
         "tags": [
             "End-to-End",
-            "Full Stack"
+            "Full Stack",
+            "Hybrid RAG",
+            "NL2SQL",
+            "Natural Language to SQL"
         ],
         "conferences": ["Live 360 Orlando 2024"]
     }
