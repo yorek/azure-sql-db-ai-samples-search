@@ -18,6 +18,22 @@ The architecture of the sample is as follows:
 
 3. **React** front-end application is used to search for samples and display the results. 
 
+## (Hybrid) RAG Pattern
+
+In order to answer questions that could have either a precise ("return all the last 5 samples") or a semantic ("return samples using a insurance use case") answer, the usual RAG pattern is not enough as it will fail short for precise answers. In order to have both precise and semantic answers, we implemented a **hybrid RAG pattern** that uses two different approaches to generate the results. 
+
+The first step if to use an LLM to understand if the asked question can be answered using the available database schema and just the SQL (or any other) language. If the answer is precise, then the SQL query is generated and executed against the database. If the question cannot be answered using just the database schema and SQL, then the RAG pattern is used to find the semantically closest results. 
+
+In either case the output is then sent back to the LLM to generate a final answer. Answer that is asked to be returned as a well-defined JSON object, so it can be easily parsed and turned into a table and then joined back with the data in the database, to provide the final, structured, complete answer to the user.
+
+I'm calling this process **Hybrid RAG** as it uses both the database schema and the RAG pattern to generate the results.
+
+[![Hybrid RAG](./_assets/hybrid-rag.png)](./_assets_/hybrid-rag.png)
+
+The hybrid RAG pattern is implemented in the database, using a stored procedure that is called by Data API builder. The stored procedure generates the SQL query and the RAG query, executes them and then generates the final answer using the LLM.
+
+Clean, easy and efficient.
+
 ## Azure Services
 
 The whole architecture is built using the following Azure services:
