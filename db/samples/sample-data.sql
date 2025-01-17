@@ -118,7 +118,8 @@ exec dbo.add_sample '
         "license": "MIT",        
         "related-links": {
             "blog": "https://devblogs.microsoft.com/azure-sql/vanna-ai-and-azure-sql-database/"
-        }
+        },
+        "tags": ["NL2SQL"]
     }
 }
 ';
