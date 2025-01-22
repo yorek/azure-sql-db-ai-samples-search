@@ -80,8 +80,13 @@ if (@response is null) begin
     end
     
     --select @samples;    
-    exec @retval = [web].[generate_answer] @text, @samples, @response output;
-    if (@retval != 0) return;
+    if (@samples is not null) begin       
+        exec @retval = [web].[generate_answer] @text, @samples, @response output;
+        if (@retval != 0) return;
+    end else begin
+        set @samples = '[]'
+        set @response = '{}'
+    end
 
     /* Cache results */
     insert into dbo.semantic_cache (query, [action], samples, embedding, query_date, response) 
