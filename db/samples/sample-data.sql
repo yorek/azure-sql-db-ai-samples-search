@@ -119,7 +119,7 @@ exec dbo.add_sample '
         "related-links": {
             "blog": "https://devblogs.microsoft.com/azure-sql/vanna-ai-and-azure-sql-database/"
         },
-        "tags": ["NL2SQL"]
+        "tags": ["NL2SQL", "Natural Language to SQL"]
     }
 }
 ';
@@ -163,7 +163,8 @@ exec dbo.add_sample '
     "details": {
         "languages": ["T-SQL"],
         "services": ["Azure SQL"],
-        "license": "MIT"
+        "license": "MIT",
+        "tags": ["NL2SQL", "Natural Language to SQL"]
     }
 }
 ';
@@ -237,7 +238,7 @@ exec dbo.add_sample '
         "frameworks": ["Semantic Kernel"],
         "services": ["Azure SQL", "Azure Functions", "Azure Static Web Apps"],
         "license": "MIT",
-        "tags": ["End-to-End"],
+        "tags": ["End-to-End", "Agentic RAG", "NL2SQL", "Natural Language to SQL"],
         "conferences": ["PASS Summit 2024", "Live 360 Orlando 2024"],
         "related-links": {
             "video": "https://www.youtube.com/watch?v=BuaKzm7Kq9Q",
@@ -361,9 +362,9 @@ exec dbo.add_sample '
 exec dbo.add_sample '
 {
     "name": "Azure SQL DB Samples AI Search",
-    "description": "This sample website, where you can search for AI samples using Azure SQL DB",
+    "description": "This sample website, where you can search for AI samples using Azure SQL DB using natural language queries",
     "url": "https://github.com/yorek/azure-sql-db-ai-samples-search",
-    "notes": "This sample website, a simple React application that uses Azure SQL DB to store the samples and Azure Open AI to provide the search capabilities. Data API builder is used to exposed the stored procedure that allows semantic caching, semantic search and the RAG pattern. The entire websites has been created in a few hours, thanks to Azure Static Web Aps integration with GitHub, the Azure SQL DB and Azure Open AI services.",
+    "notes": "This sample website, a simple React application that uses Azure SQL DB to store the samples and Azure Open AI to provide the search capabilities. Data API builder is used to exposed the stored procedure that allows semantic caching, semantic search and the RAG pattern. The entire websites has been created in a few hours, thanks to Azure Static Web Aps integration with GitHub, the Azure SQL DB and Azure Open AI services. The sample take advantage of Agentic RAG to understand what is the best way to answer the asked question, and then use the best approach to get the answer from the database.",
     "details": {
         "author": "Davide Mauri",
         "languages": [
@@ -390,6 +391,7 @@ exec dbo.add_sample '
             "End-to-End",
             "Full Stack",
             "Hybrid RAG",
+            "Agentic RAG",
             "NL2SQL",
             "Natural Language to SQL"
         ],
