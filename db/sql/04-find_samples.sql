@@ -30,8 +30,27 @@ if (@response is null) begin
     --print @rt
     --print @rq
 
+     /* Find the samples using T-SQL */
+    if (@rt = 'SQL') begin
+        declare @trq nvarchar(max) = trim(replace(replace(@rq, char(13), ' '), char(10), ' '));
+        if (@trq like '%INSERT %' or @trq like '%UPDATE %' or @trq like '%DELETE %' or @trq like '%DROP %' or @trq like '%ALTER %' or @trq like '%CREATE %') begin
+            --select @trq
+            select 'NL2SQL' as [error], -1 as [error_code], 'Unauthorized SQL command requested' as [response]
+            return -1
+        end
+
+        declare @q nvarchar(max) = 'SET @s = (' + @rq + ')';
+        exec sp_executesql @q, N'@s NVARCHAR(MAX) OUTPUT', @s = @samples output
+        --print @samples
+    end
+
+    /* If not results coming from SQL execution, try SEMANTIC anyway */
+    if (@samples is null) begin
+        set @rt = 'SQL+SEMANTIC'
+    end
+
     /* Find the samples most similar to the requested topic */
-    if (@rt = 'SEMANTIC') begin
+    if (@rt like '%SEMANTIC%') begin
         set @k = coalesce(@k, 50)        
         drop table if exists #s;
         select top(@k) 
@@ -65,19 +84,7 @@ if (@response is null) begin
         )
     end
 
-    /* Find the samples using T-SQL */
-    if (@rt = 'SQL') begin
-        declare @trq nvarchar(max) = trim(replace(replace(@rq, char(13), ' '), char(10), ' '));
-        if (@trq like '%INSERT %' or @trq like '%UPDATE %' or @trq like '%DELETE %' or @trq like '%DROP %' or @trq like '%ALTER %' or @trq like '%CREATE %') begin
-            --select @trq
-            select 'NL2SQL' as [error], -1 as [error_code], 'Unauthorized SQL command requested' as [response]
-            return -1
-        end
-
-        declare @q nvarchar(max) = 'SET @s = (' + @rq + ')';
-        exec sp_executesql @q, N'@s NVARCHAR(MAX) OUTPUT', @s = @samples output
-        --print @samples
-    end
+   
     
     --select @samples;    
     if (@samples is not null) begin       
