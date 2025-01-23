@@ -18,7 +18,7 @@ import {
   TeachingPopoverTrigger,
   TeachingPopoverFooter,
 } from '@fluentui/react-components';
-import { Search24Regular } from '@fluentui/react-icons';
+import { Alert12Filled, AlertOn16Filled, Note16Filled, Search24Regular, Warning12Filled, Warning16Color, Warning20Color } from '@fluentui/react-icons';
 import ReactMarkdown from 'react-markdown';
 import Cookies from 'js-cookie';
 import styles from './assets/styles/SearchPage.module.css'; // Import the CSS module
@@ -233,6 +233,12 @@ const SearchPage = () => {
           Search
         </Button>
       </div>
+      
+      <Text block style={{ textAlign: 'center', marginBottom: '20px' }}>
+        <Alert12Filled /> <strong>Tip:</strong> Try asking questions like "Samples used in Orlando Live 360 in 2024" or "Show me the latest 5 samples".
+        <br />
+        <Warning12Filled/> <strong>Warning!</strong> This sample is using free Azure OpenAI SKU so throttling and 500 errors can happen during peak usage.      
+      </Text>
 
       {(pageStatus == "searching") && (
         <div style={{ textAlign: 'center', margin: '20px 0' }}>
@@ -249,7 +255,7 @@ const SearchPage = () => {
       {(pageStatus === "first_load") &&
         (
           <Text block style={{ textAlign: 'center' }}>
-            Start searching to get results.
+            Loading latest samples...
           </Text>
         )
       }
