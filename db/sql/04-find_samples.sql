@@ -42,12 +42,13 @@ if (@response is null) begin
         declare @q nvarchar(max) = 'SET @s = (' + @rq + ')';
         exec sp_executesql @q, N'@s NVARCHAR(MAX) OUTPUT', @s = @samples output
         --print @samples
+
+        /* If not results coming from SQL execution, try SEMANTIC anyway */
+        if (@samples is null) begin
+            set @rt = 'SQL+SEMANTIC'
+        end
     end
 
-    /* If not results coming from SQL execution, try SEMANTIC anyway */
-    if (@samples is null) begin
-        set @rt = 'SQL+SEMANTIC'
-    end
 
     /* Find the samples most similar to the requested topic */
     if (@rt like '%SEMANTIC%') begin
@@ -83,8 +84,6 @@ if (@response is null) begin
             order by distance_score for json path
         )
     end
-
-   
     
     --select @samples;    
     if (@samples is not null) begin       
