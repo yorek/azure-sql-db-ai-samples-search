@@ -7,7 +7,7 @@ declare @payload nvarchar(max) = json_object('input': @inputText);
 declare @response nvarchar(max)
 begin try
     exec @retval = sp_invoke_external_rest_endpoint
-        @url = '$OPENAI_URL$/openai/deployments/$OPENAI_EMBEDDING_DEPLOYMENT_NAME$/embeddings?api-version=2023-03-15-preview',
+        @url = '$OPENAI_URL$/openai/deployments/$OPENAI_EMBEDDING_DEPLOYMENT_NAME$/embeddings?api-version=2024-08-01-preview',
         @method = 'POST',
         @credential = [$OPENAI_URL$],
         @payload = @payload,
