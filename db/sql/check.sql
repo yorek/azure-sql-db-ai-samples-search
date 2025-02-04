@@ -6,7 +6,8 @@ exec [web].[get_embedding] 'just a sample text', @v output
 go
 
 /*
-  Check that tables have been correctly loaded
+  Check that tables have been correctly loaded.
+  Please note that not all samples have a "note" property, so number of "total_samples_notes_embeddings" will be lower than the number of samples.
 */
 select 
     count(s.id) as total_samples,
