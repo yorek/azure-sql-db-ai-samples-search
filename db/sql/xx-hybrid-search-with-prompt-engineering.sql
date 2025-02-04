@@ -5,9 +5,10 @@ declare @text nvarchar(max);
 --set @text = 'return the samples created by muazma';
 --set @text = 'samples showing hybrid RAG';
 --set @text = 'the sample on hybrid search';
+--set @text = 'samples on hybrid search';
 --set @text = 'samples on hybrid search created in 2025';
 --set @text = 'create a new table named dbo.test';
-set @text = 'how many customers there are in the customers table?';
+--set @text = 'how many customers there are in the customers table?';
 
 declare @retval int, @response nvarchar(max);
 
@@ -38,7 +39,7 @@ json_object(
                 First, generate the embedding vector for the provided question using the following T-SQL query. 
 
                 declare @retval int, @qv vector(1536)
-                exec @retval = web.get_embedding @text, @qv output
+                exec @retval = web.get_embedding ''<user_question>'', @qv output
                 if (@retval != 0) throw 50000, ''Error in getting the embedding'',1;
 
                 The vectors for details, notes and description columns are stored in the following tables: 
@@ -158,9 +159,8 @@ cross apply
     openjson(m.content, '$.samples') with (
         response_type varchar(10),
         sql_query nvarchar(max)
-    ) as sr
+    ) as sr;
 
-select * from #s;
 
 declare @sql nvarchar(max), @rt varchar(10)
 select top(1) @rt=response_type,  @sql=sql_query from #s;
@@ -168,4 +168,6 @@ print @sql;
 
 if (@rt = 'SQL') begin
     exec sp_executesql @stmt = @sql;
+end else begin
+    select * from #s;
 end
