@@ -83,7 +83,17 @@ To deploy the database, make sure you have created the `.env` file as explained 
 dotnet run --project ./db
 ```
 
-That will connect to Azure SQL and deploy the needed database objects and some sample data.
+That will connect to Azure SQL and deploy the needed database objects. If you want to add some sample data, you can use the `sample-data.sql` file in the `db/sample` folder.
+
+To test that database deployment was successful and that OpenAI connection is working, you can run the following query using your favourite SQL client:
+
+```sql
+declare @v vector(1536)
+exec [web].[get_embedding] 'just a sample text', @v output
+select @v
+```
+
+if no error are returned, you'll get a vector as a result.
 
 ### Application
 
