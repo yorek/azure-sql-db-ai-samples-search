@@ -179,10 +179,10 @@ const SearchPage = () => {
     <>
       <div className={styles.header}>
         <div className={styles.title}>
-          Azure SQL DB Samples AI Search 💡🔍
+          Azure SQL DB Samples AI Agenting RAG Search 💡🔍
         </div>
         <div className={styles.subtitle}>
-          Find samples using AI-powered search capabilities 🚀
+          Find samples using AI Agents search capabilities 🚀
         </div>
         <div className={styles.sampleCount}>
           {isSampleCountLoading ? 'Finding how many samples are available...' : (<span>There are <Link href="https://aka.ms/sqlai-samples" target="_blank">{sampleCount} samples</Link> in the database.</span>)}
@@ -197,8 +197,9 @@ const SearchPage = () => {
               <TeachingPopoverBody>
                 <TeachingPopoverTitle>AI-Powered Search</TeachingPopoverTitle>
                 <div>
-                  This search engine uses AI to find samples from the <Link href="https://aka.ms/sqlai-samples" target="_blank">Azure SQL Database Samples repository</Link> using a RAG pattern with structured output.
+                  This search engine uses AI Agents to find samples from the <Link href="https://aka.ms/sqlai-samples" target="_blank">Azure SQL Database Samples repository</Link> using a RAG pattern with structured output.
                   <ul>
+                    <li>The searched text is given to an agent that decide the best tool to use to answer the question, either using similarity search or generating and executing a SQL query</li>
                     <li>Similiarity search across all available resources is done using the newly introduced <Link href='https://devblogs.microsoft.com/azure-sql/exciting-announcement-public-preview-of-native-vector-support-in-azure-sql-database/' target="_blank">vector support in Azure SQL Database</Link>.</li>
                     <li>Results are then passed to a GPT-4o model to generate a sample summary and thoughts with a defined <Link href='https://learn.microsoft.com/en-us/azure/ai-services/openai/how-to/structured-outputs?tabs=rest' target="_blank">structured output</Link>.</li>
                     <li><strong>Semantic caching</strong> is used to improve the performance of the search engine and reduce LLM calls costs.</li>
