@@ -195,11 +195,11 @@ const SearchPage = () => {
             <TeachingPopoverSurface className={styles.popOverSurface}>
               <TeachingPopoverHeader>Tips</TeachingPopoverHeader>
               <TeachingPopoverBody>
-                <TeachingPopoverTitle>AI-Powered Search</TeachingPopoverTitle>
+                <TeachingPopoverTitle>AI Agent Powered Search</TeachingPopoverTitle>
                 <div>
                   This search engine uses AI Agents to find samples from the <Link href="https://aka.ms/sqlai-samples" target="_blank">Azure SQL Database Samples repository</Link> using a RAG pattern with structured output.
                   <ul>
-                    <li>The searched text is given to an agent that decide the best tool to use to answer the question, either using similarity search or generating and executing a SQL query</li>
+                    <li>The searched text is given to an <strong>AI Agent</strong> that decide the best tool to use to answer the question, either using similarity search or generating and executing a SQL query</li>
                     <li>Similiarity search across all available resources is done using the newly introduced <Link href='https://devblogs.microsoft.com/azure-sql/exciting-announcement-public-preview-of-native-vector-support-in-azure-sql-database/' target="_blank">vector support in Azure SQL Database</Link>.</li>
                     <li>Results are then passed to a GPT-4o model to generate a sample summary and thoughts with a defined <Link href='https://learn.microsoft.com/en-us/azure/ai-services/openai/how-to/structured-outputs?tabs=rest' target="_blank">structured output</Link>.</li>
                     <li><strong>Semantic caching</strong> is used to improve the performance of the search engine and reduce LLM calls costs.</li>
