@@ -204,7 +204,7 @@ const SearchPage = () => {
                     <li>Results are then passed to a GPT-4o model to generate a sample summary and thoughts with a defined <Link href='https://learn.microsoft.com/en-us/azure/ai-services/openai/how-to/structured-outputs?tabs=rest' target="_blank">structured output</Link>.</li>
                     <li><strong>Semantic caching</strong> is used to improve the performance of the search engine and reduce LLM calls costs.</li>
                   </ul>
-                  If you want to have more details and get the source code of this sample, just ask about "this sample". Read more about creating AI apps with Azure SQL here: <Link href="https://aka.ms/sqlai" target="_blank">https://aka.ms/sqlai</Link>
+                  If you want to have more details and get the source code of this sample, just ask about "this agentic AI sample" or "this website sample". Read more about creating AI apps with Azure SQL here: <Link href="https://aka.ms/sqlai" target="_blank">https://aka.ms/sqlai</Link>
                 </div>
               </TeachingPopoverBody>
               <TeachingPopoverFooter primary="Got it" />
