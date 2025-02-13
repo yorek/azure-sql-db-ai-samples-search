@@ -179,7 +179,7 @@ const SearchPage = () => {
     <>
       <div className={styles.header}>
         <div className={styles.title}>
-          Azure SQL DB Samples AI Agenting RAG Search 💡🔍
+          Azure SQL DB Samples AI Agentic RAG Search 💡🔍
         </div>
         <div className={styles.subtitle}>
           Find samples using AI Agents search capabilities 🚀
