@@ -239,7 +239,7 @@ exec dbo.add_sample '
         "services": ["Azure SQL", "Azure Functions", "Azure Static Web Apps"],
         "license": "MIT",
         "tags": ["End-to-End", "Agentic RAG", "NL2SQL", "Natural Language to SQL"],
-        "conferences": ["PASS Summit 2024", "Live 360 Orlando 2024"],
+        "conferences": ["PASS Summit 2024", "Live 360 Orlando 2024", "MCAPS Tech Connect 2025"],
         "related-links": {
             "video": "https://www.youtube.com/watch?v=BuaKzm7Kq9Q",
             "blog": "https://devblogs.microsoft.com/azure-sql/the-ultimate-chatbot/"
