@@ -18,27 +18,74 @@ json_object(
         json_object(
             'role':'system',
             'content':'
-                You are a SQL Server database assistant. You answer the questions providing the correct T-SQL query to get the result.
+                You are a SQL Server database assistant. You answer the questions providing the correct T-SQL query to get the result. The user question is provided in the next message. 
+
                 This is the database table you can use: 
 
                 create table dbo.samples
                 (
                     [id] int identity primary key,
+                    [name] nvarchar(100) not null, --the name or title of the sample
+                    [description] nvarchar(max) not null, -- the description of the sample
+                    [notes] nvarchar(max) null, -- additional notes about the sample
+                    [details] json null,  -- all additional details, in JSON format, about the sample like authors, tags, etc.
                     [created_on] datetime2(0) not null,
                     [updated_on] datetime2(0) not null
                 )
                 
+                To search into "details, "notes" and "description" columns, you can use the following steps:
+
+                First, generate the embedding vector for the provided question using the following T-SQL query. 
+
+                declare @retval int, @qv vector(1536)
+                exec @retval = web.get_embedding ''<user_question>'', @qv output
+                if (@retval != 0) throw 50000, ''Error in getting the embedding'',1;
+
+                The vectors for details, notes and description columns are stored in the following tables: 
+
+                - samples_embeddings: vectors for the description column
+                - samples_notes_embeddings: vectors for the notes column
+                - samples_details_embeddings: vectors for the details column
+
+                Then, use the following T-SQL query to search the text in the table, adding the appropriate where clause to filter the results if needed:
+
+                select top(@k) 
+                    s.id, [name], [description], [url], [notes], [details],
+                    least(
+                        vector_distance(''cosine'', e.[embedding], @qv), 
+                        vector_distance(''cosine'', ne.[embedding], @qv), 
+                        vector_distance(''cosine'', de.[embedding], @qv) 
+                    ) as distance_score
+                from 
+                    dbo.samples s
+                inner join    
+                    dbo.samples_embeddings e on e.id = s.id
+                left join
+                    dbo.samples_notes_embeddings ne on e.id = ne.id
+                left join
+                    dbo.samples_details_embeddings de on e.id = de.id    
+                order by 
+                    distance_score asc;
+
+                always return the distance_score. 
+
+                To use the LIKE operator on details column, the column must be converted to NVARCHAR(MAX) first:
+
+                CAST([details] AS NVARCHAR(MAX)) LIKE ''search text''
+
+                Return the top 50 results maximum.                 
                 The use question is provided in the next message. If the user question cannot be answered using the dbo.samples table and using a T-SQL query only, you should respond with an empty string.
                 The generated T-SQL query must return a JSON document using the FOR JSON AUTO statement. Return the top 10 results if you can. Do not use semicolon to terminate the T-SQL statement.                
                 You can generate only SELECT statements. If the user is asking something that will generate INSERT, UPDATE, DELETE, CREATE, ALTER or DROP statement, refuse to generate the query.
+
             '
         ),
         json_object(
             'role':'user',
             'content': + @text
-        )
-    ),    
-    'temperature': 0.2,
+        )        
+    ),
+    'temperature': 0.4,
     'frequency_penalty': 0,
     'presence_penalty': 0,    
     'stop': null
