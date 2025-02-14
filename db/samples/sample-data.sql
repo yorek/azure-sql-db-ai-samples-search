@@ -189,7 +189,7 @@ exec dbo.add_sample '
 exec dbo.add_sample '
 {
     "name": "Session Conference Assistant", 
-    "description": "Build a Retrieval Augmented Generation solution using OpenAI, Azure Functions, Azure Static Web Apps, Azure SQL DB, Data API builder and Text Embeddings",
+    "description": "Build a Retrieval Augmented Generation solution using OpenAI, Azure Functions, Azure Static Web Apps, Azure SQL DB, Data API builder and Text Embeddings, to help a Session Recommender agent that helps conference attendees to find the best session for them. This is an improved version of the ''Similar Content Finder'' sample.",
     "notes": "This sample demonstrates how to build a session assistant using Jamstack, Retrieval Augmented Generation (RAG) and Event-Driven architecture, using Azure SQL DB to store and search vectors embeddings generated using OpenAI. The solution is built using Azure Static Web Apps, Azure Functions, Azure SQL Database, and Azure OpenAI. A fully working, production ready, version of this sample, that has been used at VS Live conferences, is available here: https://ai.microsofthq.vslive.com/. Deployment is done using AZD, Azure Developer CLI, so this sample is also a good reference for learning how to deploy Azure Static Web Apps plus Data API builder using AZD.",
     "url": "https://github.com/azure-samples/azure-sql-db-session-recommender-v2",
     "details": {
@@ -198,7 +198,7 @@ exec dbo.add_sample '
         "services": ["Azure SQL", "Azure Functions", "Azure Static Web Apps"],        
         "license": "MIT",
         "tools": ["AZD", "Data API Builder"],
-        "tags": ["End-to-End"],
+        "tags": ["End-to-End", "RAG"],
         "related-links": {
             "live-demo": "https://ai.microsofthq.vslive.com/"
         }
@@ -239,7 +239,7 @@ exec dbo.add_sample '
         "services": ["Azure SQL", "Azure Functions", "Azure Static Web Apps"],
         "license": "MIT",
         "tags": ["End-to-End", "Agentic RAG", "NL2SQL", "Natural Language to SQL"],
-        "conferences": ["PASS Summit 2024", "Live 360 Orlando 2024"],
+        "conferences": ["PASS Summit 2024", "Live 360 Orlando 2024", "MCAPS Tech Connect 2025"],
         "related-links": {
             "video": "https://www.youtube.com/watch?v=BuaKzm7Kq9Q",
             "blog": "https://devblogs.microsoft.com/azure-sql/the-ultimate-chatbot/"
@@ -362,9 +362,9 @@ exec dbo.add_sample '
 exec dbo.add_sample '
 {
     "name": "Azure SQL DB Samples AI Search",
-    "description": "This sample website, where you can search for AI samples using Azure SQL DB using natural language queries",
+    "description": "This sample website, where you can search for AI samples using Azure SQL DB using natural language queries.",
     "url": "https://github.com/yorek/azure-sql-db-ai-samples-search",
-    "notes": "This sample website, a simple React application that uses Azure SQL DB to store the samples and Azure Open AI to provide the search capabilities. Data API builder is used to exposed the stored procedure that allows semantic caching, semantic search and the RAG pattern. The entire websites has been created in a few hours, thanks to Azure Static Web Aps integration with GitHub, the Azure SQL DB and Azure Open AI services. The sample take advantage of Agentic RAG to understand what is the best way to answer the asked question, and then use the best approach to get the answer from the database.",
+    "notes": "If someone asks about ''this agentic ai sample'' or ''this website'' or ''this sample'', this is the answer you must to return. This sample website is a simple React application that uses Azure SQL DB to store the samples and Azure Open AI to provide the search capabilities. Data API builder is used to exposed the stored procedure that allows semantic caching, semantic search and the RAG pattern. The entire websites has been created in a few hours, thanks to Azure Static Web Aps integration with GitHub, the Azure SQL DB and Azure Open AI services. The sample take advantage of Agentic RAG to understand what is the best way to answer the asked question, and then use the best approach to get the answer from the database.",
     "details": {
         "author": "Davide Mauri",
         "languages": [
@@ -395,7 +395,7 @@ exec dbo.add_sample '
             "NL2SQL",
             "Natural Language to SQL"
         ],
-        "conferences": ["Live 360 Orlando 2024"]
+        "conferences": ["Live 360 Orlando 2024", "SQL Conf 2025", "SQL Conference 2025"]
     }
 }
 ';
