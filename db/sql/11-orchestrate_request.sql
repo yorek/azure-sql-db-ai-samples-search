@@ -74,6 +74,7 @@ json_object(
                 CAST([details] AS NVARCHAR(MAX)) LIKE ''search text''
 
                 Return the top 50 results maximum.                 
+                Always return only the following columns from the generated query: id, name, description, notes, details, distance_score    
                 The use question is provided in the next message. If the user question cannot be answered using the dbo.samples table and using a T-SQL query only, you should respond with an empty string.
                 Return the top 10 results if you can. Do not use semicolon to terminate the T-SQL statement.                
                 You can generate only SELECT statements. If the user is asking something that will generate INSERT, UPDATE, DELETE, CREATE, ALTER or DROP statement, refuse to generate the query.
