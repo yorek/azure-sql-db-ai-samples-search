@@ -50,7 +50,7 @@ json_object(
                 Then, use the following T-SQL query to search the text in the table, adding the appropriate where clause to filter the results if needed:
 
                 select top(@k) 
-                    s.id, [name], [description], [url], [notes], [details],
+                    s.id, [name], [description], [notes], [details],
                     least(
                         vector_distance(''cosine'', e.[embedding], @qv), 
                         vector_distance(''cosine'', ne.[embedding], @qv), 
@@ -75,7 +75,7 @@ json_object(
 
                 Return the top 50 results maximum.                 
                 The use question is provided in the next message. If the user question cannot be answered using the dbo.samples table and using a T-SQL query only, you should respond with an empty string.
-                The generated T-SQL query must return a JSON document using the FOR JSON AUTO statement. Return the top 10 results if you can. Do not use semicolon to terminate the T-SQL statement.                
+                Return the top 10 results if you can. Do not use semicolon to terminate the T-SQL statement.                
                 You can generate only SELECT statements. If the user is asking something that will generate INSERT, UPDATE, DELETE, CREATE, ALTER or DROP statement, refuse to generate the query.
 
             '

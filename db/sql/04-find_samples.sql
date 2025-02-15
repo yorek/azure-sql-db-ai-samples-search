@@ -4,9 +4,11 @@ declare @response nvarchar(max), @cached_response nvarchar(max);
 declare @retval int;
 declare @samples nvarchar(max)
 
+if trim(@text) = '' return;
+
 /* Get the embedding for the requested text */
 declare @qv vector(1536)
-exec @retval = web.get_embedding @text, @qv output
+exec @retval = web.get_embedding @text, @qv output with result sets none 
 if (@retval != 0) return;
 
 /* Check in the semantic cache to see if a similar question has been already answered */
@@ -24,7 +26,7 @@ if (@response is null) begin
     
     /* Orchestrate answer */
     declare @rt varchar(50), @rq nvarchar(max)    
-    exec @retval = [web].[orchestrate_request]  @text, @rt output, @rq output
+    exec @retval = [web].[orchestrate_request]  @text, @rt output, @rq output with result sets none  
     if (@retval != 0) return;
 
     --print @rt
@@ -38,9 +40,11 @@ if (@response is null) begin
             select 'NL2SQL' as [error], -1 as [error_code], 'Unauthorized SQL command requested' as [response]
             return -1
         end
-
-        declare @q nvarchar(max) = 'SET @s = (' + @rq + ')';
-        exec sp_executesql @q, N'@s NVARCHAR(MAX) OUTPUT', @s = @samples output
+        --print @rq
+        
+        create table #ts (id int, [name] nvarchar(100), [description] nvarchar(max), notes nvarchar(max), details json, distance_score float);
+        insert into #ts exec sp_executesql @rq 
+        set @samples = cast((select * from #ts for json auto) as nvarchar(max))
         --print @samples
 
         /* If not results coming from SQL execution, try SEMANTIC anyway */
@@ -87,7 +91,7 @@ if (@response is null) begin
     
     --select @samples;    
     if (@samples is not null) begin       
-        exec @retval = [web].[generate_answer] @text, @samples, @response output;
+        exec @retval = [web].[generate_answer] @text, @samples, @response output with result sets none;
         if (@retval != 0) return;
     end else begin
         set @samples = '[]'
@@ -123,5 +127,5 @@ inner join
     dbo.samples as s on s.id = sr.id
 order by
     sr.result_position
-    
-GO
+
+go
