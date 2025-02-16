@@ -1,0 +1,8 @@
+.gitVersion {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    text-align: center;
+    font-size: smaller;
+    color: #c1c1c1; /* Optional: Add a background color */
+  }

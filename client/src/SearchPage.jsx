@@ -22,6 +22,7 @@ import { Alert12Filled, AlertOn16Filled, Note16Filled, Search24Regular, Warning1
 import ReactMarkdown from 'react-markdown';
 import Cookies from 'js-cookie';
 import styles from './assets/styles/SearchPage.module.css'; // Import the CSS module
+import GitHash from './components/GitVersion';
 
 let pageStatus = "first_load";
 
@@ -212,9 +213,11 @@ const SearchPage = () => {
           </TeachingPopover>
 
           <Button onClick={handleGoToGithub} target="_blank">Go to GitHub Repo</Button>
-        </div>
+        </div>        
       </div>
 
+      <GitHash />
+      
       <div className={styles.searchWrapper}>
         <SearchBox
           placeholder="Type your query in natural language. The AI will do the rest..."
