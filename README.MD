@@ -115,7 +115,7 @@ Data API builder may take a few seconds to run if you are using Azure SQL and En
 
 ### Azure deployment
 
-The easiest way to deploy the full-stack application is to fork the repository and then create a new Static Web Apps pointing to the forked repository. Once the Static Web App is deployed, configured the [Database Connection](https://learn.microsoft.com/en-us/azure/static-web-apps/database-overview) feature of Static Web Apps to connect to the Azure SQL database where you have deployed the database objects and the sample data.
+The easiest way to deploy the full-stack application is to fork the repository and then create a new Static Web Apps pointing to the forked repository. Once the Static Web App is deployed, configure the [Database Connection](https://learn.microsoft.com/en-us/azure/static-web-apps/database-overview) feature of Static Web Apps to connect to the Azure SQL database where you have deployed the database objects and the sample data.
 
 Make sure you give the user thay you are using to connect to the database the permission to run the needed stored procedures:
 
