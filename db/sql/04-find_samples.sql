@@ -17,8 +17,9 @@ delete from [dbo].[semantic_cache] where query_date < dateadd(hour, -1, sysdatet
 select top(1) *, vector_distance('cosine', @qv, embedding) as d 
 into #c 
 from [dbo].[semantic_cache] order by d;
+--select * from #c
 
-select top(1) @cached_response = response from #c where d < 0.3
+select top(1) @cached_response = response from #c where d < 0.25
 if (@cached_response is not null) set @response = @cached_response
 
 /* If no cached response is available then generate a fresh answer */
