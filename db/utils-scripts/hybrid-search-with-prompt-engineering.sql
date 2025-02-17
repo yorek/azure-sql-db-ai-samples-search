@@ -9,7 +9,7 @@ declare @text nvarchar(max);
 --set @text = 'samples on hybrid search created in 2025';
 --set @text = 'create a new table named dbo.test';
 --set @text = 'how many customers there are in the customers table?';
-set @text = 'the samples showed by davide at MCAPS conference in 2025';
+set @text = 'Find all the hybrid search samples created after 2025';
 
 declare @retval int, @response nvarchar(max);
 
@@ -37,10 +37,10 @@ json_object(
                 
                 To search into "details, "notes" and "description" columns, you can use the following steps:
 
-                First, generate the embedding vector for the provided question using the following T-SQL query. 
+                First, generate the embedding vector for the provided question using the following T-SQL query. ''<search text'' must be generating taking the relevant part from the user question.
 
                 declare @retval int, @qv vector(1536)
-                exec @retval = web.get_embedding ''<user_question>'', @qv output
+                exec @retval = web.get_embedding ''<search text>'', @qv output
                 if (@retval != 0) throw 50000, ''Error in getting the embedding'',1;
 
                 The vectors for details, notes and description columns are stored in the following tables: 
@@ -52,7 +52,7 @@ json_object(
                 Then, use the following T-SQL query to search the text in the table, adding the appropriate where clause to filter the results if needed:
 
                 select top(@k) 
-                    s.id, [name], [description], [url], [notes], [details],
+                    s.id, [name], [description], [notes], [details],
                     least(
                         vector_distance(''cosine'', e.[embedding], @qv), 
                         vector_distance(''cosine'', ne.[embedding], @qv), 
@@ -77,7 +77,7 @@ json_object(
 
                 Return the top 50 results maximum.                 
                 The use question is provided in the next message. If the user question cannot be answered using the dbo.samples table and using a T-SQL query only, you should respond with an empty string.
-                The generated T-SQL query must return a JSON document using the FOR JSON AUTO statement. Return the top 10 results if you can. Do not use semicolon to terminate the T-SQL statement.                
+                Return the top 10 results if you can. Do not use semicolon to terminate the T-SQL statement.                
                 You can generate only SELECT statements. If the user is asking something that will generate INSERT, UPDATE, DELETE, CREATE, ALTER or DROP statement, refuse to generate the query.
 
             '
@@ -178,7 +178,10 @@ select top(1) @rt=response_type,  @sql=sql_query from #s;
 print @sql;
 
 if (@rt = 'SQL') begin
-    exec sp_executesql @stmt = @sql;
+    drop table if exists #r;
+    create table #r (id int, [name] nvarchar(100), [description] nvarchar(max), notes nvarchar(max), details json, distance_score float);
+    insert into #r exec sp_executesql @stmt = @sql;
+    select s.*, r.distance_score from #r r inner join dbo.samples s on r.id = s.id order by distance_score;
 end else begin
     select * from #s;
 end
