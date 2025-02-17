@@ -13,7 +13,10 @@ set @text = 'Find all the hybrid search samples created after 2025';
 
 declare @retval int, @response nvarchar(max);
 
-/* Create the prompt for the LLM */
+/* 
+    Create the prompt for the LLM using few-shots prompt to show how to 
+    get embeddings and to use the new vector_distance function
+*/
 declare @p nvarchar(max) = 
 json_object(
     'messages': json_array(
@@ -157,6 +160,9 @@ if @refusal != '' begin
     select 'Orchestrator:OpenAI/Refusal' as [error], @refusal as [refusal], @response as [response]
 end
 
+/* 
+    Process the structured output answer 
+*/
 drop table if exists #s;
 select top(1)
     *
@@ -172,11 +178,16 @@ cross apply
         sql_query nvarchar(max)
     ) as sr;
 
-
+/*
+    Show orchestration result and generated SQL query if there is one (it should!)
+*/
 declare @sql nvarchar(max), @rt varchar(10)
 select top(1) @rt=response_type,  @sql=sql_query from #s;
 print @sql;
 
+/*
+    Execute the query
+*/
 if (@rt = 'SQL') begin
     drop table if exists #r;
     create table #r (id int, [name] nvarchar(100), [description] nvarchar(max), notes nvarchar(max), details json, distance_score float);
