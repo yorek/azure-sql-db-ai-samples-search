@@ -254,7 +254,7 @@ const SearchPage = () => {
 
       {(pageStatus == "error") && (
         <Text block style={{ textAlign: 'center', color: 'red', marginBottom: '20px' }}>
-          {error[0].source}#{error[0].code}: {error[0].description}
+          Source: "{error[0].source}" - Code: "{error[0].code}"<br/>{error[0].description}
         </Text>
       )}
 
