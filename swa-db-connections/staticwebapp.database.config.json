@@ -1,5 +1,5 @@
 {
-  "$schema": "https://github.com/Azure/data-api-builder/releases/download/v1.1.7/dab.draft.schema.json",
+  "$schema": "https://github.com/Azure/data-api-builder/releases/download/v1.2.10/dab.draft.schema.json",
   "data-source": {
     "database-type": "mssql",
     "connection-string": "@env('MSSQL')",
@@ -27,6 +27,10 @@
         "provider": "StaticWebApps"
       },
       "mode": "production"
+    },
+    "cache": {
+      "enabled": true,
+      "ttl-seconds": 1
     }
   },
   "entities": {
