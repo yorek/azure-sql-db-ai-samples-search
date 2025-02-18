@@ -469,7 +469,6 @@ exec dbo.add_sample '
 {
     "name": "Build an AI App GraphQL Endpoint with SQL DB in Fabric", 
     "description": "This lab will guide you through creating a set of GraphQL RAG application APIs that use relational data, Azure OpenAI, and SQL DB in Fabric.",
-    "notes": "Sample RAG pattern, with full UX, using Fabric SQL Database, Langchain and Chainlit",
     "url": "https://github.com/Azure-Samples/sql-in-fabric-ai-embeddings-workshop",
     "details": {
         "author": "Brian Spendolini",
@@ -483,10 +482,12 @@ exec dbo.add_sample '
     }
 }
 ';
+GO
 
-select id, name, created_on, updated_on from dbo.samples order by created_on desc
+select id, name, created_on, updated_on from dbo.samples order by created_on desc;
 --where [url] like '%kmeans%'
+GO
 
-
-
+exec [web].[get_total_sample_count]
+GO
 
