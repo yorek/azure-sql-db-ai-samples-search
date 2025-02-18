@@ -93,19 +93,21 @@ const SearchPage = () => {
   const getError = (result) => {
     let responseStatus = { code: 0, description: '' };
 
-    //console.log("Result", result);
-
     if (result.error != null) {
       responseStatus = {
-        code: result.error.error.status,
-        description: result.error.error.message
+        code: result.error.status,
+        description: result.error.message
       }
     }
+    //console.log("Result", result);
 
-    if (result.value != null && result.value.length > 0 && result.value[0].error.error_code != null) {
+    if (result.value != null && result.value.length > 0 && result.value[0].error != null) {
+      let errorDetails = JSON.parse(result.value[0].error);
+      //console.log("ErrorDetails", errorDetails);
       responseStatus = {
-        code: result.value[0].error.error_code,
-        description: result.value[0].error.error_message
+        source: errorDetails.error,
+        code: errorDetails.error_code,
+        description: errorDetails.error_message
       }
     }
 
@@ -252,7 +254,7 @@ const SearchPage = () => {
 
       {(pageStatus == "error") && (
         <Text block style={{ textAlign: 'center', color: 'red', marginBottom: '20px' }}>
-          {error[0].code} - {error[0].description}
+          {error[0].source}#{error[0].code}: {error[0].description}
         </Text>
       )}
 
