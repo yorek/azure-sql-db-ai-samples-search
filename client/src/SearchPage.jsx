@@ -21,7 +21,7 @@ import {
 import { Alert12Filled, AlertOn16Filled, Note16Filled, Search24Regular, Warning12Filled, Warning16Color, Warning20Color } from '@fluentui/react-icons';
 import ReactMarkdown from 'react-markdown';
 import Cookies from 'js-cookie';
-import styles from './assets/styles/SearchPage.module.css'; // Import the CSS module
+import styles from './assets/styles/SearchPage.module.css'; 
 import GitHash from './components/GitVersion';
 
 let pageStatus = "first_load";
