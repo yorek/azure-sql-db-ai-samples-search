@@ -97,15 +97,15 @@ const SearchPage = () => {
 
     if (result.error != null) {
       responseStatus = {
-        code: result.error.status,
-        description: result.error.message
+        code: result.error.error.status,
+        description: result.error.error.message
       }
     }
 
-    if (result.value != null && result.value.length > 0 && result.value[0].error_code != null) {
+    if (result.value != null && result.value.length > 0 && result.value[0].error.error_code != null) {
       responseStatus = {
-        code: result.value[0].error_code,
-        description: result.value[0].error_message
+        code: result.value[0].error.error_code,
+        description: result.value[0].error.error_message
       }
     }
 

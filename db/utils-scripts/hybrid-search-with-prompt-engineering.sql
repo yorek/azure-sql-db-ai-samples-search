@@ -9,8 +9,8 @@ declare @text nvarchar(max);
 --set @text = 'samples on hybrid search created in 2025';
 --set @text = 'create a new table named dbo.test';
 --set @text = 'how many customers there are in the customers table?';
-set @text = 'Find all the hybrid search samples created after 2025';
---set @text = 'Show me the latest samples'
+--set @text = 'Find all the hybrid search samples created after 2025';
+set @text = 'Show me the latest samples'
 
 declare @retval int, @response nvarchar(max);
 

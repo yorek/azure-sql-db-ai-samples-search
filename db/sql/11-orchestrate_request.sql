@@ -4,14 +4,18 @@ SET QUOTED_IDENTIFIER ON
 GO
 
 
-CREATE    procedure [web].[orchestrate_request] 
+alter procedure [web].[orchestrate_request] 
 @text nvarchar(max),
 @result_type varchar(50) output,
-@result_query nvarchar(max) output
+@result_query nvarchar(max) output,
+@error nvarchar(max) output
 as
 declare @retval int, @response nvarchar(max);
 
-/* Create the prompt for the LLM */
+/* 
+    Create the prompt for the LLM using few-shots prompt to show how to 
+    get embeddings and to use the new vector_distance function
+*/
 declare @p nvarchar(max) = 
 json_object(
     'messages': json_array(
@@ -37,8 +41,8 @@ json_object(
 
                 First, generate the embedding vector for the provided question using the following T-SQL query. ''<search text'' must be generating taking the relevant part from the user question.
 
-                declare @retval int, @qv vector(1536)
-                exec @retval = web.get_embedding ''<search text>'', @qv output
+                declare @retval int, @qv vector(1536), @e nvarchar(max)
+                exec @retval = web.get_embedding ''<search text>'', @qv output, @e output;
                 if (@retval != 0) throw 50000, ''Error in getting the embedding'',1;
 
                 The vectors for details, notes and description columns are stored in the following tables: 
@@ -83,7 +87,6 @@ json_object(
                 Return the top 10 results if you can. Do not use semicolon to terminate the T-SQL statement.                
                 Only return the following columns: id int, [name] nvarchar(100), [description] nvarchar(max), notes nvarchar(max), details json, distance_score float.
                 You can generate only SELECT statements. If the user is asking something that will generate INSERT, UPDATE, DELETE, CREATE, ALTER or DROP statement, refuse to generate the query.
-
             '
         ),
         json_object(
@@ -145,23 +148,24 @@ begin try
         @credential = [$OPENAI_URL$],
         @timeout = 120,
         @payload = @p,
-        @response = @response output;
+        @response = @response output
+        with result sets none;
 end try
 begin catch
-    select 'Orchestrator:REST' as [error], ERROR_NUMBER() as [error_code], ERROR_MESSAGE() as [error_message]
+    set @error = json_object('error':'Orchestrator:REST', 'error_code':ERROR_NUMBER(), 'error_message':ERROR_MESSAGE())
     return -1
 end catch
 --select @response
 
 if @retval != 0 begin
-    select 'Orchestrator:OpenAI' as [error], @retval as [error_code], @response as [response]
+    set @error = json_object('error':'Orchestrator:OpenAI', 'error_code':@retval, 'error_message':@response)
     return -1
 end
 
 declare @refusal nvarchar(max) = (select coalesce(json_value(@response, '$.result.choices[0].refusal'), ''));
 
 if @refusal != '' begin
-    select 'Orchestrator:OpenAI/Refusal' as [error], @refusal as [refusal], @response as [response]
+    set @error = json_object('error':'Orchestrator:OpenAI/Refusal', 'refusal':@refusal, 'response':@response)
     return -1
 end
 

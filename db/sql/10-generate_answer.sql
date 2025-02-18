@@ -1,20 +1,20 @@
 create or alter procedure [web].[generate_answer] 
 @query_text nvarchar(max),
 @source nvarchar(max),
-@response nvarchar(max) output
+@response nvarchar(max) output,
+@error nvarchar(max) output
 as
 declare @retval int;
 
 if (@query_text is null) begin
-    select 'Generator' as [error], -1 as [error_code], 'Query not provided' as [error_message]
+    set @error = json_object('error':'Generator', 'error_code':-1, 'error_message':'Query not provided')
     return -1
 end
 
 if (@source is null) begin
-    select 'Generator' as [error], -1 as [error_code], 'Sample list not provided' as [error_message]
+    set @error = json_object('error':'Generator', 'error_code':-1, 'error_message':'Sample list not provided')
     return -1
 end
-
 
 /* Create the prompt for the LLM */
 declare @p nvarchar(max) = 
@@ -111,20 +111,20 @@ begin try
         @response = @response output;
 end try
 begin catch
-    select 'Generator:REST' as [error], ERROR_NUMBER() as [error_code], ERROR_MESSAGE() as [error_message]
+    set @error = json_object('error':'Generator:REST', 'error_code':ERROR_NUMBER(), 'error_message':ERROR_MESSAGE())
     return -1
 end catch
 --select @response
 
 if @retval != 0 begin
-    select 'Generator:OpenAI' as [error], @retval as [error_code], @response as [response]
+    set @error = json_object('error':'Generator:OpenAI', 'error_code':@retval, 'error_message':@response)    
     return @retval
 end
 
 declare @refusal nvarchar(max) = (select coalesce(json_value(@response, '$.result.choices[0].refusal'), ''));
 
 if @refusal != '' begin
-    select 'Generator:OpenAI/Refusal' as [error], @refusal as [refusal], @response as [response]
+    set @error = json_object('error':'Generator:OpenAI/Refusal', 'refusal':@refusal, 'response':@response)    
     return -1
 end
 GO

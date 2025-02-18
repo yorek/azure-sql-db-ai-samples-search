@@ -1,6 +1,7 @@
 create or alter procedure [web].[get_embedding]
 @inputText nvarchar(max),
-@embedding vector(1536) output
+@embedding vector(1536) output,
+@error nvarchar(max) output
 as
 declare @retval int;
 declare @payload nvarchar(max) = json_object('input': @inputText);
@@ -11,15 +12,16 @@ begin try
         @method = 'POST',
         @credential = [$OPENAI_URL$],
         @payload = @payload,
-        @response = @response output;
+        @response = @response output
+        with result sets none;
 end try
 begin catch
-    select 'Embedding:REST' as [error], ERROR_NUMBER() as [error_code], ERROR_MESSAGE() as [error_message]
+    set @error = json_object('error':'Embedding:REST', 'error_code':ERROR_NUMBER(), 'error_message':ERROR_MESSAGE())
     return -1
 end catch
 
 if @retval != 0 begin
-    select 'Embedding:OpenAI' as [error], @retval as [error_code], @response as [response]
+    set @error = json_object('error':'Embedding:OpenAI', 'error_code':@retval, 'error_message':@response)
     return @retval
 end
 
