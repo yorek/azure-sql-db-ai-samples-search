@@ -467,7 +467,7 @@ exec dbo.add_sample '
 
 exec dbo.add_sample '
 {
-    "name": "Build an AI App GraphQL Endpoint with SQL DB in Fabric​", 
+    "name": "Build an AI App GraphQL Endpoint with SQL DB in Fabric", 
     "description": "This lab will guide you through creating a set of GraphQL RAG application APIs that use relational data, Azure OpenAI, and SQL DB in Fabric.",
     "notes": "Sample RAG pattern, with full UX, using Fabric SQL Database, Langchain and Chainlit",
     "url": "https://github.com/Azure-Samples/sql-in-fabric-ai-embeddings-workshop",
