@@ -3,6 +3,7 @@
 */
 declare @v vector(1536)
 exec [web].[get_embedding] 'just a sample text', @v output
+select @v
 go
 
 /*
