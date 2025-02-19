@@ -10,6 +10,7 @@ import {
 import {Link16Regular, Link20Regular} from '@fluentui/react-icons';
 import ReactMarkdown from 'react-markdown';
 
+import GitHash from './components/GitVersion';
 import PageTitle from './components/PageTitle';
 
 import styles from './assets/styles/SamplesPage.module.css';
@@ -36,6 +37,7 @@ const SamplesPage = () => {
   return (
     <>
       <PageTitle />
+
       <div className={styles.samples}>
         {loading && <p>Loading...</p>}
         {!loading &&
@@ -66,6 +68,8 @@ const SamplesPage = () => {
           })
         }
       </div>
+
+       <GitHash />
     </>
   );
 };

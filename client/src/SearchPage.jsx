@@ -162,6 +162,7 @@ const SearchPage = () => {
   return (
     <>
       <PageTitle />
+      
       <div className={styles.buttonsArea}>
         <TeachingPopover defaultOpen={popOverOpen}>
           <TeachingPopoverTrigger>
