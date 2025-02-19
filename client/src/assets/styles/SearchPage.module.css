@@ -1,26 +1,3 @@
-.header {  
-  text-align: center;
-  margin-top: 60px;
-  margin-bottom: 20px;
-}
-
-.title {
-  font-size: xx-large;
-  font-weight: bold;
-  color: #0078D4;
-}
-
-.subtitle {
-  font-size: large;
-  margin-top: 15px;  
-}
-
-.sampleCount {
-  font-size: medium;
-  margin-top: 10px;
-  margin-bottom: 15px;  
-}
-
 .searchWrapper {  
   display: flex;
   justify-content: center;

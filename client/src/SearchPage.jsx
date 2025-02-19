@@ -23,6 +23,7 @@ import ReactMarkdown from 'react-markdown';
 import Cookies from 'js-cookie';
 import styles from './assets/styles/SearchPage.module.css'; 
 import GitHash from './components/GitVersion';
+import PageTitle from './components/PageTitle';
 
 let pageStatus = "first_load";
 
@@ -32,30 +33,10 @@ const SearchPage = () => {
   const [results, setResults] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState([]);
-  const [sampleCount, setSampleCount] = useState(0);
-  const [isSampleCountLoading, setIsSampleCountLoading] = useState(true); // For sample count loading
   const location = useLocation();
   const [popOverOpen, setPopOverOpen] = useState(false);
 
   useEffect(() => {
-    const fetchSampleCount = async () => {
-      setIsSampleCountLoading(true);
-      try {
-        const response = await fetch('./data-api/rest/countSamples');
-        if (response.ok) {
-          const data = await response.json();
-          const count = data.value[0].total_sample_count;
-          setSampleCount(count);
-        }        
-      } catch (error) {
-        console.log(error);
-      } finally {
-        setIsSampleCountLoading(false);
-      }
-    };
-
-    fetchSampleCount();
-
     const params = new URLSearchParams(location.search);
     const q = params.get('q');
     //console.log('Query:', q);
@@ -180,44 +161,34 @@ const SearchPage = () => {
 
   return (
     <>
-      <div className={styles.header}>
-        <div className={styles.title}>
-          Azure SQL DB Samples AI Agentic RAG Search 💡🔍
-        </div>
-        <div className={styles.subtitle}>
-          Find samples using AI Agents search capabilities 🚀
-        </div>
-        <div className={styles.sampleCount}>
-          {isSampleCountLoading ? 'Finding how many samples are available...' : (<span>There are <Link href="https://aka.ms/sqlai-samples" target="_blank">{sampleCount} samples</Link> in the database.</span>)}
-        </div>
-        <div className={styles.buttonsArea}>
-          <TeachingPopover defaultOpen={popOverOpen}>
-            <TeachingPopoverTrigger>
-              <Button>How does it work?</Button>
-            </TeachingPopoverTrigger>
-            <TeachingPopoverSurface className={styles.popOverSurface}>
-              <TeachingPopoverHeader>Tips</TeachingPopoverHeader>
-              <TeachingPopoverBody>
-                <TeachingPopoverTitle>AI Agent Powered Search</TeachingPopoverTitle>
-                <div>
-                  This search engine uses AI Agents to find samples from the <Link href="https://aka.ms/sqlai-samples" target="_blank">Azure SQL Database Samples repository</Link> using a RAG pattern with structured output.
-                  <ul>
-                    <li>The searched text is given to an <strong>AI Agent</strong> that decide the best tool to use to answer the question, either using similarity search or generating and executing a SQL query</li>
-                    <li>Similiarity search across all available resources is done using the newly introduced <Link href='https://devblogs.microsoft.com/azure-sql/exciting-announcement-public-preview-of-native-vector-support-in-azure-sql-database/' target="_blank">vector support in Azure SQL Database</Link>.</li>
-                    <li>Results are then passed to a GPT-4o model to generate a sample summary and thoughts with a defined <Link href='https://learn.microsoft.com/en-us/azure/ai-services/openai/how-to/structured-outputs?tabs=rest' target="_blank">structured output</Link>.</li>
-                    <li><strong>Semantic caching</strong> is used to improve the performance of the search engine and reduce LLM calls costs.</li>
-                  </ul>
-                  If you want to have more details and get the source code of this sample, just ask about "this agentic AI sample" or "this website sample". Read more about creating AI apps with Azure SQL here: <Link href="https://aka.ms/sqlai" target="_blank">https://aka.ms/sqlai</Link>
-                </div>
-              </TeachingPopoverBody>
-              <TeachingPopoverFooter primary="Got it" />
-            </TeachingPopoverSurface>
-          </TeachingPopover>
+      <PageTitle />
+      <div className={styles.buttonsArea}>
+        <TeachingPopover defaultOpen={popOverOpen}>
+          <TeachingPopoverTrigger>
+            <Button>How does it work?</Button>
+          </TeachingPopoverTrigger>
+          <TeachingPopoverSurface className={styles.popOverSurface}>
+            <TeachingPopoverHeader>Tips</TeachingPopoverHeader>
+            <TeachingPopoverBody>
+              <TeachingPopoverTitle>AI Agent Powered Search</TeachingPopoverTitle>
+              <div>
+                This search engine uses AI Agents to find samples from the <Link href="https://aka.ms/sqlai-samples" target="_blank">Azure SQL Database Samples repository</Link> using a RAG pattern with structured output.
+                <ul>
+                  <li>The searched text is given to an <strong>AI Agent</strong> that decide the best tool to use to answer the question, either using similarity search or generating and executing a SQL query</li>
+                  <li>Similiarity search across all available resources is done using the newly introduced <Link href='https://devblogs.microsoft.com/azure-sql/exciting-announcement-public-preview-of-native-vector-support-in-azure-sql-database/' target="_blank">vector support in Azure SQL Database</Link>.</li>
+                  <li>Results are then passed to a GPT-4o model to generate a sample summary and thoughts with a defined <Link href='https://learn.microsoft.com/en-us/azure/ai-services/openai/how-to/structured-outputs?tabs=rest' target="_blank">structured output</Link>.</li>
+                  <li><strong>Semantic caching</strong> is used to improve the performance of the search engine and reduce LLM calls costs.</li>
+                </ul>
+                If you want to have more details and get the source code of this sample, just ask about "this agentic AI sample" or "this website sample". Read more about creating AI apps with Azure SQL here: <Link href="https://aka.ms/sqlai" target="_blank">https://aka.ms/sqlai</Link>
+              </div>
+            </TeachingPopoverBody>
+            <TeachingPopoverFooter primary="Got it" />
+          </TeachingPopoverSurface>
+        </TeachingPopover>
 
-          <Button onClick={handleGoToGithub} target="_blank">Go to GitHub Repo</Button>
-        </div>        
-      </div>
-
+        <Button onClick={handleGoToGithub} target="_blank">Go to GitHub Repo</Button>
+      </div>        
+      
       <GitHash />
       
       <div className={styles.searchWrapper}>

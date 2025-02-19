@@ -1,5 +1,18 @@
 import React, { useState, useEffect } from 'react';
-//import styles from './assets/styles/AboutPage.module.css';
+import {
+  Button,
+  Spinner,
+  Link,
+  Card,
+  CardHeader,
+  CardFooter
+} from '@fluentui/react-components';
+import {Link16Regular, Link20Regular} from '@fluentui/react-icons';
+import ReactMarkdown from 'react-markdown';
+
+import PageTitle from './components/PageTitle';
+
+import styles from './assets/styles/SamplesPage.module.css';
 
 const SamplesPage = () => {
 
@@ -10,29 +23,49 @@ const SamplesPage = () => {
     console.log('Fetching samples...');
     const fetchSamples = async () => {
       setLoading(true);
-      const response = await fetch('./data-api/rest/samples?$orderby=id');
+      const response = await fetch('./data-api/rest/samples?$orderby=created_on desc');
       const data = await response.json();
       setSamples(data.value);
       setLoading(false);
+      console.log('Done.');
     };
-     
+
     fetchSamples();
-    }, []);
+  }, [location]);
 
   return (
     <>
-    {loading && <p>Loading...</p>}
-    {!loading &&
-      <div>
-        {samples.map((sample, index) => (
-          <div key={index}>
-            <h3>{sample.id}: {sample.name}</h3>
-            <p>{sample.description}</p>
-            <a href={sample.url}>{sample.url}</a>
-          </div>
-        ))}
+      <PageTitle />
+      <div className={styles.samples}>
+        {loading && <p>Loading...</p>}
+        {!loading &&
+          samples.map((result, index) => {
+            return (
+              <Card key={index} className={styles.resultCard}>
+                <CardHeader
+                  header={
+                    <div className={styles.resultCardHeader}>
+                      <Link href={result.url} target='blank'>{result.name} <Link24Regular /></Link>
+                    </div>
+                  }
+                  description={
+                    <div>
+                      <div className={styles.resultDescription}>
+                        <ReactMarkdown>
+                          {result.description}
+                        </ReactMarkdown>
+                      </div>
+                      <div className={styles.resultDetails}>
+                        Created on: {result.created_on}, Updated on: {result.updated_on}
+                      </div>
+                    </div>
+                  }
+                />
+              </Card>
+            );
+          })
+        }
       </div>
-  }
     </>
   );
 };
