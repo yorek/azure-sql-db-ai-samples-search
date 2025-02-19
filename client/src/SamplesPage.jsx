@@ -45,7 +45,7 @@ const SamplesPage = () => {
                 <CardHeader
                   header={
                     <div className={styles.resultCardHeader}>
-                      <Link href={result.url} target='blank'>{result.name} <Link24Regular /></Link>
+                      <Link href={result.url} target='blank'>{result.name} <Link20Regular /></Link>
                     </div>
                   }
                   description={
