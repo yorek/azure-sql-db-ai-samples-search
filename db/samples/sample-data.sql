@@ -484,6 +484,23 @@ exec dbo.add_sample '
 ';
 GO
 
+exec dbo.add_sample '
+{
+    "name": "Modernize applications with Azure SQL, Open AI and Data API builder", 
+    "description": "This repository contains a sample application and scripts to demonstrate how to migrate and modernize your applications with Azure SQL and AI, without the need to change your application code and taking advantage of Data API builder to create a modern data access layer.",
+    "notes": "Help customers to modernize applications without changing code, using RAG pattern and embeddings",
+    "url": "https://github.com/Azure-Samples/azure-sql-modernize-app-with-ai",
+    "details": {
+        "author": "Davide Mauri",
+        "languages": ["T-SQL", "REST", "GraphQL"],        
+        "services": ["Azure SQL", "Azure Open AI"],
+        "license": "MIT",
+        "tags": ["End-to-End", "Modernize", "Innovate", "Migrate", "RAG", "Embeddings", "Vectors"]        
+    }
+}
+';
+GO
+
 select id, name, created_on, updated_on from dbo.samples order by created_on desc;
 --where [url] like '%kmeans%'
 GO
@@ -491,3 +508,5 @@ GO
 exec [web].[get_total_sample_count]
 GO
 
+exec [web].[find_samples] 'migrate and modernzine'
+go

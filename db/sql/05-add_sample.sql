@@ -40,10 +40,15 @@ delete from dbo.samples_embeddings where [id] = @sampleId
 declare @embedding vector(1536)
 declare @name nvarchar(100) 
 declare @description nvarchar(max)
+declare @retval int, @error nvarchar(max)
 select @name = [name], @description = [description] from #samples;
 
 declare @sample nvarchar(max) = @name + ': ' + @description;
-exec web.get_embedding @sample, @embedding output;
+exec @retval = web.get_embedding @sample, @embedding output, @error output;
+if (@retval != 0) begin
+    select @error as error; 
+    return;
+end
 
 insert into dbo.samples_embeddings (id, embedding, updated_on)
 select @sampleId as id, @embedding as [embedding], sysdatetime() as [updated_on];
@@ -57,7 +62,11 @@ if (exists(select * from #samples where [notes] is not null)) begin
     declare @notes_embedding vector(1536);
     declare @notes nvarchar(max) = (select [notes] from #samples);
     
-    exec web.get_embedding @notes, @notes_embedding output;
+    exec @retval = web.get_embedding @notes, @notes_embedding output, @error output;
+    if (@retval != 0) begin
+        select @error as error; 
+        return;
+    end
 
     insert into dbo.samples_notes_embeddings (id, embedding, updated_on)
     select @sampleId as id, @notes_embedding as [embedding], sysdatetime() as [updated_on]
@@ -72,7 +81,11 @@ if (exists(select * from #samples where [details] is not null)) begin
     declare @details_embedding vector(1536);
     declare @details nvarchar(max) = (select [details] from #samples);
     
-    exec web.get_embedding @details, @details_embedding output;
+    exec @retval = web.get_embedding @details, @details_embedding output, @error output;
+    if (@retval != 0) begin
+        select @error as error; 
+        return;
+    end
 
     insert into dbo.samples_details_embeddings (id, embedding, updated_on) 
     select @sampleId as id, @details_embedding as [embedding], sysdatetime() as [updated_on]
