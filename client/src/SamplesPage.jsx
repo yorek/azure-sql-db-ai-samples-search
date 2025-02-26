@@ -10,10 +10,11 @@ import {
 import {Link16Regular, Link20Regular} from '@fluentui/react-icons';
 import ReactMarkdown from 'react-markdown';
 
+import styles from './assets/styles/SamplesPage.module.css';
+
 import GitHash from './components/GitVersion';
 import PageTitle from './components/PageTitle';
 
-import styles from './assets/styles/SamplesPage.module.css';
 
 const SamplesPage = () => {
 
@@ -47,7 +48,7 @@ const SamplesPage = () => {
                 <CardHeader
                   header={
                     <div className={styles.resultCardHeader}>
-                      <Link href={result.url} target='blank'>{result.name} <Link20Regular /></Link>
+                      {result.name} <Link href={result.url} target='blank'> <Link20Regular /></Link>
                     </div>
                   }
                   description={
