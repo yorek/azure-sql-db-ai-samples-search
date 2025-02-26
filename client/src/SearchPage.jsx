@@ -173,7 +173,7 @@ const SearchPage = () => {
             <TeachingPopoverBody>
               <TeachingPopoverTitle>AI Agent Powered Search</TeachingPopoverTitle>
               <div>
-                This search engine uses AI Agents to find samples from the <Link href="https://aka.ms/sqlai-samples" target="_blank">Azure SQL Database Samples repository</Link> using a RAG pattern with structured output.
+                This search engine uses AI Agents to find samples created over time and available at <Link href='https://github.com/Azure-Samples?q=azure-sql' target="_blank">Azure SQL Database Samples repository</Link> and <Link href='https://aka.ms/sqlai-samples' target="_blank"> Azure SQL AI Samples</Link>using a RAG pattern with structured output.
                 <ul>
                   <li>The searched text is given to an <strong>AI Agent</strong> that decide the best tool to use to answer the question, either using similarity search or generating and executing a SQL query</li>
                   <li>Similiarity search across all available resources is done using the newly introduced <Link href='https://devblogs.microsoft.com/azure-sql/exciting-announcement-public-preview-of-native-vector-support-in-azure-sql-database/' target="_blank">vector support in Azure SQL Database</Link>.</li>

@@ -501,6 +501,25 @@ exec dbo.add_sample '
 ';
 GO
 
+/*
+    SQL Conf() 2025
+*/
+
+exec dbo.add_sample '
+{
+    "name": "Vectors, AI, Agents: how AI will change the way users interact with databases", 
+    "description": "Discover how AI is revolutionizing the way users and developers interact with databases. In this session we will explore how intelligent agents can generate and execute T-SQL queries to retrieve the precise information requested by users or developers. Dive into the foundational role of vectors in powering these agent-driven interactions and see how SQL Server can serve as the backbone for creating modern, AI-augmented applications. Additionally, gain insights into the critical security implications of these advancements and learn best practices for safeguarding your data in this AI-driven paradigm. Whether you''re a database developer or a technology strategist, this session will equip you with the tools and understanding to leverage AI for the next generation of database interactions.",
+    "url": "https://youtu.be/Uddhx8Bu2ZM",
+    "details": {
+        "author": "Davide Mauri",        
+        "conference": "SQL Conf() 2025"
+    }
+}
+';
+GO
+
+--exec dbo.delete_sample @url = 'https://youtu.be/Uddhx8Bu2ZM'
+
 select id, name, created_on, updated_on from dbo.samples order by created_on desc;
 --where [url] like '%kmeans%'
 GO
