@@ -3,6 +3,13 @@ import UserState from "./userState";
 import { teamsDarkTheme, teamsLightTheme } from "@fluentui/react-components";
 import sha256 from "crypto-js/sha256";
 
+function getCookie(name: string): string | null {
+    const value = `; ${document.cookie}`;
+    const parts = value.split(`; ${name}=`);
+    if (parts.length === 2) return parts.pop()?.split(';').shift() || null;
+    return null;
+}
+
 const initialState: UserState = {
     fullName: "",
     email: "",
@@ -13,9 +20,13 @@ const initialState: UserState = {
     theme: teamsLightTheme
 };
 
+// Read state from cookie if available
+const cookieState = localStorage.getItem("userState");
+const parsedCookieState = cookieState ? JSON.parse(cookieState) : null;
+
 export const userSlice = createSlice({
     name: "user",
-    initialState: initialState,
+    initialState: parsedCookieState || initialState,
     reducers: {
         login: (state) => {
             state.fullName = "Raffaele Garofalo";
@@ -23,8 +34,10 @@ export const userSlice = createSlice({
             state.emailHash = sha256("rgarofalo@microsoft.com").toString();
             state.role = "Microsoft";
             state.isAuth = true;
+            localStorage.setItem("userState", JSON.stringify(state));
         },
         logout: (state) => {
+            localStorage.removeItem("userState");
             return {
                 ...state,
                 ...initialState
@@ -37,6 +50,7 @@ export const userSlice = createSlice({
             else {
                 state.theme = teamsLightTheme;
             }
+            localStorage.setItem("userState", JSON.stringify(state));
         }
     }
 });
