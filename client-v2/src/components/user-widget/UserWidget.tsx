@@ -1,30 +1,41 @@
-import { 
-    Avatar, 
-    Body1, 
-    Body1Strong, 
-    Button, 
-    Popover, 
-    PopoverSurface, 
-    PopoverTrigger, 
-    Switch,
-    makeStyles 
+import {
+    Avatar,
+    Body1,
+    Body1Strong,
+    Button,
+    Popover,
+    PopoverSurface,
+    PopoverTrigger,
+    ToggleButton,
+    makeStyles,
+    teamsDarkTheme,
 } from "@fluentui/react-components";
+
+import {
+    WeatherMoonFilled,
+    WeatherSunnyRegular,
+} from "@fluentui/react-icons"
+
+import { useSelector, useDispatch } from "react-redux";
+import { login, logout, setTheme } from "../../store/slices/userSlice";
+import UserState from "../../store/slices/userState";
 
 const useStyles = makeStyles({
     avatar: {
-        cursor: "pointer", 
-        display: "flex", 
-        flexWrap: "nowrap", 
-        alignItems: "center", 
+        cursor: "pointer",
+        display: "flex",
+        flexWrap: "nowrap",
+        alignItems: "center",
         justifyContent: "space-between"
     },
     menu: {
-        width: "240px", 
-        display: "flex", 
-        flexWrap: "nowrap", 
-        alignItems: "center", 
+        width: "240px",
+        display: "flex",
+        flexWrap: "nowrap",
+        alignItems: "center",
         justifyContent: "space-between",
-        gap: "12px"
+        gap: "12px",
+        marginBottom: "16px"
     },
     menuOpen: {
         padding: "8px",
@@ -37,29 +48,63 @@ const useStyles = makeStyles({
 const UserWidget = () => {
 
     const classes = useStyles();
+    const dispatch = useDispatch();
+    const user = useSelector((state: { user: UserState }) => state.user);
 
     return (
-            <Popover trapFocus withArrow>
-                <PopoverTrigger>
-                    <div className={classes.avatar}>
-                        <Body1Strong style={{ marginRight: "8px"}}>Microsoft</Body1Strong>
-                        <Avatar name="Raffaele Garofalo" badge={{ status: "available" }} />
-                    </div>
-                </PopoverTrigger>
-                <PopoverSurface>
-                    <div className={classes.menu}>
-                        <Body1Strong>Microsoft</Body1Strong>
-                        <Button appearance="subtle" size="small">Sign out</Button>
-                    </div>
-                    <div className={classes.menuOpen}>
-                        <Avatar name="Raffaele Garofalo" badge={{ status: "available" }} size={48} />
-                        <div style={{ display: "flex", flexDirection:"column"}}>
-                            <Body1Strong>Raffaele Garofalo</Body1Strong>
-                            <Body1>rgarofalo@microsoft.com</Body1>
-                        </div>
-                    </div>
-                </PopoverSurface>
-            </Popover>
+        <>
+            {user.isAuth ? (
+                <div style={{ display: "flex", gap: "16px" }}>
+                    <Popover trapFocus withArrow>
+                        <PopoverTrigger>
+                            <div className={classes.avatar}>
+                                <Body1Strong style={{ marginRight: "8px" }}>{user.role}</Body1Strong>
+                                <Avatar 
+                                    name={user.fullName} 
+                                    image={{
+                                        src: `https://www.gravatar.com/avatar/${user.emailHash}?d=identicon`
+                                    }}
+                                    badge={{ status: "available" }} />
+                            </div>
+                        </PopoverTrigger>
+                        <PopoverSurface>
+                            <div className={classes.menu}>
+                                <Body1Strong>{user.role}</Body1Strong>
+                                <Button appearance="subtle" size="small" onClick={() => dispatch(logout())}>Sign out</Button>
+                            </div>
+                            <div className={classes.menuOpen}>
+                                <Avatar 
+                                    image={{
+                                        src: `https://www.gravatar.com/avatar/${user.emailHash}?d=identicon`
+                                    }}                                    
+                                    name={user.fullName} 
+                                    badge={{ status: "available" }} size={48} />
+                                <div style={{ display: "flex", flexDirection: "column" }}>
+                                    <Body1Strong>{user.fullName}</Body1Strong>
+                                    <Body1>{user.email}</Body1>
+                                </div>
+                            </div>
+                        </PopoverSurface>
+                    </Popover>
+                    <ToggleButton
+                        appearance="subtle"
+                        icon={user.theme == teamsDarkTheme ? <WeatherSunnyRegular /> : <WeatherMoonFilled />}
+                        onClick={() => dispatch(setTheme(user.theme == teamsDarkTheme ? 'light' : 'dark'))} />
+                </div>
+            ) : (
+                <div style={{ display: "flex", gap: "16px" }}>
+                    <Button
+                        appearance="primary"
+                        size="medium"
+                        onClick={() => dispatch(login())}>Sign in</Button>
+                    <ToggleButton
+                        appearance="subtle"
+                        icon={user.theme == teamsDarkTheme ? <WeatherSunnyRegular /> : <WeatherMoonFilled />}
+                        onClick={() => dispatch(setTheme(user.theme == teamsDarkTheme ? 'light' : 'dark'))} />
+
+                </div>
+            )}
+        </>
     );
 };
 
