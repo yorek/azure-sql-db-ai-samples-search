@@ -1,6 +1,6 @@
 
 import { 
-    Title3,
+    
     makeStyles,
     tokens 
 } from "@fluentui/react-components";
@@ -16,10 +16,7 @@ const useStyles = makeStyles({
         backgroundColor: tokens.colorNeutralBackground1,
         borderBottom: "1px solid " + tokens.colorNeutralStroke1,
     },
-    title: {
-        fontWeight: "lighter",
-        color: tokens.colorNeutralForeground1,
-    },
+
     image: {
         padding: "8px",
         width: "48px",
@@ -31,7 +28,7 @@ const Toolbar = () => {
     return (
         <div className={classes.root}>
             <img src={process.env.PUBLIC_URL + "/MS-icon.png"} alt="logo" className={classes.image}/>
-            <Title3 className={classes.title}>Azure SQL Sample Search with AI</Title3>
+            
             <UserWidget />
         </div>
     );
