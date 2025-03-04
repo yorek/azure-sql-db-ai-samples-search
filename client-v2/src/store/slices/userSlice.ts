@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import UserState from "./userState";
+import UserState from "./UserState";
 import { teamsDarkTheme, teamsLightTheme } from "@fluentui/react-components";
 import sha256 from "crypto-js/sha256";
 
@@ -18,7 +18,7 @@ const initialState: UserState = {
 const cookieState = localStorage.getItem("userState");
 const parsedCookieState = cookieState ? JSON.parse(cookieState) : null;
 
-export const userSlice = createSlice({
+export const UserSlice = createSlice({
     name: "user",
     initialState: parsedCookieState || initialState,
     reducers: {
@@ -49,6 +49,6 @@ export const userSlice = createSlice({
     }
 });
 
-export const { login, logout, setTheme } = userSlice.actions;
+export const { login, logout, setTheme } = UserSlice.actions;
 
-export default userSlice;
+export default UserSlice;

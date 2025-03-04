@@ -7,7 +7,6 @@ import {
     PopoverSurface,
     PopoverTrigger,
     ToggleButton,
-    makeStyles,
     teamsDarkTheme,
 } from "@fluentui/react-components";
 
@@ -16,40 +15,18 @@ import {
     WeatherSunnyRegular,
 } from "@fluentui/react-icons"
 
+// redux
 import { useSelector, useDispatch } from "react-redux";
-import { login, logout, setTheme } from "../../store/slices/userSlice";
-import UserState from "../../store/slices/userState";
+import { login, logout, setTheme } from "../../store/slices/UserSlice";
+import { RootState } from "../../store/store";
 
-const useStyles = makeStyles({
-    avatar: {
-        cursor: "pointer",
-        display: "flex",
-        flexWrap: "nowrap",
-        alignItems: "center",
-        justifyContent: "space-between"
-    },
-    menu: {
-        width: "240px",
-        display: "flex",
-        flexWrap: "nowrap",
-        alignItems: "center",
-        justifyContent: "space-between",
-        gap: "12px",
-        marginBottom: "16px"
-    },
-    menuOpen: {
-        padding: "8px",
-        display: "flex",
-        justifyContent: "space-between",
-        gap: "12px"
-    }
-});
+import Styles from "./UserWidget.styles";
 
 const UserWidget = () => {
 
-    const classes = useStyles();
+    const classes = Styles();
     const dispatch = useDispatch();
-    const user = useSelector((state: { user: UserState }) => state.user);
+    const user = useSelector((state: RootState) => state.user);
 
     return (
         <>
