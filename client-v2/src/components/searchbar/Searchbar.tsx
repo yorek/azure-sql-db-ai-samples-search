@@ -41,6 +41,10 @@ const useStyles = makeStyles({
         gap: "16px",
         padding: `${tokens.spacingVerticalMNudge} ${tokens.spacingHorizontalMNudge}`,
     },
+    link : {
+        fontWeight: "bold",
+        fontSize: tokens.fontSizeBase400,
+    }
 });
 
 const Searchbar = () => {
@@ -60,12 +64,12 @@ const Searchbar = () => {
                 <SearchBox style={{ minWidth: "350px" }} size="large" placeholder='Samples used in Orlando Live 360 in 2024' />
                 <Button size='large' appearance="primary">Search</Button>
             </div>
-            <Subtitle2 style={{ fontWeight: "normal" }}>
-                There are a total of <Link inline>0 Samples</Link> in the Database.
+            <Subtitle2 style={{ fontWeight: "normal", textAlign: "center" }}>
+                There are a total of <Link className={classes.link} inline>0 Samples</Link> in the Database.
             </Subtitle2>
-            <Subtitle2 style={{ fontWeight: "normal" }}>
-                You can read more on <Link inline onClick={() => handleOpen}>how it works here</Link>. 
-                You can visit our <Link inline>GitHub repository here</Link>.
+            <Subtitle2 style={{ fontWeight: "normal", textAlign: "center" }}>
+                You can read more on <Link className={classes.link} as="a" inline onClick={() => handleOpen()}>how it works here</Link>. 
+                You can visit our <Link className={classes.link} inline href="https://github.com/yorek/azure-sql-db-ai-samples-search" target='_blank'>GitHub repository here</Link>.
             </Subtitle2>
             <HowItWorks open={openDialog} setOpen={setOpenDialog} />
         </div>

@@ -3,13 +3,7 @@ import UserState from "./userState";
 import { teamsDarkTheme, teamsLightTheme } from "@fluentui/react-components";
 import sha256 from "crypto-js/sha256";
 
-function getCookie(name: string): string | null {
-    const value = `; ${document.cookie}`;
-    const parts = value.split(`; ${name}=`);
-    if (parts.length === 2) return parts.pop()?.split(';').shift() || null;
-    return null;
-}
-
+// initial state
 const initialState: UserState = {
     fullName: "",
     email: "",
@@ -57,4 +51,4 @@ export const userSlice = createSlice({
 
 export const { login, logout, setTheme } = userSlice.actions;
 
-export default userSlice.reducer;
+export default userSlice;
