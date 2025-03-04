@@ -88,8 +88,8 @@ const UserWidget = () => {
                     </Popover>
                     <ToggleButton
                         appearance="subtle"
-                        icon={user.theme == teamsDarkTheme ? <WeatherSunnyRegular /> : <WeatherMoonFilled />}
-                        onClick={() => dispatch(setTheme(user.theme == teamsDarkTheme ? 'light' : 'dark'))} />
+                        icon={user.theme === teamsDarkTheme ? <WeatherSunnyRegular /> : <WeatherMoonFilled />}
+                        onClick={() => dispatch(setTheme(user.theme === teamsDarkTheme ? 'light' : 'dark'))} />
                 </div>
             ) : (
                 <div style={{ display: "flex", gap: "16px" }}>
@@ -99,8 +99,8 @@ const UserWidget = () => {
                         onClick={() => dispatch(login())}>Sign in</Button>
                     <ToggleButton
                         appearance="subtle"
-                        icon={user.theme == teamsDarkTheme ? <WeatherSunnyRegular /> : <WeatherMoonFilled />}
-                        onClick={() => dispatch(setTheme(user.theme == teamsDarkTheme ? 'light' : 'dark'))} />
+                        icon={user.theme === teamsDarkTheme ? <WeatherSunnyRegular /> : <WeatherMoonFilled />}
+                        onClick={() => dispatch(setTheme(user.theme === teamsDarkTheme ? 'light' : 'dark'))} />
 
                 </div>
             )}

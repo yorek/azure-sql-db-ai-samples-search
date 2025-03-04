@@ -1,5 +1,4 @@
 import ReactDOM from 'react-dom/client';
-import { FluentProvider, teamsLightTheme } from '@fluentui/react-components';
 
 import store from './store/store';
 import { Provider } from 'react-redux';

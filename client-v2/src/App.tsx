@@ -1,6 +1,6 @@
 import { FluentProvider, makeStyles, tokens } from "@fluentui/react-components";
 
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import UserState from "./store/slices/userState";
 
 import Toolbar from "./components/toolbar/Toolbar";
