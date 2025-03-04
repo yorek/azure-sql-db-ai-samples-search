@@ -19,7 +19,7 @@ const useStyles = makeStyles({
 
     image: {
         padding: "8px",
-        width: "48px",
+        height: "24px",
     }
 });
 
@@ -27,7 +27,7 @@ const Toolbar = () => {
     const classes = useStyles();
     return (
         <div className={classes.root}>
-            <img src={process.env.PUBLIC_URL + "/MS-icon.png"} alt="logo" className={classes.image}/>
+            <img src={process.env.PUBLIC_URL + "/MS-logo-horizontal.png"} alt="logo" className={classes.image}/>
             
             <UserWidget />
         </div>

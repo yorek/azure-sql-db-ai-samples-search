@@ -1,19 +1,16 @@
 import {
-    Body1,
     Button,
-    Field,
     Link,
-    MessageBar,
-    MessageBarBody,
-    MessageBarTitle,
     SearchBox,
-    Subtitle1,
     Subtitle2,
     Title1,
     Title3,
     makeStyles,
     tokens
 } from '@fluentui/react-components';
+
+import HowItWorks from '../messages/HowItWorks';
+import React, { useState } from 'react';
 
 const useStyles = makeStyles({
     root: {
@@ -29,9 +26,18 @@ const useStyles = makeStyles({
         textAlign: "center",
         padding: "16px",
     },
+    subtitle: {
+        textAlign: "center",
+        padding: "16px",
+        fontWeight: "normal",
+    },
     fieldWrapper: {
         display: "flex",
         alignItems: "center",
+        flexDirection: "column",
+        "@media(min-width: 768px)": {
+            flexDirection: "row"
+        },
         gap: "16px",
         padding: `${tokens.spacingVerticalMNudge} ${tokens.spacingHorizontalMNudge}`,
     },
@@ -40,31 +46,29 @@ const useStyles = makeStyles({
 const Searchbar = () => {
 
     const classes = useStyles();
+    const [openDialog, setOpenDialog] = useState(false);
 
+    const handleOpen = () => {
+        setOpenDialog(true);
+      };
+    
     return (
-        <>
-            <div className={classes.root}>
-                <Title1 className={classes.title}>Azure SQL DB Samples AI Agentic RAG Search</Title1>
-                <Title3 style={{fontWeight:"lighter"}}>Find samples using AI Agents search capabilities</Title3>
-                <div className={classes.fieldWrapper}>
-                    <SearchBox style={{width: "450px"}} size="large" placeholder='Samples used in Orlando Live 360 in 2024' />
-                    <Button size='large' appearance="primary">Search</Button>
-                </div>
-                <Subtitle2 style={{fontWeight: "normal"}}>There are a total of <Link>0 Samples</Link> in the Database.</Subtitle2>
+        <div className={classes.root}>
+            <Title1 className={classes.title}>Azure SQL DB Samples AI Agentic RAG Search</Title1>
+            <Title3 className={classes.subtitle}>Find samples using AI Agents search capabilities</Title3>
+            <div className={classes.fieldWrapper}>
+                <SearchBox style={{ minWidth: "350px" }} size="large" placeholder='Samples used in Orlando Live 360 in 2024' />
+                <Button size='large' appearance="primary">Search</Button>
             </div>
-            <MessageBar intent="info" style={{ margin: "8px 36px" }}>
-                <MessageBarBody>
-                    <MessageBarTitle>Tip:</MessageBarTitle>
-                    Try asking questions like "Samples used in Orlando Live 360 in 2024" or "Show me the latest 5 samples".
-                </MessageBarBody>
-            </MessageBar>
-            <MessageBar intent="warning" style={{ margin: "8px 36px" }}>
-                <MessageBarBody>
-                    <MessageBarTitle>Warning:</MessageBarTitle>
-                    This sample is using free Azure OpenAI SKU so throttling and 500 errors can happen during peak usage.
-                </MessageBarBody>
-            </MessageBar>
-        </>
+            <Subtitle2 style={{ fontWeight: "normal" }}>
+                There are a total of <Link inline>0 Samples</Link> in the Database.
+            </Subtitle2>
+            <Subtitle2 style={{ fontWeight: "normal" }}>
+                You can read more on <Link inline onClick={() => handleOpen}>how it works here</Link>. 
+                You can visit our <Link inline>GitHub repository here</Link>.
+            </Subtitle2>
+            <HowItWorks open={openDialog} setOpen={setOpenDialog} />
+        </div>
     );
 };
 
