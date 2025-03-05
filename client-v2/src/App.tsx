@@ -1,4 +1,4 @@
-import { FluentProvider, makeStaticStyles, makeStyles, tokens } from "@fluentui/react-components";
+import { FluentProvider, makeStaticStyles, makeStyles, teamsDarkTheme, teamsLightTheme, tokens } from "@fluentui/react-components";
 
 import { useSelector } from "react-redux";
 import UserState from "./store/slices/UserState";
@@ -13,12 +13,18 @@ const useStyles = makeStyles({
     padding: 0,
     display: "flex",
     flexDirection: "column",
+    minHeight: "100vh",
+    backgroundColor: tokens.colorNeutralBackground3,
+
   }
 });
 
 const globalStyles = makeStaticStyles({
+  html: {
+    margin: 0,
+    padding: 0,
+  },
   body: {
-    backgroundColor: tokens.colorNeutralBackground6,
     margin: 0,
     padding: 0,
   }
@@ -31,7 +37,7 @@ const App = () => {
   const user = useSelector((state: { user: UserState }) => state.user);
 
   return (
-    <FluentProvider theme={user.theme}>
+    <FluentProvider theme={user.theme === "light" ? teamsLightTheme : teamsDarkTheme}>
       <div className={classes.root}>
         <Toolbar />
         <Searchbar />

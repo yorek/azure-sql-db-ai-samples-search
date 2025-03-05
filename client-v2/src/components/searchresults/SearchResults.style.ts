@@ -15,7 +15,12 @@ const Styles = makeStyles({
   card: {
     padding: "10px",
     width: "350px",
-    height: "280px",
+    animationIterationCount: '1',
+    animationDuration: '0.5s',
+    animationName: {
+      from: { opacity: '0' },
+      to: { opacity: '1' },
+    },
   },
   cardlogo: {
     borderRadius: "4px",
@@ -38,6 +43,16 @@ const Styles = makeStyles({
     WebkitLineClamp: 4,
     WebkitBoxOrient: "vertical",
     marginBlockStart: "0",
+  },
+  cardbodyExpand: {
+    marginBlockStart: "0",
+    height: "320px",
+    animationIterationCount: '1',
+    animationDuration: '0.5s',
+    animationName: {
+      from: { height: '200px' },
+      to: { height: '320px' },
+    },
   }
 });
 

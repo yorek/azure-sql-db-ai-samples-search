@@ -11,7 +11,7 @@ const initialState: UserState = {
     token: "",
     role: "",
     isAuth: false,
-    theme: teamsLightTheme
+    theme: "light"
 };
 
 // Read state from cookie if available
@@ -39,10 +39,10 @@ export const UserSlice = createSlice({
         },
         setTheme: (state, action) => {
             if (action.payload === "dark") {
-                state.theme = teamsDarkTheme;
+                state.theme = "dark";
             }
             else {
-                state.theme = teamsLightTheme;
+                state.theme = "light";
             }
             localStorage.setItem("userState", JSON.stringify(state));
         }

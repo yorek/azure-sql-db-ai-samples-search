@@ -15,10 +15,15 @@ const SearchResults = () => {
     return (
         <div className={classes.root}>
             {results.status === 'loading' &&
-                <Spinner style={{ marginTop: "10px" }} />
+            <>
+                <Spinner style={{ margin: "30px 0 10px" }} />
+                <Subtitle2 style={{ fontWeight: "normal", textAlign: "center", margin: "10px 0" }}>
+                    Searching for relevant results ...
+                </Subtitle2>            
+            </>
             }
             {results.status === 'succeeded' &&
-                <Subtitle2 style={{ fontWeight: "normal", textAlign: "center", marginTop: "10px" }}>
+                <Subtitle2 style={{ fontWeight: "normal", textAlign: "center", margin: "10px 0" }}>
                     Your query returned <strong>{results.results?.limit}</strong> results out of <strong>{results.results?.total}</strong> total.
                 </Subtitle2>
             }
