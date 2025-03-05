@@ -1,6 +1,5 @@
 export default interface SearchState {
-    query: string;
+    status: 'idle' | 'loading' | 'succeeded' | 'failed';
     results: any[];
-    loading: boolean;
-    error: string | null;
+    error: string | undefined;
 }

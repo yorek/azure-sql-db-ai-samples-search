@@ -10,6 +10,9 @@ const Styles = makeStyles({
         height: "48px",
         backgroundColor: tokens.colorNeutralBackground1,
         borderBottom: "1px solid " + tokens.colorNeutralStroke1,
+        position: "sticky",
+        top: 0,
+        zIndex: 1000,
     },
 
     image: {

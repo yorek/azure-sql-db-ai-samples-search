@@ -5,6 +5,7 @@ import UserState from "./store/slices/UserState";
 
 import Toolbar from "./components/toolbar/Toolbar";
 import Searchbar from "./components/searchbar/Searchbar";
+import SearchResults from "./components/searchresults/SearchResults";
 
 const useStyles = makeStyles({
   root: {
@@ -27,6 +28,7 @@ const App = () => {
       <div className={classes.root}>
         <Toolbar />
         <Searchbar />
+        <SearchResults />
       </div>
     </FluentProvider>
 

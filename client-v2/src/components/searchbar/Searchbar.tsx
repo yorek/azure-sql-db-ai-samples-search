@@ -11,10 +11,14 @@ import HowItWorks from '../messages/HowItWorks';
 import { useState } from 'react';
 
 import Styles from './Searchbar.styles';
+import { searchArticlesAsync } from '../../store/slices/SearchSlice';
+import { useDispatch } from 'react-redux';
+import { AppDispatch } from '../../store/store';
 
 const Searchbar = () => {
 
     const classes = Styles();
+    const dispatch: AppDispatch = useDispatch();
     const [openDialog, setOpenDialog] = useState(false);
 
     const handleOpen = () => {
@@ -22,7 +26,7 @@ const Searchbar = () => {
     };
     
     const handleSearch = () => {
-
+       dispatch(searchArticlesAsync());
     };
 
     return (
