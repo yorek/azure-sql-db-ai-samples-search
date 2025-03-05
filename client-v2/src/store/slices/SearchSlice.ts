@@ -1,12 +1,13 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 import SearchState from './SearchState';
+import SearchResults from '../../types/SearchResults';
 
 // delay for demo purposes
 const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
 
 // async search
-export const searchArticlesAsync = createAsyncThunk('search/searchArticles', async () => {
+export const searchArticlesAsync = createAsyncThunk<SearchResults, string>('search/searchArticles', async () => {
     await delay(2000);
     const response = await axios.get('https://jsonexamples.com/posts');
     return response.data;
@@ -14,7 +15,7 @@ export const searchArticlesAsync = createAsyncThunk('search/searchArticles', asy
 
 const initialState: SearchState = {
     status: 'idle',
-    results: [],
+    results: undefined,
     error: undefined
 };
 
@@ -29,7 +30,7 @@ const SearchSlice = createSlice({
           })
           .addCase(searchArticlesAsync.fulfilled, (state, action) => {
             state.status = 'succeeded';
-            state.results = action.payload.posts;
+            state.results = action.payload;
           })
           .addCase(searchArticlesAsync.rejected, (state, action) => {
             state.status = 'failed';

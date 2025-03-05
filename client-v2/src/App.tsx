@@ -1,4 +1,4 @@
-import { FluentProvider, makeStyles, tokens } from "@fluentui/react-components";
+import { FluentProvider, makeStaticStyles, makeStyles, tokens } from "@fluentui/react-components";
 
 import { useSelector } from "react-redux";
 import UserState from "./store/slices/UserState";
@@ -13,14 +13,21 @@ const useStyles = makeStyles({
     padding: 0,
     display: "flex",
     flexDirection: "column",
-    height: "100vh",
-    backgroundColor: tokens.colorNeutralBackground1,
+  }
+});
+
+const globalStyles = makeStaticStyles({
+  body: {
+    backgroundColor: tokens.colorNeutralBackground6,
+    margin: 0,
+    padding: 0,
   }
 });
 
 const App = () => {
 
   const classes = useStyles();
+  globalStyles();
   const user = useSelector((state: { user: UserState }) => state.user);
 
   return (

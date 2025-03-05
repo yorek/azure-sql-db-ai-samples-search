@@ -26,7 +26,7 @@ const Searchbar = () => {
     };
     
     const handleSearch = () => {
-       dispatch(searchArticlesAsync());
+       dispatch(searchArticlesAsync('search query'));
     };
 
     return (
