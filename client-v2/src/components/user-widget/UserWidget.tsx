@@ -7,7 +7,6 @@ import {
     PopoverSurface,
     PopoverTrigger,
     ToggleButton,
-    teamsDarkTheme,
 } from "@fluentui/react-components";
 
 import {

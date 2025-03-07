@@ -1,5 +1,5 @@
 import { Card, CardHeader, Text, Caption1, CardFooter, Menu, MenuTrigger, Button, MenuPopover, MenuList, MenuItem, Tag } from "@fluentui/react-components";
-import { LinkMultipleRegular, MoreHorizontal20Regular, EditRegular, DeleteRegular, ReadingListRegular, ArrowDownRegular, ArrowUpRegular } from "@fluentui/react-icons";
+import { LinkMultipleRegular, MoreHorizontal20Regular, EditRegular, DeleteRegular, ArrowDownRegular, ArrowUpRegular } from "@fluentui/react-icons";
 import Article from "../../types/Article";
 
 import Style from "./SearchResults.style";   
@@ -17,7 +17,7 @@ const SearchCard = (props: CardProps) => {
     const [cardHeight, setCardHeight] = React.useState(250);
 
     const handleOpen = (article: Article) => {
-        window?.open('https://google.com/', '_blank')?.focus();
+        window?.open(`https://google.com/?${article.id}`, '_blank')?.focus();
     };
 
     return (

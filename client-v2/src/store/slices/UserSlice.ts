@@ -1,6 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
 import UserState from "./UserState";
-import { teamsDarkTheme, teamsLightTheme } from "@fluentui/react-components";
 import sha256 from "crypto-js/sha256";
 
 // initial state
