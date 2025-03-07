@@ -98,10 +98,12 @@ exec dbo.add_sample '
     "name": "Vector similarity search with Azure SQL & Azure OpenAI", 
     "description": "This example shows how to use Azure OpenAI from Azure SQL database to get the vector embeddings of any chosen text, and then calculate the cosine similarity against the Wikipedia articles (for which vector embeddings have been already calculated,) to find the articles that covers topics that are close - or similar - to the provided text.", 
     "url": "https://github.com/Azure-Samples/azure-sql-db-openai",
+    "notes": "The sample has been enriched lately with hybrid search, showing how to use fulltext with BM25, reciprocal ranking fusion (RRF) to improve search results in wikipedia sample dataset.",
     "details": {
         "languages": ["T-SQL", "Python"],
         "services": ["Azure SQL"],
-        "license": "MIT"        
+        "license": "MIT",      
+        "tags": ["RRF", "Reciprocal Ranking Fusion", "BM25", "Fulltext", "Hybrid Search"]  
     }
 }
 ';
@@ -496,6 +498,23 @@ exec dbo.add_sample '
         "services": ["Azure SQL", "Azure Open AI"],
         "license": "MIT",
         "tags": ["End-to-End", "Modernize", "Innovate", "Migrate", "RAG", "Embeddings", "Vectors"]        
+    }
+}
+';
+GO
+
+exec dbo.add_sample '
+{
+    "name": "SqlDatabaseVectorSearch", 
+    "description": "A repository that showcases the native VECTOR type in Azure SQL Database to perform embeddings and RAG with Azure OpenAI, using DOC, PDF, TXT and MD documents.",
+    "notes": "A repository that showcases the native VECTOR type in Azure SQL Database to perform embeddings and RAG with Azure OpenAI. The application allows to load documents, generate embeddings and save them into the database as Vectors, and perform searches using Vector Search and RAG. Currently, PDF, DOCX, TXT and MD files are supported. Vectors are saved and retrieved with Entity Framework Core using the EFCore.SqlServer.VectorSearch library. Embedding and Chat Completion are integrated with Semantic Kernel. This repository contains a Blazor Web App as well as a Minimal API that allows to programatically interact with embeddings and RAG.",
+    "url": "https://github.com/marcominerva/SqlDatabaseVectorSearch",
+    "details": {
+        "author": "Marco Minerva",
+        "languages": ["T-SQL", "C#"],        
+        "services": ["Azure SQL", "Azure Open AI"],
+        "license": "MIT",
+        "tags": ["End-to-End", "RAG", "Embeddings", "Vectors", "EFCore", "Semantic Kernel", "UX", "UI", "Chat", "Response Streaming"]        
     }
 }
 ';
