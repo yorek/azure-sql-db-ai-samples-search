@@ -3,11 +3,13 @@ import { useDispatch } from "react-redux";
 
 import UserSlice from "./slices/UserSlice";
 import SearchSlice from "./slices/SearchSlice";
+import HomeSlice from "./slices/HomeSlice";
 
 const store = configureStore({
   reducer: {
     user: UserSlice.reducer,
     search: SearchSlice.reducer,
+    home: HomeSlice.reducer
   },
 });
 

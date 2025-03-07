@@ -8,18 +8,26 @@ import {
 } from '@fluentui/react-components';
 
 import HowItWorks from '../messages/HowItWorks';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import Styles from './Searchbar.styles';
 import { searchArticlesAsync } from '../../store/slices/SearchSlice';
-import { useDispatch } from 'react-redux';
-import { AppDispatch } from '../../store/store';
+import { getTotalSamplesAsync } from '../../store/slices/HomeSlice';
+import { useDispatch, useSelector } from 'react-redux';
+import { AppDispatch, RootState } from '../../store/store';
 
 const Searchbar = () => {
 
     const classes = Styles();
-    const dispatch: AppDispatch = useDispatch();
+    const totalSamples = useSelector((state: RootState) => state).home.totalSamples;
     const [openDialog, setOpenDialog] = useState(false);
+
+    const dispatch: AppDispatch = useDispatch();
+
+    useEffect(() => {
+        dispatch(getTotalSamplesAsync());
+    }
+    , [dispatch]);
 
     const handleOpen = () => {
         setOpenDialog(true);
@@ -38,7 +46,7 @@ const Searchbar = () => {
                 <Button size='large' appearance="primary" onClick={() => handleSearch()}>Search</Button>
             </div>
             <Subtitle2 style={{ fontWeight: "normal", textAlign: "center" }}>
-                There are a total of <Link className={classes.link} inline>0 Samples</Link> in the Database.
+                There are a total of <Link className={classes.link} inline>{totalSamples} Samples</Link> in the Database.
             </Subtitle2>
             <Subtitle2 style={{ fontWeight: "normal", textAlign: "center" }}>
                 You can read more on <Link className={classes.link} as="a" inline onClick={() => handleOpen()}>how it works here</Link>. 
