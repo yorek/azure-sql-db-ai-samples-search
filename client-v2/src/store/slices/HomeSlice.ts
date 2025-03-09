@@ -27,6 +27,18 @@ export const getLatestSamplesAsync = createAsyncThunk<LightSample[]>('home/getLa
   return response.data?.value;
 });
 
+// async search samples
+export const searchSamplesAsync = createAsyncThunk<LightSample[], string>('home/searchSamplesAsync', async (query: string) => {
+  const response = await axios.get(`${process.env.REACT_APP_API_URL}findSamples?text=${query}`, {
+    withCredentials: false,
+    headers: {
+      'Content-Type': 'application/json',
+      'Accept': 'application/json',
+    }
+  });   
+  return response.data.value;
+});
+
 const initialState: HomeState = {
     totalSamples: {
         status: 'idle',
@@ -74,6 +86,17 @@ const HomeSlice = createSlice({
             state.latestSamples.records = action.payload;
           })
           .addCase(getLatestSamplesAsync.rejected, (state, action) => {
+            state.latestSamples.status = 'failed';
+            state.latestSamples.errror = action.error.message;
+          })
+          .addCase(searchSamplesAsync.pending, (state) => {
+            state.latestSamples.status = 'loading';
+          })
+          .addCase(searchSamplesAsync.fulfilled, (state, action) => {
+            state.latestSamples.status = 'succeeded';
+            state.latestSamples.records = action.payload;
+          })
+          .addCase(searchSamplesAsync.rejected, (state, action) => {
             state.latestSamples.status = 'failed';
             state.latestSamples.errror = action.error.message;
           });

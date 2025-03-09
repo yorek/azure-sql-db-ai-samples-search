@@ -39,7 +39,7 @@ const SearchResults = () => {
             }
             {home.latestSamples.status === 'succeeded' &&
                 <Subtitle2 style={{ fontWeight: "normal", textAlign: "center", margin: "10px 0" }}>
-                    Here you can find the TOP <strong>{home.latestSamples.records.length}</strong> results.
+                    Your query returned <strong>{home.latestSamples.records.length}</strong> results.
                 </Subtitle2>
             }
             {/* 

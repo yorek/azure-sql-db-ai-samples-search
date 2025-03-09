@@ -4,7 +4,7 @@ import SearchState from './SearchState';
 import Sample from '../../types/Sample';
 
 // async list all samples
-export const getAllSamplesAsync = createAsyncThunk<Sample[]>('home/getAllSamplesAsync', async () => {
+export const getAllSamplesAsync = createAsyncThunk<Sample[]>('search/getAllSamplesAsync', async () => {
   const response = await axios.get(`${process.env.REACT_APP_API_URL}samples`, {
     withCredentials: false,
     headers: {
@@ -14,7 +14,6 @@ export const getAllSamplesAsync = createAsyncThunk<Sample[]>('home/getAllSamples
   });   
   return response.data.value;
 });
-
 
 const initialState: SearchState = {
     samples: {

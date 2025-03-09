@@ -7,14 +7,14 @@ import {
     Title3
 } from '@fluentui/react-components';
 
-import {  SearchRegular, ArrowUndoRegular} from '@fluentui/react-icons'
+import { SearchRegular, ArrowUndoRegular } from '@fluentui/react-icons'
 
 import HowItWorks from '../messages/HowItWorks';
 import { useEffect, useState } from 'react';
 
 import Styles from './Searchbar.styles';
 import { resetSearchState, getAllSamplesAsync } from '../../store/slices/SearchSlice';
-import { getLatestSamplesAsync, getTotalSamplesAsync, resetHomeState } from '../../store/slices/HomeSlice';
+import { getLatestSamplesAsync, getTotalSamplesAsync, resetHomeState, searchSamplesAsync } from '../../store/slices/HomeSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '../../store/store';
 
@@ -24,6 +24,7 @@ const Searchbar = () => {
     const home = useSelector((state: RootState) => state).home;
     const search = useSelector((state: RootState) => state).search;
     const [openDialog, setOpenDialog] = useState(false);
+    const [searchValue, setSearchValue] = useState<string>('');
 
     const dispatch: AppDispatch = useDispatch();
 
@@ -34,6 +35,14 @@ const Searchbar = () => {
         dispatch(getLatestSamplesAsync());
     }, [dispatch]);
 
+    /* Search
+    * @param event
+    * @param data
+    */
+    const onSearchChange = (event: any, data: { value: string }) => {
+        setSearchValue(data.value);
+    };
+
     /* Open HowItWorks dialog */
     const handleOpen = () => {
         setOpenDialog(true);
@@ -41,8 +50,9 @@ const Searchbar = () => {
 
     /* Handle search */
     const handleSearch = () => {
+        dispatch(resetSearchState());
         dispatch(resetHomeState());
-
+        dispatch(searchSamplesAsync(searchValue));
     };
 
     /* Handle reset */
@@ -66,9 +76,11 @@ const Searchbar = () => {
             <div className={classes.fieldWrapper}>
                 <SearchBox style={{ minWidth: "350px" }}
                     size="large"
-                    placeholder='Samples used in Orlando Live 360 in 2024' />
+                    placeholder='Samples used in Orlando Live 360 in 2024'
+                    value={searchValue}
+                    onChange={onSearchChange} />
                 <Button
-                    disabled={home.latestSamples.status === 'loading' || search.samples.status === 'loading'}
+                    disabled={home.latestSamples.status === 'loading' || search.samples.status === 'loading' || searchValue === ''}
                     size='large'
                     appearance="primary"
                     icon={<SearchRegular />}

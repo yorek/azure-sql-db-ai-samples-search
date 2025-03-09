@@ -26,7 +26,7 @@ const SearchCard = (props: CardProps) => {
                     image={<img src={process.env.PUBLIC_URL + "/favicon.png"} alt="logo" className={classes.cardlogo} />}
                     header={<Text weight="semibold">{sample.name}</Text>}
                     description={
-                        <Caption1 className={classes.cardcaption}><strong>AUTHOR:&nbsp;</strong>{sample.details.author ?? 'n/a'}</Caption1>
+                        <Caption1 className={classes.cardcaption}><strong>AUTHOR:&nbsp;</strong>{sample.details?.author ?? 'n/a'}</Caption1>
                     }
                 />
                 {/* <div className={classes.tags}>
