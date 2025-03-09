@@ -13,7 +13,7 @@ import HowItWorks from '../messages/HowItWorks';
 import { useEffect, useState } from 'react';
 
 import Styles from './Searchbar.styles';
-import { resetSearchState, searchArticlesAsync } from '../../store/slices/SearchSlice';
+import { resetSearchState, getAllSamplesAsync } from '../../store/slices/SearchSlice';
 import { getLatestSamplesAsync, getTotalSamplesAsync, resetHomeState } from '../../store/slices/HomeSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '../../store/store';
@@ -39,12 +39,17 @@ const Searchbar = () => {
 
     const handleSearch = () => {
         dispatch(resetHomeState());
-        dispatch(searchArticlesAsync('search query'));
+
     };
 
     const handleReset = () => {
         dispatch(resetSearchState());
         dispatch(getLatestSamplesAsync());
+    };
+
+    const handleAllSamples = () => {
+        dispatch(resetHomeState());
+        dispatch(getAllSamplesAsync());
     };
 
     return (
@@ -56,13 +61,13 @@ const Searchbar = () => {
                     size="large"
                     placeholder='Samples used in Orlando Live 360 in 2024' />
                 <Button
-                    disabled={home.latestSamples.status === 'loading' || search.status === 'loading'}
+                    disabled={home.latestSamples.status === 'loading' || search.samples.status === 'loading'}
                     size='large'
                     appearance="primary"
                     icon={<SearchRegular />}
                     onClick={() => handleSearch()}>Search</Button>
                 <Button
-                    disabled={home.latestSamples.status === 'loading' || search.status === 'loading'}
+                    disabled={home.latestSamples.status === 'loading' || search.samples.status === 'loading'}
                     size='large'
                     appearance="transparent"
                     icon={<ArrowUndoRegular />}
@@ -71,7 +76,7 @@ const Searchbar = () => {
             </div>
             {home.totalSamples.status === 'loading' && <Subtitle2 style={{ fontWeight: "normal", textAlign: "center" }}>Loading total Nr. of samples ...</Subtitle2>}
             {home.totalSamples.status === 'failed' && <Subtitle2 style={{ fontWeight: "normal", textAlign: "center" }}><strong>Failed</strong> to load Samples</Subtitle2>}
-            {home.totalSamples.status === 'succeeded' && <Subtitle2 style={{ fontWeight: "normal", textAlign: "center" }}>There are a total of <Link className={classes.link} inline>{home.totalSamples.total} Samples</Link> in the Database.</Subtitle2>}
+            {home.totalSamples.status === 'succeeded' && <Subtitle2 style={{ fontWeight: "normal", textAlign: "center" }}>There are a total of <Link onClick={() => handleAllSamples()} className={classes.link} inline>{home.totalSamples.total} Samples</Link> in the Database.</Subtitle2>}
             <Subtitle2 style={{ fontWeight: "normal", textAlign: "center" }}>
                 You can read more on <Link className={classes.link} as="a" inline onClick={() => handleOpen()}>how it works here</Link>.
                 You can visit our <Link className={classes.link} inline href="https://github.com/yorek/azure-sql-db-ai-samples-search" target='_blank'>GitHub repository here</Link>.

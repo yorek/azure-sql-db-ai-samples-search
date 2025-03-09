@@ -31,7 +31,7 @@ const Styles = makeStyles({
         overflow: "hidden",
         textOverflow: "ellipsis",
         display: "-webkit-box",
-        WebkitLineClamp: 4,
+        WebkitLineClamp: 3,
         WebkitBoxOrient: "vertical",
         marginBlockStart: "0",
     },

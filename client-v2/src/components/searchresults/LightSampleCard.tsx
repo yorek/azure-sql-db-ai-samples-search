@@ -26,7 +26,7 @@ const LightSampleCard = (props: CardProps) => {
                     image={<img src={process.env.PUBLIC_URL + "/favicon.png"} alt="logo" className={classes.cardlogo} />}
                     header={<Text weight="semibold">{sample.name}</Text>}
                     description={
-                        <Caption1 className={classes.cardcaption}>{sample.url}</Caption1>
+                        <Caption1 className={classes.cardcaption}><strong>URL:&nbsp;</strong>{sample.url}</Caption1>
                     }
                 />
                 <div className={cardHeight === 210 ? classes.cardbody : classes.cardbodyExpand}>

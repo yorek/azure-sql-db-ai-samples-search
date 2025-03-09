@@ -19,7 +19,7 @@ const SearchResults = () => {
             {/* 
                 Display a loading spinner while the search is in progress.
             */}
-            {(search.status === 'loading'
+            {(search.samples.status === 'loading'
                 || home.latestSamples.status === 'loading'
             ) &&
                 <>
@@ -32,9 +32,9 @@ const SearchResults = () => {
             {/* 
                 Search results stats.
             */}
-            {search.status === 'succeeded' &&
+            {search.samples.status === 'succeeded' &&
                 <Subtitle2 style={{ fontWeight: "normal", textAlign: "center", margin: "10px 0" }}>
-                    Your query returned <strong>{search.results?.limit}</strong> results out of <strong>{search.results?.total}</strong> total.
+                    Your query returned <strong>{search.samples.results?.length}</strong> results.
                 </Subtitle2>
             }
             {home.latestSamples.status === 'succeeded' &&
@@ -45,12 +45,12 @@ const SearchResults = () => {
             {/* 
                 Display search results.
             */}
-            {search.results?.posts.length !== undefined && search.results?.posts.length > 0 &&
+            {search.samples.results.length !== undefined && search.samples.results.length > 0 &&
                 < div className={classes.results}>
-                    {search.status === 'succeeded' && search.results?.posts.map((article) => (
-                        <SearchCard key={article.id} article={article} />
+                    {search.samples.status === 'succeeded' && search.samples.results.map((sample) => (
+                        <SearchCard key={sample.id} sample={sample} />
                     ))}
-                    {search.status === 'failed' && <h2>{search.error}</h2>}
+                    {search.samples.status === 'failed' && <h2>{search.samples.error}</h2>}
                 </div>
             }
             {home.latestSamples.records.length !== undefined && home.latestSamples.records.length > 0 &&

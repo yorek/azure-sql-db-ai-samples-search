@@ -1,22 +1,27 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 import SearchState from './SearchState';
-import SearchResults from '../../types/SearchResults';
+import Sample from '../../types/Sample';
 
-// delay for demo purposes
-const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
-
-// async search
-export const searchArticlesAsync = createAsyncThunk<SearchResults, string>('search/searchArticles', async () => {
-    await delay(2000);
-    const response = await axios.get('https://jsonexamples.com/posts');
-    return response.data;
+// async list all samples
+export const getAllSamplesAsync = createAsyncThunk<Sample[]>('home/getAllSamplesAsync', async () => {
+  const response = await axios.get(`${process.env.REACT_APP_API_URL}samples`, {
+    withCredentials: false,
+    headers: {
+      'Content-Type': 'application/json',
+      'Accept': 'application/json',
+    }
+  });   
+  return response.data.value;
 });
 
+
 const initialState: SearchState = {
-    status: 'idle',
-    results: undefined,
-    error: undefined
+    samples: {
+        status: 'idle',
+        results: [],
+        error: undefined
+    }
 };
 
 const SearchSlice = createSlice({
@@ -24,23 +29,22 @@ const SearchSlice = createSlice({
     initialState: initialState,
     reducers: {
       resetSearchState: (state) => {
-        state.status = 'idle';
-        state.results = undefined;
-        state.error = undefined;
+        state.samples = initialState.samples;
       }
     },
     extraReducers: (builder) => {
         builder
-        .addCase(searchArticlesAsync.pending, (state) => {
-            state.status = 'loading';
+        // all samples
+        .addCase(getAllSamplesAsync.pending, (state) => {
+            state.samples.status = 'loading';
           })
-          .addCase(searchArticlesAsync.fulfilled, (state, action) => {
-            state.status = 'succeeded';
-            state.results = action.payload;
+          .addCase(getAllSamplesAsync.fulfilled, (state, action) => {
+            state.samples.status = 'succeeded';
+            state.samples.results = action.payload;
           })
-          .addCase(searchArticlesAsync.rejected, (state, action) => {
-            state.status = 'failed';
-            state.error = action.error.message;
+          .addCase(getAllSamplesAsync.rejected, (state, action) => {
+            state.samples.status = 'failed';
+            state.samples.error = action.error.message;
           });
     }
 });

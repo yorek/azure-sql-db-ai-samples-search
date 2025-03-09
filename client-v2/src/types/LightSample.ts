@@ -7,3 +7,4 @@ export default interface LightSample {
     thoughts: string;
     url: string;
 }
+
