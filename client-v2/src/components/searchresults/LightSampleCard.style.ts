@@ -3,7 +3,9 @@ import { makeStyles, tokens } from "@fluentui/react-components";
 const Styles = makeStyles({
     card: {
         padding: "10px",
-        width: "350px",
+        width: "calc((100vw / 3) - 20px)",
+        maxWidth: "500px",
+        minWidth: "350px",
         animationIterationCount: '1',
         animationDuration: '0.5s',
         animationName: {
@@ -35,12 +37,17 @@ const Styles = makeStyles({
     },
     cardbodyExpand: {
         marginBlockStart: "0",
-        height: "320px",
+        height: "350px",
+        textOverflow: "ellipsis",
+        display: "-webkit-box",
+        WebkitLineClamp: 10,
+        overflow: "auto",
+        WebkitBoxOrient: "vertical",
         animationIterationCount: '1',
         animationDuration: '0.5s',
         animationName: {
-            from: { height: '200px' },
-            to: { height: '320px' },
+            from: { height: '210px' },
+            to: { height: '350px' },
         },
     },
 });

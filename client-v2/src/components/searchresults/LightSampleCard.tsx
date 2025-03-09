@@ -1,4 +1,4 @@
-import { Card, CardHeader, Text, Caption1, CardFooter, Menu, MenuTrigger, Button, MenuPopover, MenuList, MenuItem, Tag } from "@fluentui/react-components";
+import { Card, CardHeader, Text, Caption1, CardFooter, Menu, MenuTrigger, Button, MenuPopover, MenuList, MenuItem } from "@fluentui/react-components";
 import { LinkMultipleRegular, MoreHorizontal20Regular, EditRegular, DeleteRegular, ArrowDownRegular, ArrowUpRegular } from "@fluentui/react-icons";
 import LightSample from "../../types/LightSample";
 
@@ -14,7 +14,7 @@ const SearchCard = (props: CardProps) => {
     const { sample } = props;
     const classes = Style();
 
-    const [cardHeight, setCardHeight] = React.useState(250);
+    const [cardHeight, setCardHeight] = React.useState(210);
 
     const handleOpen = (sample: LightSample) => {
         window?.open(sample.url, '_blank')?.focus();
@@ -29,7 +29,7 @@ const SearchCard = (props: CardProps) => {
                         <Caption1 className={classes.cardcaption}>{sample.url}</Caption1>
                     }
                 />
-                <div className={cardHeight === 250 ? classes.cardbody : classes.cardbodyExpand}>
+                <div className={cardHeight === 210 ? classes.cardbody : classes.cardbodyExpand}>
                     <p>{sample.description}</p>
                     <p><em>{sample.sample_summary}</em></p>
                 </div>
@@ -52,7 +52,7 @@ const SearchCard = (props: CardProps) => {
                         </Menu>}
                 >
                     <Button onClick={() => handleOpen(sample)} icon={<LinkMultipleRegular />}>Open</Button>
-                    {cardHeight === 250 ? <Button onClick={() => setCardHeight(500)} icon={<ArrowDownRegular />}>Read all</Button> : <Button onClick={() => setCardHeight(250)} icon={<ArrowUpRegular />}>Read less</Button>}
+                    {cardHeight === 210 ? <Button onClick={() => setCardHeight(350)} icon={<ArrowDownRegular />}>Read all</Button> : <Button onClick={() => setCardHeight(210)} icon={<ArrowUpRegular />}>Read less</Button>}
     
                 </CardFooter>
             </Card>
