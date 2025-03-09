@@ -6,7 +6,6 @@ const Toolbar = () => {
     return (
         <div className={classes.root}>
             <img src={process.env.PUBLIC_URL + "/MS-logo-horizontal.png"} alt="logo" className={classes.image}/>
-            <span>{process.env.REACT_APP_API_URL}</span>
             <UserWidget />
         </div>
     );

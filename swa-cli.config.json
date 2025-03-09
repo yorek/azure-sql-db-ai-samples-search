@@ -8,7 +8,7 @@
       "appBuildCommand": "npm run build",
       "apiBuildCommand": "dotnet publish -c Release",
       "run": "npm start",
-      "appDevserverUrl": "http://127.0.0.1:4280"
+      "appDevserverUrl": "http://127.0.0.1:3000"
     }
   }
 }

@@ -11,6 +11,7 @@ const store = configureStore({
     search: SearchSlice.reducer,
     home: HomeSlice.reducer
   },
+  
 });
 
 export type RootState = ReturnType<typeof store.getState>;

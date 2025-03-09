@@ -19,7 +19,7 @@ import { AppDispatch, RootState } from '../../store/store';
 const Searchbar = () => {
 
     const classes = Styles();
-    const totalSamples = useSelector((state: RootState) => state).home.totalSamples;
+    const home = useSelector((state: RootState) => state).home;
     const [openDialog, setOpenDialog] = useState(false);
 
     const dispatch: AppDispatch = useDispatch();
@@ -45,9 +45,9 @@ const Searchbar = () => {
                 <SearchBox style={{ minWidth: "350px" }} size="large" placeholder='Samples used in Orlando Live 360 in 2024' />
                 <Button size='large' appearance="primary" onClick={() => handleSearch()}>Search</Button>
             </div>
-            <Subtitle2 style={{ fontWeight: "normal", textAlign: "center" }}>
-                There are a total of <Link className={classes.link} inline>{totalSamples} Samples</Link> in the Database.
-            </Subtitle2>
+            {home.status === 'loading' && <Subtitle2 style={{ fontWeight: "normal", textAlign: "center" }}>Loading total Nr. of samples ...</Subtitle2>}
+            {home.status === 'failed' && <Subtitle2 style={{ fontWeight: "normal", textAlign: "center" }}>Failed to load Samples</Subtitle2>}
+            {home.status === 'succeeded' && <Subtitle2 style={{ fontWeight: "normal", textAlign: "center" }}>There are a total of <Link className={classes.link} inline>{home.totalSamples} Samples</Link> in the Database.</Subtitle2>}
             <Subtitle2 style={{ fontWeight: "normal", textAlign: "center" }}>
                 You can read more on <Link className={classes.link} as="a" inline onClick={() => handleOpen()}>how it works here</Link>. 
                 You can visit our <Link className={classes.link} inline href="https://github.com/yorek/azure-sql-db-ai-samples-search" target='_blank'>GitHub repository here</Link>.
