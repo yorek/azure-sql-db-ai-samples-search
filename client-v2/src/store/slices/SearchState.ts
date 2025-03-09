@@ -1,5 +1,4 @@
 import Sample from "../../types/Sample";
-import SearchResults from "../../types/SearchResults";
 
 export default interface SearchState {
     samples: {

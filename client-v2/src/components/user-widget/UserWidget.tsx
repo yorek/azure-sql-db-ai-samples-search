@@ -32,7 +32,7 @@ const UserWidget = () => {
     return (
         <>
             {user.isAuth ? (
-                <div style={{ display: "flex", gap: "16px" }}>
+                <div className={classes.authBox}>
                     <Popover trapFocus withArrow>
                         <PopoverTrigger>
                             <div className={classes.avatar}>
@@ -60,7 +60,7 @@ const UserWidget = () => {
                                     }}                                    
                                     name={user.fullName} 
                                     badge={{ status: "available" }} size={48} />
-                                <div style={{ display: "flex", flexDirection: "column" }}>
+                                <div className={classes.menuOpenHeader}>
                                     <Body1Strong>{user.fullName}</Body1Strong>
                                     <Body1>{user.email}</Body1>
                                 </div>
@@ -73,7 +73,7 @@ const UserWidget = () => {
                         onClick={() => dispatch(setTheme(user.theme === "dark" ? 'light' : 'dark'))} />
                 </div>
             ) : (
-                <div style={{ display: "flex", gap: "16px" }}>
+                <div className={classes.authBox}>
                     <Button
                         appearance="primary"
                         size="medium"

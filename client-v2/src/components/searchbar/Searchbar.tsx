@@ -27,26 +27,33 @@ const Searchbar = () => {
 
     const dispatch: AppDispatch = useDispatch();
 
+    /* onLoad clean and load total and latest samples */
     useEffect(() => {
         dispatch(resetSearchState());
         dispatch(getTotalSamplesAsync());
         dispatch(getLatestSamplesAsync());
     }, [dispatch]);
 
+    /* Open HowItWorks dialog */
     const handleOpen = () => {
         setOpenDialog(true);
     };
 
+    /* Handle search */
     const handleSearch = () => {
         dispatch(resetHomeState());
 
     };
 
+    /* Handle reset */
     const handleReset = () => {
         dispatch(resetSearchState());
+        dispatch(resetHomeState());
+        dispatch(getTotalSamplesAsync());
         dispatch(getLatestSamplesAsync());
     };
 
+    /* Handle all samples */
     const handleAllSamples = () => {
         dispatch(resetHomeState());
         dispatch(getAllSamplesAsync());

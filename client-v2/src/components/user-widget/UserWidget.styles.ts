@@ -2,6 +2,9 @@ import { makeStyles } from "@fluentui/react-components";
 
 // custom styles
 const Styles = makeStyles({
+    authBox: {
+        display: "flex", gap: "16px"
+    },
     avatar: {
         cursor: "pointer",
         display: "flex",
@@ -23,6 +26,11 @@ const Styles = makeStyles({
         display: "flex",
         justifyContent: "space-between",
         gap: "12px"
+    },
+    menuOpenHeader: {
+        display: "flex",
+        flexDirection: "column",
+        gap: "4px"
     }
 });
 

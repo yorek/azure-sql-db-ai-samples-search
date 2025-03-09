@@ -1,8 +1,6 @@
 import { FluentProvider, 
   makeStaticStyles, 
   makeStyles, 
-  teamsDarkTheme, 
-  teamsLightTheme,
   webLightTheme,
   webDarkTheme, 
   tokens } from "@fluentui/react-components";
