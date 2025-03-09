@@ -12,6 +12,8 @@ import {
 import {
     WeatherMoonFilled,
     WeatherSunnyRegular,
+    ArrowEnterRegular,
+    ArrowExitRegular
 } from "@fluentui/react-icons"
 
 // redux
@@ -46,7 +48,10 @@ const UserWidget = () => {
                         <PopoverSurface>
                             <div className={classes.menu}>
                                 <Body1Strong>{user.role}</Body1Strong>
-                                <Button appearance="subtle" size="small" onClick={() => dispatch(logout())}>Sign out</Button>
+                                <Button 
+                                icon={<ArrowExitRegular />}
+                                appearance="transparent" 
+                                size="medium" onClick={() => dispatch(logout())}>Sign out</Button>
                             </div>
                             <div className={classes.menuOpen}>
                                 <Avatar 
@@ -63,7 +68,7 @@ const UserWidget = () => {
                         </PopoverSurface>
                     </Popover>
                     <ToggleButton
-                        appearance="subtle"
+                        appearance="transparent"
                         icon={user.theme === "light" ? <WeatherSunnyRegular /> : <WeatherMoonFilled />}
                         onClick={() => dispatch(setTheme(user.theme === "dark" ? 'light' : 'dark'))} />
                 </div>
@@ -72,9 +77,10 @@ const UserWidget = () => {
                     <Button
                         appearance="primary"
                         size="medium"
+                        icon={<ArrowEnterRegular />}
                         onClick={() => dispatch(login())}>Sign in</Button>
                     <ToggleButton
-                        appearance="subtle"
+                        appearance="transparent"
                         icon={user.theme === "light" ? <WeatherSunnyRegular /> : <WeatherMoonFilled />}
                         onClick={() => dispatch(setTheme(user.theme === "dark" ? 'light' : 'dark'))} />
 

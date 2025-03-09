@@ -7,6 +7,8 @@ import {
     Title3
 } from '@fluentui/react-components';
 
+import {  SearchRegular, ArrowUndoRegular} from '@fluentui/react-icons'
+
 import HowItWorks from '../messages/HowItWorks';
 import { useEffect, useState } from 'react';
 
@@ -20,6 +22,7 @@ const Searchbar = () => {
 
     const classes = Styles();
     const home = useSelector((state: RootState) => state).home;
+    const search = useSelector((state: RootState) => state).search;
     const [openDialog, setOpenDialog] = useState(false);
 
     const dispatch: AppDispatch = useDispatch();
@@ -39,13 +42,32 @@ const Searchbar = () => {
         dispatch(searchArticlesAsync('search query'));
     };
 
+    const handleReset = () => {
+        dispatch(resetSearchState());
+        dispatch(getLatestSamplesAsync());
+    };
+
     return (
         <div className={classes.root}>
             <Title1 className={classes.title}>Azure SQL DB Samples AI Agentic RAG Search</Title1>
             <Title3 className={classes.subtitle}>Find samples using AI Agents search capabilities</Title3>
             <div className={classes.fieldWrapper}>
-                <SearchBox style={{ minWidth: "350px" }} size="large" placeholder='Samples used in Orlando Live 360 in 2024' />
-                <Button size='large' appearance="primary" onClick={() => handleSearch()}>Search</Button>
+                <SearchBox style={{ minWidth: "350px" }}
+                    size="large"
+                    placeholder='Samples used in Orlando Live 360 in 2024' />
+                <Button
+                    disabled={home.latestSamples.status === 'loading' || search.status === 'loading'}
+                    size='large'
+                    appearance="primary"
+                    icon={<SearchRegular />}
+                    onClick={() => handleSearch()}>Search</Button>
+                <Button
+                    disabled={home.latestSamples.status === 'loading' || search.status === 'loading'}
+                    size='large'
+                    appearance="transparent"
+                    icon={<ArrowUndoRegular />}
+                    onClick={() => handleReset()}>Reset</Button>
+
             </div>
             {home.totalSamples.status === 'loading' && <Subtitle2 style={{ fontWeight: "normal", textAlign: "center" }}>Loading total Nr. of samples ...</Subtitle2>}
             {home.totalSamples.status === 'failed' && <Subtitle2 style={{ fontWeight: "normal", textAlign: "center" }}><strong>Failed</strong> to load Samples</Subtitle2>}

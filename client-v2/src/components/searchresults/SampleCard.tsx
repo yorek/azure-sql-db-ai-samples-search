@@ -2,14 +2,14 @@ import { Card, CardHeader, Text, Caption1, CardFooter, Menu, MenuTrigger, Button
 import { LinkMultipleRegular, MoreHorizontal20Regular, EditRegular, DeleteRegular, ArrowDownRegular, ArrowUpRegular } from "@fluentui/react-icons";
 import LightSample from "../../types/LightSample";
 
-import Style from "./LightSampleCard.style";
+import Style from "./SampleCard.style";
 import React from "react";
 
 interface CardProps {
     sample: LightSample;
 }
 
-const LightSampleCard = (props: CardProps) => {
+const SampleCard = (props: CardProps) => {
 
     const { sample } = props;
     const classes = Style();
@@ -51,24 +51,12 @@ const LightSampleCard = (props: CardProps) => {
                             </MenuPopover>
                         </Menu>}
                 >
-                    <Button 
-                        onClick={() => handleOpen(sample)} 
-                        appearance="primary"
-                        icon={<LinkMultipleRegular />}>Open</Button>
-                    {cardHeight === 210 ? 
-                        <Button 
-                        appearance="transparent"
-                        onClick={() => setCardHeight(350)} 
-                        icon={<ArrowDownRegular />}>Read all</Button> 
-                        : <Button 
-                        appearance="transparent"
-                        onClick={() => setCardHeight(210)} 
-                        icon={<ArrowUpRegular />}>Read less</Button>
-                    }
+                    <Button onClick={() => handleOpen(sample)} icon={<LinkMultipleRegular />}>Open</Button>
+                    {cardHeight === 210 ? <Button onClick={() => setCardHeight(350)} icon={<ArrowDownRegular />}>Read all</Button> : <Button onClick={() => setCardHeight(210)} icon={<ArrowUpRegular />}>Read less</Button>}
     
                 </CardFooter>
             </Card>
         );
 };
 
-export default LightSampleCard;
+export default SampleCard;
