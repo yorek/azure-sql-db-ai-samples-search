@@ -1,5 +1,14 @@
+import LightSample from "../../types/LightSample";
+
 export default interface HomeState {
-    status: 'idle' | 'loading' | 'succeeded' | 'failed';
-    error: string | undefined;
-    totalSamples: number;
+    totalSamples: {
+        status: 'idle' | 'loading' | 'succeeded' | 'failed';
+        error: string | undefined;
+        total: number;
+    };  
+    latestSamples: {
+        status: 'idle' | 'loading' | 'succeeded' | 'failed';
+        errror: string | undefined;
+        records: LightSample[];
+    }
 };
