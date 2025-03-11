@@ -1,6 +1,7 @@
 {
     "navigationFallback": {
-        "rewrite": "/"
+        "rewrite": "/",
+        "exclude": ["/.auth/**"]
     },
     "globalHeaders": {
         "Access-Control-Allow-Origin": "*",

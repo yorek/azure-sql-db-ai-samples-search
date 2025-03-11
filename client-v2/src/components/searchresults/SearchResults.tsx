@@ -11,8 +11,8 @@ const SearchResults = () => {
 
     const classes = Styles();
 
-    const search = useSelector((state: RootState) => state).search;
-    const home = useSelector((state: RootState) => state).home;
+    const search = useSelector((state: RootState) => state.search);
+    const home = useSelector((state: RootState) => state.home);
 
     return (
         <div className={classes.root}>

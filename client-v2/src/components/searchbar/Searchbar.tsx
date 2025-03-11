@@ -21,8 +21,8 @@ import { AppDispatch, RootState } from '../../store/store';
 const Searchbar = () => {
 
     const classes = Styles();
-    const home = useSelector((state: RootState) => state).home;
-    const search = useSelector((state: RootState) => state).search;
+    const home = useSelector((state: RootState) => state.home);
+    const search = useSelector((state: RootState) => state.search);
     const [openDialog, setOpenDialog] = useState(false);
     const [searchValue, setSearchValue] = useState<string>('');
 
