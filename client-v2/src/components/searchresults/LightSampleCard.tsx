@@ -4,6 +4,8 @@ import LightSample from "../../types/LightSample";
 
 import Style from "./LightSampleCard.style";
 import React from "react";
+import { useSelector } from "react-redux";
+import { RootState } from "../../store/store";
 
 interface CardProps {
     sample: LightSample;
@@ -14,6 +16,7 @@ const LightSampleCard = (props: CardProps) => {
     const { sample } = props;
     const classes = Style();
 
+    const user = useSelector((state: RootState) => state.user);
     const [cardHeight, setCardHeight] = React.useState(210);
 
     const handleOpen = (sample: LightSample) => {
@@ -38,6 +41,7 @@ const LightSampleCard = (props: CardProps) => {
                         <Menu>
                             <MenuTrigger disableButtonEnhancement>
                                 <Button
+                                    disabled={!user.isAuth}
                                     appearance="transparent"
                                     icon={<MoreHorizontal20Regular />}
                                     aria-label="More options"

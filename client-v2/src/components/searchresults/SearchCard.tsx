@@ -4,6 +4,8 @@ import { LinkMultipleRegular, MoreHorizontal20Regular, EditRegular, DeleteRegula
 import Style from "./SearchCard.style";
 import React from "react";
 import Sample from "../../types/Sample";
+import { RootState } from "../../store/store";
+import { useSelector } from "react-redux";
 
 interface CardProps {
     sample: Sample;
@@ -14,6 +16,7 @@ const SearchCard = (props: CardProps) => {
     const { sample } = props;
     const classes = Style();
 
+    const user = useSelector((state: RootState) => state.user);
     const [cardHeight, setCardHeight] = React.useState(210);
 
     const handleOpen = (sample: Sample) => {
@@ -43,6 +46,7 @@ const SearchCard = (props: CardProps) => {
                         <Menu>
                             <MenuTrigger disableButtonEnhancement>
                                 <Button
+                                    disabled={!user.isAuth}
                                     appearance="transparent"
                                     icon={<MoreHorizontal20Regular />}
                                     aria-label="More options"

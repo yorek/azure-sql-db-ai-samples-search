@@ -58,7 +58,7 @@ const UserWidget = () => {
                     <Popover trapFocus withArrow>
                         <PopoverTrigger>
                             <div className={classes.avatar}>
-                                <Body1Strong style={{ marginRight: "8px" }}>{user.provider.toUpperCase()}</Body1Strong>
+                                {/* <Body1Strong style={{ marginRight: "8px" }}>{user.provider.toUpperCase()}</Body1Strong> */}
                                 <Avatar
                                     name={user.email}
                                     image={{
@@ -69,7 +69,7 @@ const UserWidget = () => {
                         </PopoverTrigger>
                         <PopoverSurface>
                             <div className={classes.menu}>
-                                <Body1Strong>{user.provider.toUpperCase()}</Body1Strong>
+                                <Body1Strong>{user.provider.toUpperCase() === "AAD" ? "Microsoft" : "GitHub"}</Body1Strong>
                                 <Button
                                     icon={<ArrowExitRegular />}
                                     appearance="transparent"
