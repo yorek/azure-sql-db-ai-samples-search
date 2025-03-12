@@ -41,7 +41,7 @@ const UserWidget = () => {
     }
         , [dispatch]);
 
-    const onLogin = (provider: "microsoft" | "github") => {
+    const onLogin = (provider: "aad" | "github") => {
         const url = `/.auth/login/${provider}?post_login_redirect_uri=${window.location.origin}`;
         window.location.href = url;
     };
@@ -105,7 +105,7 @@ const UserWidget = () => {
                         <MenuPopover>
                             <MenuList>
                                 <MenuItem onClick={() => onLogin("github")}>GitHub</MenuItem>
-                                <MenuItem onClick={() => onLogin("microsoft")}>Microsoft</MenuItem>
+                                <MenuItem onClick={() => onLogin("aad")}>Microsoft</MenuItem>
                             </MenuList>
                         </MenuPopover>
                     </Menu>
