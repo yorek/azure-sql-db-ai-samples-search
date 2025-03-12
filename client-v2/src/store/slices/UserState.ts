@@ -1,9 +1,9 @@
 type UserState = {
-    fullName: string;
+    userId: string;
     email: string;
     emailHash: string;
-    token: string;
-    role: string;
+    provider: string;
+    roles: string[];
     isAuth: boolean;
     theme: string;
 }

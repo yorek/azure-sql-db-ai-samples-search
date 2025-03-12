@@ -3,6 +3,12 @@ import {
     Body1,
     Body1Strong,
     Button,
+    Menu,
+    MenuButton,
+    MenuItem,
+    MenuList,
+    MenuPopover,
+    MenuTrigger,
     Popover,
     PopoverSurface,
     PopoverTrigger,
@@ -13,21 +19,37 @@ import {
     WeatherMoonFilled,
     WeatherSunnyRegular,
     ArrowEnterRegular,
-    ArrowExitRegular
+    ArrowExitRegular,
 } from "@fluentui/react-icons"
 
 // redux
 import { useSelector, useDispatch } from "react-redux";
-import { login, logout, setTheme } from "../../store/slices/UserSlice";
-import { RootState } from "../../store/store";
+import { setTheme, getUserAsync } from "../../store/slices/UserSlice";
+import { RootState, AppDispatch } from "../../store/store";
 
 import Styles from "./UserWidget.styles";
+import { useEffect } from "react";
 
 const UserWidget = () => {
 
     const classes = Styles();
-    const dispatch = useDispatch();
+    const dispatch = useDispatch<AppDispatch>();
     const user = useSelector((state: RootState) => state.user);
+
+    useEffect(() => {
+        dispatch(getUserAsync());
+    }
+        , [dispatch]);
+
+    const onLogin = (provider: "microsoft" | "github") => {
+        const url = `/.auth/login/${provider}?post_login_redirect_uri=${window.location.origin}`;
+        window.location.href = url;
+    };
+
+    const onLogout = () => {
+        const url = `/.auth/logout`;
+        window.location.href = url;
+    };
 
     return (
         <>
@@ -36,9 +58,9 @@ const UserWidget = () => {
                     <Popover trapFocus withArrow>
                         <PopoverTrigger>
                             <div className={classes.avatar}>
-                                <Body1Strong style={{ marginRight: "8px" }}>{user.role}</Body1Strong>
-                                <Avatar 
-                                    name={user.fullName} 
+                                <Body1Strong style={{ marginRight: "8px" }}>{user.provider.toUpperCase()}</Body1Strong>
+                                <Avatar
+                                    name={user.email}
                                     image={{
                                         src: `https://www.gravatar.com/avatar/${user.emailHash}?d=identicon`
                                     }}
@@ -47,22 +69,22 @@ const UserWidget = () => {
                         </PopoverTrigger>
                         <PopoverSurface>
                             <div className={classes.menu}>
-                                <Body1Strong>{user.role}</Body1Strong>
-                                <Button 
-                                icon={<ArrowExitRegular />}
-                                appearance="transparent" 
-                                size="medium" onClick={() => dispatch(logout())}>Sign out</Button>
+                                <Body1Strong>{user.provider.toUpperCase()}</Body1Strong>
+                                <Button
+                                    icon={<ArrowExitRegular />}
+                                    appearance="transparent"
+                                    size="medium" onClick={() => onLogout()}>Sign out</Button>
                             </div>
                             <div className={classes.menuOpen}>
-                                <Avatar 
+                                <Avatar
                                     image={{
                                         src: `https://www.gravatar.com/avatar/${user.emailHash}?d=identicon`
-                                    }}                                    
-                                    name={user.fullName} 
+                                    }}
+                                    name={user.email}
                                     badge={{ status: "available" }} size={48} />
                                 <div className={classes.menuOpenHeader}>
-                                    <Body1Strong>{user.fullName}</Body1Strong>
-                                    <Body1>{user.email}</Body1>
+                                    <Body1Strong>{user.email}</Body1Strong>
+                                    <Body1>{user.roles.join(", ").toUpperCase()}</Body1>
                                 </div>
                             </div>
                         </PopoverSurface>
@@ -74,11 +96,19 @@ const UserWidget = () => {
                 </div>
             ) : (
                 <div className={classes.authBox}>
-                    <Button
-                        appearance="primary"
-                        size="medium"
-                        icon={<ArrowEnterRegular />}
-                        onClick={() => dispatch(login())}>Sign in</Button>
+                    <Menu>
+                        <MenuTrigger disableButtonEnhancement>
+                            <MenuButton icon={<ArrowEnterRegular />} appearance="primary" shape="circular">
+                                Login
+                            </MenuButton>
+                        </MenuTrigger>
+                        <MenuPopover>
+                            <MenuList>
+                                <MenuItem onClick={() => onLogin("github")}>GitHub</MenuItem>
+                                <MenuItem onClick={() => onLogin("microsoft")}>Microsoft</MenuItem>
+                            </MenuList>
+                        </MenuPopover>
+                    </Menu>
                     <ToggleButton
                         appearance="transparent"
                         icon={user.theme === "light" ? <WeatherSunnyRegular /> : <WeatherMoonFilled />}
