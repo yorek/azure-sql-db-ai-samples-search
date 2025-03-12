@@ -59,7 +59,6 @@ const Searchbar = () => {
     const handleReset = () => {
         dispatch(resetSearchState());
         dispatch(resetHomeState());
-        dispatch(getTotalSamplesAsync());
         dispatch(getLatestSamplesAsync());
     };
 
@@ -79,18 +78,21 @@ const Searchbar = () => {
                     placeholder='Samples used in Orlando Live 360 in 2024'
                     value={searchValue}
                     onChange={onSearchChange} />
-                <Button
-                    disabled={home.latestSamples.status === 'loading' || search.samples.status === 'loading' || searchValue === ''}
-                    size='large'
-                    appearance="primary"
-                    icon={<SearchRegular />}
-                    onClick={() => handleSearch()}>Search</Button>
-                <Button
-                    disabled={home.latestSamples.status === 'loading' || search.samples.status === 'loading'}
-                    size='large'
-                    appearance="transparent"
-                    icon={<ArrowUndoRegular />}
-                    onClick={() => handleReset()}>Reset</Button>
+                <div className={classes.buttonsWrapper}>
+                    <Button
+                        disabled={home.latestSamples.status === 'loading' || search.samples.status === 'loading' || searchValue === ''}
+                        size='large'
+                        appearance="primary"
+                        icon={<SearchRegular />}
+                        onClick={() => handleSearch()}>Search</Button>
+                    <Button
+                        disabled={home.latestSamples.status === 'loading' || search.samples.status === 'loading'}
+                        size='large'
+                        appearance="transparent"
+                        icon={<ArrowUndoRegular />}
+                        onClick={() => handleReset()}>Reset</Button>
+
+                </div>
 
             </div>
             {home.totalSamples.status === 'loading' && <Subtitle2 style={{ fontWeight: "normal", textAlign: "center" }}>Loading total Nr. of samples ...</Subtitle2>}

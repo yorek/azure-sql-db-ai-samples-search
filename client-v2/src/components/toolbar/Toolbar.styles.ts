@@ -18,6 +18,9 @@ const Styles = makeStyles({
     image: {
         padding: "8px",
         height: "24px",
+    },
+    imageMobile: {
+        height: "36px",
     }
 });
 

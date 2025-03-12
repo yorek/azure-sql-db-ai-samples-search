@@ -13,11 +13,18 @@ const Styles = makeStyles({
     title: {
         textAlign: "center",
         padding: "16px",
+        "@media(max-width: 768px)": {
+            fontSize: tokens.fontSizeBase600,
+        },
     },
     subtitle: {
         textAlign: "center",
         padding: "16px",
         fontWeight: "normal",
+        "@media(max-width: 768px)": {
+            fontSize: tokens.fontSizeBase500,
+            padding: "0",
+        },
     },
     fieldWrapper: {
         display: "flex",
@@ -28,6 +35,10 @@ const Styles = makeStyles({
         },
         gap: "16px",
         padding: `${tokens.spacingVerticalMNudge} ${tokens.spacingHorizontalMNudge}`,
+    },
+    buttonsWrapper: {
+        display: "flex",
+        gap: "16px",
     },
     link : {
         fontWeight: "bold",
