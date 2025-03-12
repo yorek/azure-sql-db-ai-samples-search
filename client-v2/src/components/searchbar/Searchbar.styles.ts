@@ -15,6 +15,7 @@ const Styles = makeStyles({
         padding: "16px",
         "@media(max-width: 768px)": {
             fontSize: tokens.fontSizeBase600,
+            padding: "0",
         },
     },
     subtitle: {

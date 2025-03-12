@@ -1,4 +1,8 @@
 import {
+    Accordion,
+    AccordionHeader,
+    AccordionItem,
+    AccordionPanel,
     Button,
     Link,
     SearchBox,
@@ -7,7 +11,7 @@ import {
     Title3
 } from '@fluentui/react-components';
 
-import { SearchRegular, ArrowUndoRegular } from '@fluentui/react-icons'
+import { SearchRegular, ArrowUndoRegular, InfoRegular } from '@fluentui/react-icons'
 
 import HowItWorks from '../messages/HowItWorks';
 import { useEffect, useState } from 'react';
@@ -91,15 +95,15 @@ const Searchbar = () => {
                         appearance="transparent"
                         icon={<ArrowUndoRegular />}
                         onClick={() => handleReset()}>Reset</Button>
-
                 </div>
-
             </div>
             {home.totalSamples.status === 'loading' && <Subtitle2 style={{ fontWeight: "normal", textAlign: "center" }}>Loading total Nr. of samples ...</Subtitle2>}
             {home.totalSamples.status === 'failed' && <Subtitle2 style={{ fontWeight: "normal", textAlign: "center" }}><strong>Failed</strong> to load Samples</Subtitle2>}
-            {home.totalSamples.status === 'succeeded' && <Subtitle2 style={{ fontWeight: "normal", textAlign: "center" }}>There are a total of <Link onClick={() => handleAllSamples()} className={classes.link} inline>{home.totalSamples.total} Samples</Link> in the Database.</Subtitle2>}
+            {home.totalSamples.status === 'succeeded' && <Subtitle2 style={{ fontWeight: "normal", textAlign: "center" }}>There are a total of <Link onClick={() => handleAllSamples()} className={classes.link} inline>{home.totalSamples.total} Samples</Link>.</Subtitle2>}
             <Subtitle2 style={{ fontWeight: "normal", textAlign: "center" }}>
                 You can read more on <Link className={classes.link} as="a" inline onClick={() => handleOpen()}>how it works here</Link>.
+            </Subtitle2>
+            <Subtitle2 style={{ fontWeight: "normal", textAlign: "center" }}>
                 You can visit our <Link className={classes.link} inline href="https://github.com/yorek/azure-sql-db-ai-samples-search" target='_blank'>GitHub repository here</Link>.
             </Subtitle2>
             <HowItWorks open={openDialog} setOpen={setOpenDialog} />

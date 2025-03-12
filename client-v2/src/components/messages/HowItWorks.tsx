@@ -14,7 +14,7 @@ const HowItWorks: React.FC<HowItWorksProps> = ({ open, setOpen }) => {
     if (!open) return null;
 
     return (
-        <Dialog modalType="non-modal" open={open} onOpenChange={(event, data) => {
+        <Dialog modalType="modal" open={open} onOpenChange={(event, data) => {
             if (data.open === false) {
                 handleClose();
             }
