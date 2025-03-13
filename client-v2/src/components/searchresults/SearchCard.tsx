@@ -54,8 +54,8 @@ const SearchCard = (props: CardProps) => {
                             </MenuTrigger>
                             <MenuPopover>
                                 <MenuList>
-                                    <MenuItem icon={<EditRegular />}>Edit</MenuItem>
-                                    <MenuItem icon={<DeleteRegular />}>Delete</MenuItem>
+                                    <MenuItem disabled={!user.canEdit} icon={<EditRegular />}>Edit</MenuItem>
+                                    <MenuItem disabled={!user.canDelete} icon={<DeleteRegular />}>Delete</MenuItem>
                                 </MenuList>
                             </MenuPopover>
                         </Menu>}

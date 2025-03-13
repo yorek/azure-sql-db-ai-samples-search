@@ -1,8 +1,4 @@
 import {
-    Accordion,
-    AccordionHeader,
-    AccordionItem,
-    AccordionPanel,
     Button,
     Link,
     SearchBox,
@@ -11,14 +7,14 @@ import {
     Title3
 } from '@fluentui/react-components';
 
-import { SearchRegular, ArrowUndoRegular, InfoRegular } from '@fluentui/react-icons'
+import { SearchRegular, ArrowUndoRegular } from '@fluentui/react-icons'
 
 import HowItWorks from '../messages/HowItWorks';
 import { useEffect, useState } from 'react';
 
 import Styles from './Searchbar.styles';
-import { resetSearchState, getAllSamplesAsync } from '../../store/slices/SearchSlice';
-import { getLatestSamplesAsync, getTotalSamplesAsync, resetHomeState, searchSamplesAsync } from '../../store/slices/HomeSlice';
+import { resetSearchState, getAllSamplesAsync, getLatestSamplesAsync, searchSamplesAsync } from '../../store/slices/SearchSlice';
+import { getTotalSamplesAsync } from '../../store/slices/HomeSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '../../store/store';
 
@@ -55,20 +51,17 @@ const Searchbar = () => {
     /* Handle search */
     const handleSearch = () => {
         dispatch(resetSearchState());
-        dispatch(resetHomeState());
         dispatch(searchSamplesAsync(searchValue));
     };
 
     /* Handle reset */
     const handleReset = () => {
         dispatch(resetSearchState());
-        dispatch(resetHomeState());
         dispatch(getLatestSamplesAsync());
     };
 
     /* Handle all samples */
     const handleAllSamples = () => {
-        dispatch(resetHomeState());
         dispatch(getAllSamplesAsync());
     };
 
@@ -84,27 +77,26 @@ const Searchbar = () => {
                     onChange={onSearchChange} />
                 <div className={classes.buttonsWrapper}>
                     <Button
-                        disabled={home.latestSamples.status === 'loading' || search.samples.status === 'loading' || searchValue === ''}
+                        disabled={search.samples.status === 'loading' || searchValue === ''}
                         size='large'
                         appearance="primary"
                         icon={<SearchRegular />}
                         onClick={() => handleSearch()}>Search</Button>
                     <Button
-                        disabled={home.latestSamples.status === 'loading' || search.samples.status === 'loading'}
+                        disabled={search.samples.status === 'loading'}
                         size='large'
                         appearance="transparent"
                         icon={<ArrowUndoRegular />}
                         onClick={() => handleReset()}>Reset</Button>
                 </div>
             </div>
-            {home.totalSamples.status === 'loading' && <Subtitle2 style={{ fontWeight: "normal", textAlign: "center" }}>Loading total Nr. of samples ...</Subtitle2>}
-            {home.totalSamples.status === 'failed' && <Subtitle2 style={{ fontWeight: "normal", textAlign: "center" }}><strong>Failed</strong> to load Samples</Subtitle2>}
-            {home.totalSamples.status === 'succeeded' && <Subtitle2 style={{ fontWeight: "normal", textAlign: "center" }}>There are a total of <Link onClick={() => handleAllSamples()} className={classes.link} inline>{home.totalSamples.total} Samples</Link>.</Subtitle2>}
             <Subtitle2 style={{ fontWeight: "normal", textAlign: "center" }}>
-                You can read more on <Link className={classes.link} as="a" inline onClick={() => handleOpen()}>how it works here</Link>.
-            </Subtitle2>
-            <Subtitle2 style={{ fontWeight: "normal", textAlign: "center" }}>
-                You can visit our <Link className={classes.link} inline href="https://github.com/yorek/azure-sql-db-ai-samples-search" target='_blank'>GitHub repository here</Link>.
+            {home.totalSamples.status === 'loading' && "Loading total Nr. of samples ..."}&nbsp;
+            {home.totalSamples.status === 'failed' && <><strong>Failed</strong> to load Samples</>}&nbsp;
+            {home.totalSamples.status === 'succeeded' && <>There are a total of <Link onClick={() => handleAllSamples()} className={classes.link} inline>{home.totalSamples.total} Samples</Link>.</>}&nbsp;
+            You can read more on <Link className={classes.link} as="a" inline onClick={() => handleOpen()}>how it works here</Link>.&nbsp;
+            You can visit our <Link className={classes.link} inline href="https://github.com/yorek/azure-sql-db-ai-samples-search" target='_blank'>GitHub repository here</Link>.
+
             </Subtitle2>
             <HowItWorks open={openDialog} setOpen={setOpenDialog} />
         </div>

@@ -24,7 +24,11 @@ const initialState: UserState = {
     provider: "",
     roles: [],
     isAuth: false,
-    theme: "light"
+    theme: "light",
+    canCreate: false,
+    canEdit: false,
+    canDelete: false,
+
 };
 
 // // Read state from cookie if available
@@ -57,7 +61,9 @@ export const UserSlice = createSlice({
                 state.provider = action.payload.clientPrincipal.identityProvider;
                 state.roles = action.payload.clientPrincipal.userRoles;
                 state.userId = action.payload.clientPrincipal.userId;
-                state.isAuth = true;                
+                state.isAuth = true;    
+                state.canDelete = state.roles.includes("contributor");
+                
             })
             .addCase(getUserAsync.rejected, (state) => {
                 state.isAuth = false;

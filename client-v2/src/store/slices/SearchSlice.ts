@@ -15,6 +15,30 @@ export const getAllSamplesAsync = createAsyncThunk<Sample[]>('search/getAllSampl
   return response.data.value;
 });
 
+// async list latest samples
+export const getLatestSamplesAsync = createAsyncThunk<Sample[]>('search/getLatestSamples', async () => {
+  const response = await axios.get(`${process.env.REACT_APP_API_URL}latestSamples`, {
+    withCredentials: false,
+    headers: {
+      'Content-Type': 'application/json',
+      'Accept': 'application/json',
+    }
+  });   
+  return response.data?.value;
+});
+
+// async search specific samples
+export const searchSamplesAsync = createAsyncThunk<Sample[], string>('search/searchSamplesAsync', async (query: string) => {
+  const response = await axios.get(`${process.env.REACT_APP_API_URL}findSamples?text=${query}`, {
+    withCredentials: false,
+    headers: {
+      'Content-Type': 'application/json',
+      'Accept': 'application/json',
+    }
+  });   
+  return response.data.value;
+});
+
 const initialState: SearchState = {
     samples: {
         status: 'idle',
@@ -44,7 +68,32 @@ const SearchSlice = createSlice({
           .addCase(getAllSamplesAsync.rejected, (state, action) => {
             state.samples.status = 'failed';
             state.samples.error = action.error.message;
-          });
+          })
+          // latest samples
+          .addCase(getLatestSamplesAsync.pending, (state) => {
+            state.samples.status = 'loading';
+          })
+          .addCase(getLatestSamplesAsync.fulfilled, (state, action) => {
+            state.samples.status = 'succeeded';
+            state.samples.results = action.payload;
+          })
+          .addCase(getLatestSamplesAsync.rejected, (state, action) => {
+            state.samples.status = 'failed';
+            state.samples.error = action.error.message;
+          })
+          // search samples
+          .addCase(searchSamplesAsync.pending, (state) => {
+            state.samples.status = 'loading';
+          })
+          .addCase(searchSamplesAsync.fulfilled, (state, action) => {
+            state.samples.status = 'succeeded';
+            state.samples.results = action.payload;
+          })
+          .addCase(searchSamplesAsync.rejected, (state, action) => {  
+            state.samples.status = 'failed';
+            state.samples.error = action.error.message;
+          }
+        );
     }
 });
 
