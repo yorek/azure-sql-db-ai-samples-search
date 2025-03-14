@@ -1,9 +1,10 @@
-import { Dialog, DialogTrigger, Button, DialogSurface, DialogBody, DialogTitle, DialogContent, Checkbox, DialogActions, Field, ProgressBar } from "@fluentui/react-components";
+import { Dialog, DialogTrigger, Button, DialogSurface, DialogBody, DialogTitle, DialogContent, DialogActions, Field, ProgressBar } from "@fluentui/react-components";
 import Sample from "../../types/Sample";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../store/store";
 import { deleteSampleAsync, resetDeleteState } from "../../store/slices/SearchSlice";
 import Styles from "./DeleteSample.style";
+import { useEffect } from "react";
 
 interface DeleteProps {
     sample: Sample;
@@ -23,25 +24,25 @@ const DeleteSample = (props: DeleteProps) => {
     const search = useSelector((state: RootState) => state.search);
     const dispatch: AppDispatch = useDispatch();
 
+    // handle close and reset of the dialog
+    const onClose = () => {
+        
+        setOpen(false);
+    };
+
+    useEffect(() => {
+        console.log(`search.delete.status: ${search.delete.status}`);
+    }
+    , [search.delete.status]);
+
     // handle deletion of the sample and close the dialog
     const handleClose = (target: string) => {
-        console.log(`target: ${target}`);
         if (target === 'delete') {
             // delete the sample
             dispatch(deleteSampleAsync(sample.id.toString()));
-
-            // wait until done
-            while (search.delete.status === 'loading') {
-                // wait
-            }
-            // error keep it open
-            if (search.delete.status === 'succeeded') {
-                setOpen(false);
-            }
         }
         if (target === 'cancel') {    
-            dispatch(resetDeleteState());    
-            setOpen(false);
+            onClose();
         }
     };
 
@@ -76,12 +77,12 @@ const DeleteSample = (props: DeleteProps) => {
                     </DialogContent>
                     <DialogActions>
                         <DialogTrigger disableButtonEnhancement>
-                            <Button id="delete" appearance="primary">
+                            <Button id="delete" appearance="primary" disabled={search.delete.status === 'loading'}>
                                 Delete
                             </Button>
                         </DialogTrigger>
                         <DialogTrigger disableButtonEnhancement>
-                            <Button id="cancel" appearance="secondary">Cancel</Button>
+                            <Button id="cancel" appearance="secondary" disabled={search.delete.status === 'loading'}>Cancel</Button>
                         </DialogTrigger>
                     </DialogActions>
                 </DialogBody>

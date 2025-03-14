@@ -3,6 +3,9 @@ import axios from 'axios';
 import SearchState from './SearchState';
 import Sample from '../../types/Sample';
 
+// Define the delay function
+const delay = (ms: number | undefined) => new Promise(resolve => setTimeout(resolve, ms));
+
 // async search total samples
 export const getTotalSamplesAsync = createAsyncThunk<number>('search/getTotalSamples', async () => {
   const response = await axios.get(`${process.env.REACT_APP_API_URL}countSamples`, {
@@ -53,14 +56,17 @@ export const searchSamplesAsync = createAsyncThunk<Sample[], string>('search/sea
 
 // delete a sample
 export const deleteSampleAsync = createAsyncThunk<number, string>('search/deleteSampleAsync', async (id: string) => {
-  const response = await axios.delete(`${process.env.REACT_APP_API_URL}deleteSample`, {
-    data: { id: id, url: null },
-    withCredentials: false,
-    headers: {
-      'Content-Type': 'application/json',
-      'Accept': 'application/json',
-    }
-  });
+  await delay(1000).then(async() => {
+    await axios.delete(`${process.env.REACT_APP_API_URL}deleteSample`, {
+      data: { id: id, url: null },
+      withCredentials: false,
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+      }
+    });
+  
+  }); // for better user experience
   return Number(id);
 });
 
