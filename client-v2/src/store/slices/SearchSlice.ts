@@ -3,6 +3,18 @@ import axios from 'axios';
 import SearchState from './SearchState';
 import Sample from '../../types/Sample';
 
+// async search total samples
+export const getTotalSamplesAsync = createAsyncThunk<number>('search/getTotalSamples', async () => {
+  const response = await axios.get(`${process.env.REACT_APP_API_URL}countSamples`, {
+    withCredentials: false,
+    headers: {
+      'Content-Type': 'application/json',
+      'Accept': 'application/json',
+    }
+  });   
+  return response.data?.value[0]?.total_sample_count;
+});
+
 // async list all samples
 export const getAllSamplesAsync = createAsyncThunk<Sample[]>('search/getAllSamplesAsync', async () => {
   const response = await axios.get(`${process.env.REACT_APP_API_URL}samples`, {
@@ -61,6 +73,11 @@ const initialState: SearchState = {
     delete: {
       status: 'idle',
       error: undefined
+    },
+    totalSamples: {
+      status: 'idle',
+      error: undefined,
+      total: 0
     }  
 };
 
@@ -77,6 +94,18 @@ const SearchSlice = createSlice({
     },
     extraReducers: (builder) => {
         builder
+        // total samples
+        .addCase(getTotalSamplesAsync.pending, (state) => {
+            state.totalSamples.status = 'loading';
+          })
+          .addCase(getTotalSamplesAsync.fulfilled, (state, action) => {
+            state.totalSamples.status = 'succeeded';
+            state.totalSamples.total = action.payload;
+          })
+          .addCase(getTotalSamplesAsync.rejected, (state, action) => {
+            state.totalSamples.status = 'failed';
+            state.totalSamples.error = action.error.message;
+          })
         // all samples
         .addCase(getAllSamplesAsync.pending, (state) => {
             state.samples.status = 'loading';
@@ -121,7 +150,9 @@ const SearchSlice = createSlice({
             state.delete.status = 'succeeded';
             // remove the deleted sample from the list
             state.samples.results = state.samples.results.filter(sample => sample.id !== action.payload);
-            console.log(action);
+            // recount the total samples
+            state.totalSamples.total = state.totalSamples.total - 1;
+            
           })
           .addCase(deleteSampleAsync.rejected, (state, action) => {
             state.delete.status = 'failed';

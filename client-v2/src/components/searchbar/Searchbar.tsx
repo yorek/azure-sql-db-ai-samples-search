@@ -13,15 +13,13 @@ import HowItWorks from '../messages/HowItWorks';
 import { useEffect, useState } from 'react';
 
 import Styles from './Searchbar.styles';
-import { resetSearchState, getAllSamplesAsync, getLatestSamplesAsync, searchSamplesAsync } from '../../store/slices/SearchSlice';
-import { getTotalSamplesAsync } from '../../store/slices/HomeSlice';
+import { resetSearchState, getAllSamplesAsync, getLatestSamplesAsync, searchSamplesAsync, getTotalSamplesAsync } from '../../store/slices/SearchSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '../../store/store';
 
 const Searchbar = () => {
 
     const classes = Styles();
-    const home = useSelector((state: RootState) => state.home);
     const search = useSelector((state: RootState) => state.search);
     const [openDialog, setOpenDialog] = useState(false);
     const [searchValue, setSearchValue] = useState<string>('');
@@ -91,9 +89,9 @@ const Searchbar = () => {
                 </div>
             </div>
             <Subtitle2 style={{ fontWeight: "normal", textAlign: "center" }}>
-            {home.totalSamples.status === 'loading' && "Loading total Nr. of samples ..."}&nbsp;
-            {home.totalSamples.status === 'failed' && <><strong>Failed</strong> to load Samples</>}&nbsp;
-            {home.totalSamples.status === 'succeeded' && <>There are a total of <Link onClick={() => handleAllSamples()} className={classes.link} inline>{home.totalSamples.total} Samples</Link>.</>}&nbsp;
+            {search.totalSamples.status === 'loading' && "Loading total Nr. of samples ..."}&nbsp;
+            {search.totalSamples.status === 'failed' && <><strong>Failed</strong> to load Samples</>}&nbsp;
+            {search.totalSamples.status === 'succeeded' && <>There are a total of <Link onClick={() => handleAllSamples()} className={classes.link} inline>{search.totalSamples.total} Samples</Link>.</>}&nbsp;
             You can read more on <Link className={classes.link} as="a" inline onClick={() => handleOpen()}>how it works here</Link>.&nbsp;
             You can visit our <Link className={classes.link} inline href="https://github.com/yorek/azure-sql-db-ai-samples-search" target='_blank'>GitHub repository here</Link>.
 

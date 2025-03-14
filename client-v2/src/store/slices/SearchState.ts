@@ -9,5 +9,10 @@ export default interface SearchState {
     delete: {
         status: 'idle' | 'loading' | 'succeeded' | 'failed';
         error: string | undefined
-    }
+    },
+    totalSamples: {
+        status: 'idle' | 'loading' | 'succeeded' | 'failed';
+        error: string | undefined;
+        total: number;
+    }; 
 }

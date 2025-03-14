@@ -3,7 +3,6 @@ import Sample from "../../types/Sample";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../store/store";
 import { deleteSampleAsync, resetDeleteState } from "../../store/slices/SearchSlice";
-import { getTotalSamplesAsync } from "../../store/slices/HomeSlice";
 import Styles from "./DeleteSample.style";
 
 interface DeleteProps {
@@ -26,6 +25,7 @@ const DeleteSample = (props: DeleteProps) => {
 
     // handle deletion of the sample and close the dialog
     const handleClose = (target: string) => {
+        console.log(`target: ${target}`);
         if (target === 'delete') {
             // delete the sample
             dispatch(deleteSampleAsync(sample.id.toString()));
@@ -35,14 +35,14 @@ const DeleteSample = (props: DeleteProps) => {
                 // wait
             }
             // error keep it open
-            if (search.delete.status === 'failed') {
-                return;
+            if (search.delete.status === 'succeeded') {
+                setOpen(false);
             }
         }
-        // done, reset and reload total
-        dispatch(resetDeleteState());
-        dispatch(getTotalSamplesAsync());
-        setOpen(false);
+        if (target === 'cancel') {    
+            dispatch(resetDeleteState());    
+            setOpen(false);
+        }
     };
 
     if (!open) return null;
