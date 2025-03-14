@@ -143,6 +143,32 @@
           ]
         }
       ]
+    },
+    "DeleteSample": {
+      "source":{
+        "object": "dbo.delete_sample",
+        "type": "stored-procedure",
+        "parameters": {
+          "id": ""
+        }
+      },
+      "rest": {
+        "enabled": true,
+        "path": "/deleteSample",
+        "methods": [
+          "delete"
+        ]
+      },
+      "permissions": [
+        {
+          "role": "anonymous",
+          "actions": [
+            {
+              "action": "*"
+            }
+          ]
+        }
+      ]
     }
   }
 }

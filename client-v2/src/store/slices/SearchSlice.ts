@@ -39,12 +39,29 @@ export const searchSamplesAsync = createAsyncThunk<Sample[], string>('search/sea
   return response.data.value;
 });
 
+// delete a sample
+export const deleteSampleAsync = createAsyncThunk<number, string>('search/deleteSampleAsync', async (id: string) => {
+  const response = await axios.delete(`${process.env.REACT_APP_API_URL}deleteSample`, {
+    data: { id: id },
+    withCredentials: false,
+    headers: {
+      'Content-Type': 'application/json',
+      'Accept': 'application/json',
+    }
+  });
+  return Number(id);
+});
+
 const initialState: SearchState = {
     samples: {
         status: 'idle',
         results: [],
-        error: undefined
-    }
+        error: undefined,
+    },
+    delete: {
+      status: 'idle',
+      error: undefined
+    }  
 };
 
 const SearchSlice = createSlice({
@@ -53,6 +70,9 @@ const SearchSlice = createSlice({
     reducers: {
       resetSearchState: (state) => {
         state.samples = initialState.samples;
+      },
+      resetDeleteState: (state) => {
+        state.delete = initialState.delete;
       }
     },
     extraReducers: (builder) => {
@@ -92,10 +112,23 @@ const SearchSlice = createSlice({
           .addCase(searchSamplesAsync.rejected, (state, action) => {  
             state.samples.status = 'failed';
             state.samples.error = action.error.message;
-          }
-        );
+          })
+          // delete sample
+          .addCase(deleteSampleAsync.pending, (state) => {
+            state.delete.status = 'loading';
+          })
+          .addCase(deleteSampleAsync.fulfilled, (state, action) => {
+            state.delete.status = 'succeeded';
+            // remove the deleted sample from the list
+            state.samples.results = state.samples.results.filter(sample => sample.id !== action.payload);
+            console.log(action);
+          })
+          .addCase(deleteSampleAsync.rejected, (state, action) => {
+            state.delete.status = 'failed';
+            state.delete.error = action.error.message;
+          });
     }
 });
 
-export const { resetSearchState } = SearchSlice.actions;
+export const { resetSearchState, resetDeleteState } = SearchSlice.actions;
 export default SearchSlice;

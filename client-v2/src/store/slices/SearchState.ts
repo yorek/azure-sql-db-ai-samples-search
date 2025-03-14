@@ -5,5 +5,9 @@ export default interface SearchState {
         status: 'idle' | 'loading' | 'succeeded' | 'failed';
         results: Sample[];
         error: string | undefined
+    },
+    delete: {
+        status: 'idle' | 'loading' | 'succeeded' | 'failed';
+        error: string | undefined
     }
 }
