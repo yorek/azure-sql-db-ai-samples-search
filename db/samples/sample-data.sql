@@ -533,7 +533,8 @@ exec dbo.add_sample '
         "services": ["Azure SQL", "SQL Server"],
         "frameworks": ["Vue", "Vue.js"],
         "license": "MIT",
-        "tags": ["End-to-End", "Aspire", "EFCore", "UX", "UI", ".NET", "DotNet", "Fullstack", "Data API Buider", "DAB"]        
+        "tags": ["End-to-End", "Aspire", "EFCore", "UX", "UI", ".NET", "DotNet", "Fullstack", "Data API Buider", "DAB"],        
+        "conferences": ["VS Live 2025 Las Vegas"]
     }
 }
 ';
