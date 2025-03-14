@@ -90,7 +90,7 @@ const Searchbar = () => {
             </div>
             <Subtitle2 style={{ fontWeight: "normal", textAlign: "center" }}>
             {search.totalSamples.status === 'loading' && "Loading total Nr. of samples ..."}&nbsp;
-            {search.totalSamples.status === 'failed' && <><strong>Failed</strong> to load Samples</>}&nbsp;
+            {search.totalSamples.status === 'failed' && <><strong>Failed</strong> to load Samples. <Link onClick={() => dispatch(getTotalSamplesAsync())} className={classes.link} inline>Try again</Link>.</>}&nbsp;
             {search.totalSamples.status === 'succeeded' && <>There are a total of <Link onClick={() => handleAllSamples()} className={classes.link} inline>{search.totalSamples.total} Samples</Link>.</>}&nbsp;
             You can read more on <Link className={classes.link} as="a" inline onClick={() => handleOpen()}>how it works here</Link>.&nbsp;
             You can visit our <Link className={classes.link} inline href="https://github.com/yorek/azure-sql-db-ai-samples-search" target='_blank'>GitHub repository here</Link>.

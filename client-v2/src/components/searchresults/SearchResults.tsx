@@ -34,6 +34,15 @@ const SearchResults = () => {
                 </Subtitle2>
             }
             {/* 
+                Search results stats.
+            */}
+            {search.samples.status === 'failed' &&
+                <Subtitle2 style={{ fontWeight: "normal", textAlign: "center", margin: "10px 0" }}>
+                    An error occurred: <strong>{search.samples.error}</strong>.<br />
+                    Please try again.
+                </Subtitle2>
+            }
+            {/* 
                 Display search results.
             */}
             {search.samples.results.length !== undefined && search.samples.results.length > 0 &&
@@ -41,7 +50,6 @@ const SearchResults = () => {
                     {search.samples.status === 'succeeded' && search.samples.results.map((sample) => (
                         <SearchCard key={sample.id} sample={sample} />
                     ))}
-                    {search.samples.status === 'failed' && <h2>{search.samples.error}</h2>}
                 </div>
             }
         </div >
