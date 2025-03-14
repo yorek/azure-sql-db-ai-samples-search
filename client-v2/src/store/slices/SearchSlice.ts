@@ -42,7 +42,7 @@ export const searchSamplesAsync = createAsyncThunk<Sample[], string>('search/sea
 // delete a sample
 export const deleteSampleAsync = createAsyncThunk<number, string>('search/deleteSampleAsync', async (id: string) => {
   const response = await axios.delete(`${process.env.REACT_APP_API_URL}deleteSample`, {
-    data: { id: id },
+    data: { id: id, url: null },
     withCredentials: false,
     headers: {
       'Content-Type': 'application/json',
