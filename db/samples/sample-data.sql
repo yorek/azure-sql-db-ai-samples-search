@@ -506,7 +506,7 @@ GO
 
 exec dbo.add_sample '
 {
-    "name": "SqlDatabaseVectorSearch", 
+    "name": "SQL Database Vector Search", 
     "description": "A repository that showcases the native VECTOR type in Azure SQL Database to perform embeddings and RAG with Azure OpenAI, using DOC, PDF, TXT and MD documents.",
     "notes": "A repository that showcases the native VECTOR type in Azure SQL Database to perform embeddings and RAG with Azure OpenAI. The application allows to load documents, generate embeddings and save them into the database as Vectors, and perform searches using Vector Search and RAG. Currently, PDF, DOCX, TXT and MD files are supported. Vectors are saved and retrieved with Entity Framework Core using the EFCore.SqlServer.VectorSearch library. Embedding and Chat Completion are integrated with Semantic Kernel. This repository contains a Blazor Web App as well as a Minimal API that allows to programatically interact with embeddings and RAG.",
     "url": "https://github.com/marcominerva/SqlDatabaseVectorSearch",
@@ -516,6 +516,24 @@ exec dbo.add_sample '
         "services": ["Azure SQL", "Azure Open AI"],
         "license": "MIT",
         "tags": ["End-to-End", "RAG", "Embeddings", "Vectors", "EFCore", "Semantic Kernel", "UX", "UI", "Chat", "Response Streaming"]        
+    }
+}
+';
+GO
+
+exec dbo.add_sample '
+{
+    "name": "Azure SQL and SQL Server with .NET Aspire", 
+    "description": "Samples on how to use SQL Server and Azure SQL with .NET Aspire. The samples cover also usage of DbUp, Database Projects, Data API Builder, Node+Vue and also a full end-to-end fullstack application with Aspire, SQL Server, Database Projects, Data API Builder, Node and Vue",
+    "notes": "A set of samples showing how to use Azure SQL and SQL Server with Aspire. Starting from using an existing SQL Server instance through using SQL Server hosted in Aspire, and then deploying the database using DBUp, Database Projects and Entity Framework integration. Data API builder is also integrated to have a CRUD service ready in seconds and then a full end-to-end solution is provided using .NEt Aspire, SQL Server, Data API Builder, Database Projects, Node and Vue.Js as a frontend. The end-to-end application is the well-known ToDo application.",
+    "url": "https://github.com/Azure-Samples/azure-sql-db-aspire",
+    "details": {
+        "author": "Davide Mauri",
+        "languages": ["T-SQL", "C#", "Node"],        
+        "services": ["Azure SQL", "SQL Server"],
+        "frameworks": ["Vue", "Vue.js"],
+        "license": "MIT",
+        "tags": ["End-to-End", "Aspire", "EFCore", "UX", "UI", ".NET", "DotNet", "Fullstack", "Data API Buider", "DAB"]        
     }
 }
 ';
