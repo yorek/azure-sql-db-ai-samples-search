@@ -540,6 +540,27 @@ exec dbo.add_sample '
 ';
 GO
 
+exec dbo.add_sample '
+{
+    "name": "SQL projects DevOps samples", 
+    "description": "CI/CD for SQL databases with SQL projects - Azure SQL and SQL Server. This repository contains sample workflows for several scenarios related to SQL projects, including CI checks and deployments to multiple environments.",
+    "notes": "Following this sample you''ll be able to setup CI/CD workflows for database development and deployment, including:\n- getting started from an existing database\n- a CI check that validates all object references with dotnet build\n- a CI check for SQL code quality with code analysis\n- incorporating additional database objects in your build, such as system objects\n- a deployment workflow that checks for deployment warnings\n a deployment workflow that updates a testing environment\n- a deployment workflow that generates a script for review\nThe .NET Conf 2024 session Next-gen SQL projects with Microsoft.Build.Sql covered the topics in this repository for some background on establishing a database development lifecycle.",
+    "url": "https://github.com/Azure-Samples/sql-projects-devops-samples",
+    "details": {
+        "related-links": {
+            "blog": "https://techcommunity.microsoft.com/blog/azuresqlblog/the-microsoft-build-sql-project-sdk-is-now-generally-available/4392063"
+        }, 
+        "author": "Drew Skwiers-Koballa",
+        "languages": ["T-SQL"],        
+        "services": ["Azure SQL", "SQL Server"],
+        "license": "MIT",
+        "tags": ["CI/CD", "DevOps", "GitHub Actions"],        
+        "tools": ["SqlPackage", "DacFx"],
+        "conferences": [".NET Conf 2024"]
+    }
+}';
+GO
+
 select id, name, created_on, updated_on from dbo.samples order by created_on desc;
 --where [url] like '%kmeans%'
 GO
