@@ -56,7 +56,7 @@ export const searchSamplesAsync = createAsyncThunk<Sample[], string>('search/sea
 
 // delete a sample
 export const deleteSampleAsync = createAsyncThunk<number, string>('search/deleteSampleAsync', async (id: string) => {
-  await delay(1000).then(async() => {
+  await delay(1000).then(async() => { // for better user experience
     await axios.delete(`${process.env.REACT_APP_API_URL}deleteSample`, {
       data: { id: id, url: null },
       withCredentials: false,
@@ -66,8 +66,21 @@ export const deleteSampleAsync = createAsyncThunk<number, string>('search/delete
       }
     });
   
-  }); // for better user experience
+  }); 
   return Number(id);
+});
+
+// get the details
+export const getSampleDetailsAsync = createAsyncThunk<Sample, string>('search/getSampleDetailsAsync', async (id: string) => {
+  const response = await axios.post(`${process.env.REACT_APP_API_URL}sampleDetails`, { id: id, url: null },{
+    // withCredentials: false,
+    headers: {
+      'Content-Type': 'application/json',
+      'Accept': 'application/json',
+    }
+  });   
+  const sample = response.data.value[0].sample_json;
+  return JSON.parse(sample);
 });
 
 const initialState: SearchState = {
@@ -84,6 +97,11 @@ const initialState: SearchState = {
       status: 'idle',
       error: undefined,
       total: 0
+    },
+    sampleDetails: {
+      status: 'idle',
+      error: undefined,
+      sample: undefined
     }  
 };
 
@@ -163,7 +181,20 @@ const SearchSlice = createSlice({
           .addCase(deleteSampleAsync.rejected, (state, action) => {
             state.delete.status = 'failed';
             state.delete.error = action.error.message;
-          });
+          })
+          // get sample details
+          .addCase(getSampleDetailsAsync.pending, (state) => {
+            state.sampleDetails.status = 'loading';
+          })
+          .addCase(getSampleDetailsAsync.fulfilled, (state, action) => {
+            state.sampleDetails.status = 'succeeded';
+            state.sampleDetails.sample = action.payload;
+          })
+          .addCase(getSampleDetailsAsync.rejected, (state, action) => {
+            state.sampleDetails.status = 'failed';
+            state.sampleDetails.error = action.error.message;
+          }
+        );
     }
 });
 

@@ -7,6 +7,7 @@ import Sample from "../../types/Sample";
 import { RootState } from "../../store/store";
 import { useSelector } from "react-redux";
 import DeleteSample from "../messages/DeleteSample";
+import RecordDetails from "../recorddetails/RecordDetails";
 
 interface CardProps {
     sample: Sample;
@@ -20,6 +21,7 @@ const SearchCard = (props: CardProps) => {
     const user = useSelector((state: RootState) => state.user);
     const [cardHeight, setCardHeight] = React.useState(210);
     const [openDialog, setOpenDialog] = React.useState(false);
+    const [openDetails, setOpenDetails] = React.useState(false);
 
     const handleOpen = (sample: Sample) => {
         window?.open(sample.url, '_blank')?.focus();
@@ -69,20 +71,15 @@ const SearchCard = (props: CardProps) => {
                     onClick={() => handleOpen(sample)}
                     appearance="primary"
                     icon={<LinkMultipleRegular />}>Open</Button>
-                {cardHeight === 210 ?
-                    <Button
+                 <Button
                         appearance="transparent"
-                        onClick={() => setCardHeight(350)}
+                        onClick={() => setOpenDetails(true)}
                         icon={<ArrowDownRegular />}>Read all</Button>
-                    : <Button
-                        appearance="transparent"
-                        onClick={() => setCardHeight(210)}
-                        icon={<ArrowUpRegular />}>Read less</Button>
-                }
 
             </CardFooter>
         </Card>
         <DeleteSample sample={sample} open={openDialog} setOpen={setOpenDialog} />
+        <RecordDetails open={openDetails} setOpen={setOpenDetails} id={sample.id} />
         </>
     );
 };

@@ -14,5 +14,10 @@ export default interface SearchState {
         status: 'idle' | 'loading' | 'succeeded' | 'failed';
         error: string | undefined;
         total: number;
-    }; 
+    },
+    sampleDetails: {
+        status: 'idle' | 'loading' | 'succeeded' | 'failed';
+        error: string | undefined;
+        sample: Sample | undefined;
+    } 
 }

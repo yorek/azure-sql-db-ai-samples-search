@@ -170,6 +170,34 @@
           ]
         }
       ]
+    },
+    "SampleDetails": {
+      "source": {
+        "object": "dbo.get_sample",
+        "type": "stored-procedure",
+        "parameters": {
+          "id": "",
+          "url": ""
+        }
+      },
+      "rest": {
+        "enabled": true,
+        "path": "/sampleDetails",
+        "methods": [
+          "get",
+          "post"
+        ]
+      },
+      "permissions": [
+        {
+          "role": "anonymous",
+          "actions": [
+            {
+              "action": "*"
+            }
+          ]
+        }
+      ]
     }
   }
 }
