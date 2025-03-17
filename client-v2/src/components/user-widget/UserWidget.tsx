@@ -20,6 +20,7 @@ import {
     WeatherSunnyRegular,
     ArrowEnterRegular,
     ArrowExitRegular,
+    AddRegular
 } from "@fluentui/react-icons"
 
 // redux
@@ -28,13 +29,15 @@ import { setTheme, getUserAsync } from "../../store/slices/UserSlice";
 import { RootState, AppDispatch } from "../../store/store";
 
 import Styles from "./UserWidget.styles";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import CreateSample from "../messages/CreateSample";
 
 const UserWidget = () => {
 
     const classes = Styles();
     const dispatch = useDispatch<AppDispatch>();
     const user = useSelector((state: RootState) => state.user);
+    const [createOpen, setCreateOpen] = useState(false);
 
     useEffect(() => {
         dispatch(getUserAsync());
@@ -51,10 +54,21 @@ const UserWidget = () => {
         window.location.href = url;
     };
 
+    const onCreate = () => {
+        setCreateOpen(true);
+    };
+
     return (
         <>
             {user.isAuth ? (
                 <div className={classes.authBox}>
+                    <Button
+                        icon={<AddRegular />}
+                        appearance="primary"
+                        size="medium"
+                        shape="circular"
+                        onClick={onCreate}
+                    >Create</Button>
                     <Popover trapFocus withArrow>
                         <PopoverTrigger>
                             <div className={classes.avatar}>
@@ -93,6 +107,7 @@ const UserWidget = () => {
                         appearance="transparent"
                         icon={user.theme === "light" ? <WeatherSunnyRegular /> : <WeatherMoonFilled />}
                         onClick={() => dispatch(setTheme(user.theme === "dark" ? 'light' : 'dark'))} />
+                    <CreateSample open={createOpen} setOpen={setCreateOpen} />
                 </div>
             ) : (
                 <div className={classes.authBox}>

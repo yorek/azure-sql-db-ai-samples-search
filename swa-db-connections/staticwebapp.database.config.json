@@ -198,6 +198,32 @@
           ]
         }
       ]
+    },
+    "CreateSample": {
+      "source": {
+        "object": "dbo.add_sample",
+        "type": "stored-procedure",
+        "parameters": {
+          "payload": ""
+        }
+      },
+      "rest": {
+        "enabled": true,
+        "path": "/createSample",
+        "methods": [
+          "post"
+        ]
+      },
+      "permissions": [
+        {
+          "role": "anonymous",
+          "actions": [
+            {
+              "action": "*"
+            }
+          ]
+        }
+      ]
     }
   }
 }

@@ -30,11 +30,6 @@ const DeleteSample = (props: DeleteProps) => {
         setOpen(false);
     };
 
-    useEffect(() => {
-        console.log(`search.delete.status: ${search.delete.status}`);
-    }
-    , [search.delete.status]);
-
     // handle deletion of the sample and close the dialog
     const handleClose = (target: string) => {
         if (target === 'delete') {

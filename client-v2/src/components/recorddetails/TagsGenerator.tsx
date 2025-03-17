@@ -35,7 +35,8 @@ const TagsGenerator = (props: TagsGeneratorProps) => {
 
     return (
         <div className={classes.tags}>
-            {Object.entries(sample.details).map(([key, value]) => (
+            
+            {sample.details && Object.entries(sample.details).map(([key, value]) => (
                 <Field key={key} label={key}
                     style={{ fontWeight: 'bold', textTransform: 'capitalize', display: 'flex', flexDirection: 'row', gap: '10px', flexWrap: 'wrap' }}>
                     {renderValue(value)}
