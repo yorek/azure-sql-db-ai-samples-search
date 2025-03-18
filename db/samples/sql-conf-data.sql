@@ -185,6 +185,13 @@ exec dbo.add_sample '
 ';
 GO
 
+/*
+delete se from dbo.samples_details_embeddings se inner join dbo.samples s on se.id = s.id where json_value(s.details, '$.conference') = 'SQL Conf() 2025'
+delete se from dbo.samples_notes_embeddings se inner join dbo.samples s on se.id = s.id where json_value(s.details, '$.conference') = 'SQL Conf() 2025'
+delete se from dbo.samples_embeddings se inner join dbo.samples s on se.id = s.id where json_value(s.details, '$.conference') = 'SQL Conf() 2025'
+delete from dbo.samples where json_value(details, '$.conference') = 'SQL Conf() 2025'
+*/
+
 select id, name, json_value(details, '$.author')from dbo.samples where json_value(details, '$.conference') = 'SQL Conf() 2025'
 
 --exec dbo.delete_sample @url = 'https://youtu.be/Uddhx8Bu2ZM'
