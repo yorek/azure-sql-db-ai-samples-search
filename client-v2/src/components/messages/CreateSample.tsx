@@ -12,6 +12,9 @@ import {
     Textarea,
     ProgressBar
 } from "@fluentui/react-components";
+
+import CodeEditor from '@uiw/react-textarea-code-editor';
+
 import * as Yup from 'yup';
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
@@ -20,6 +23,8 @@ import Style from "./CreateSample.style";
 import { createSampleAsync } from "../../store/slices/SearchSlice";
 import { AppDispatch, RootState } from "../../store/store";
 import { useDispatch, useSelector } from "react-redux";
+import { Record } from "../../types/Record";
+import { useEffect } from "react";
 
 interface CreateProps {
     open: boolean;
@@ -31,8 +36,15 @@ const CreateSample = (props: CreateProps) => {
     const { open, setOpen } = props;
     const dispatch: AppDispatch = useDispatch();
     const search = useSelector((state: RootState) => state.search);
+    
     const classes = Style();
 
+    useEffect(() => {
+        if (search.createSample.status === 'succeeded') {
+            setOpen(false);
+        }
+    }, [search.createSample.status, setOpen]);
+    
     // form validation hook
     const validationSchema = Yup.object().shape({
         name: Yup.string().required('The Name is a mandatory field.'),
@@ -42,7 +54,7 @@ const CreateSample = (props: CreateProps) => {
         details: Yup.string().required('Some details are required, in JSON format')
     });
 
-    const { register, trigger, formState: { errors }, reset, getValues } = useForm({
+    const { register, trigger, formState: { errors }, reset, getValues, setValue } = useForm({
         resolver: yupResolver(validationSchema),
       });
 
@@ -51,7 +63,10 @@ const CreateSample = (props: CreateProps) => {
         if (target === 'create') {
             // validate
             trigger(['name', 'url', 'description', 'notes', 'details'])
-            dispatch(createSampleAsync(JSON.stringify(getValues())));
+            // get value
+            const values = getValues();
+            const record = new Record(values.name,values.url, values.description, values.notes ?? '', values.details);
+            dispatch(createSampleAsync(JSON.stringify(record)));
             reset();
         }
         if (target === 'cancel') {
@@ -115,10 +130,24 @@ const CreateSample = (props: CreateProps) => {
                             </Field>
                             <Field
                                 required
-                                label="Details (In JSON format)"
+                                label="Details (JSON object)"
                                 validationState={errors.details ? 'error' : 'none'}
                                 validationMessage={errors.details?.message}>
-                                <Textarea {...register('details')} placeholder="{'author': 'your name'}"/>
+                                    <CodeEditor
+                                        {...register("details")}
+                                        language="json"
+                                        placeholder="{}"
+                                        padding={10}
+                                        rows={6}
+                                        minHeight={100}
+                                        style={{
+                                            fontSize: 14,
+                                            backgroundColor: "#f5f5f5",
+                                            fontFamily:
+                                              "ui-monospace,SFMono-Regular,SF Mono,Consolas,Liberation Mono,Menlo,monospace"
+                                          }}
+                                    />
+
                             </Field>
                         </DialogContent>
                         <DialogActions>
