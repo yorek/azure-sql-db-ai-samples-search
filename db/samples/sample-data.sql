@@ -565,8 +565,3 @@ select id, name, created_on, updated_on from dbo.samples order by created_on des
 --where [url] like '%kmeans%'
 GO
 
-exec [web].[get_total_sample_count]
-GO
-
-exec [web].[find_samples] 'migrate and modernzine'
-go

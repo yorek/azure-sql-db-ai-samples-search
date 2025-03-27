@@ -1,1 +1,0 @@
-exec [web].[find_samples] 'agentic rag insurance sample'
