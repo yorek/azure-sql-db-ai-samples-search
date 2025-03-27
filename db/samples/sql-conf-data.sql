@@ -192,7 +192,8 @@ delete se from dbo.samples_embeddings se inner join dbo.samples s on se.id = s.i
 delete from dbo.samples where json_value(details, '$.conference') = 'SQL Conf() 2025'
 */
 
-select id, name, json_value(details, '$.author')from dbo.samples where json_value(details, '$.conference') = 'SQL Conf() 2025'
+select id, name, json_value(details, '$.author' ) as speaker 
+from dbo.samples where json_value(details, '$.conference') = 'SQL Conf() 2025'
 
 --exec dbo.delete_sample @url = 'https://youtu.be/Uddhx8Bu2ZM'
 
