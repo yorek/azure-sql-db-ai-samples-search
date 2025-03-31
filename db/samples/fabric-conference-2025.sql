@@ -15,3 +15,8 @@ exec dbo.add_sample '
     }
 }';
 GO
+
+--exec dbo.delete_sample @url = 'https://github.com/yorek/fabric-conference-2025'
+
+
+

@@ -233,7 +233,7 @@ exec dbo.add_sample '
 {
     "name": "Chatbot on structured and unstructured data with Semantic Kernel", 
     "description": "Using Azure SQL and Semantic Kernel to chat with your own data using a mix of NL2SQL and RAG",
-    "notes": "This sample shows how to build a chatbot that can answer using RAG and using SQL Queries to answer any question you may want to ask it, be it on unstructured data (eg: what is the common issue raised for product XYZ) or on structured data (eg: how many customers from Canada called the support line?). Built using Semantic Kernel. This is the sample Davide used in many keynotes and demos, including PASS Summit 2024 and Live 360 Orlando 2024, where the data source was the database of a fictional insurance company, Contoso Insurance.",
+    "notes": "This sample shows how to build a chatbot that can answer using RAG and using SQL Queries to answer any question you may want to ask it, be it on unstructured data (eg: what is the common issue raised for product XYZ) or on structured data (eg: how many customers from Canada called the support line?). Built using Semantic Kernel. This sample shows also how to build an Agentic RAG solution for a fictional insurance company, Contoso Insurance.",
     "url": "https://github.com/Azure-Samples/azure-sql-db-chat-sk",
     "details": {
         "author": "Davide Mauri",
