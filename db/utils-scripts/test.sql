@@ -6,3 +6,6 @@ go
 
 exec [web].[find_samples] 'agentic rag insurance sample'
 go
+
+exec [web].[find_samples] 'rag sample'
+go

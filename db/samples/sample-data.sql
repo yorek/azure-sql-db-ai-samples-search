@@ -398,7 +398,7 @@ exec dbo.add_sample '
             "NL2SQL",
             "Natural Language to SQL"
         ],
-        "conferences": ["Live 360 Orlando 2024", "SQL Conf 2025", "SQL Conference 2025"]
+        "conferences": ["Live 360 Orlando 2024", "SQL Conf 2025", "SQL Conference 2025", "Fabric Community Conference 2025", "FabCon 2025"]
     }
 }
 ';
