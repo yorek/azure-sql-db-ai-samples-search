@@ -1,9 +1,3 @@
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-
-
 create or alter procedure [web].[orchestrate_request] 
 @text nvarchar(max),
 @result_type varchar(50) output,
