@@ -16,6 +16,8 @@ exec dbo.add_sample '
 }';
 GO
 
+select * from dbo.samples where [url] = 'https://github.com/yorek/fabric-conference-2025'
+ 
 --exec dbo.delete_sample @url = 'https://github.com/yorek/fabric-conference-2025'
 
 
