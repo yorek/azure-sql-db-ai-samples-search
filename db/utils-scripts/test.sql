@@ -10,3 +10,5 @@ go
 exec [web].[find_samples] 'rag sample'
 go
 
+exec [web].[find_samples_langchain] 'any samples used at FabCon 2025?'
+go
