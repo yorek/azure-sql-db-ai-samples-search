@@ -89,8 +89,10 @@ To test that database deployment was successful and that OpenAI connection is wo
 
 ```sql
 declare @v vector(1536)
-exec [web].[get_embedding] 'just a sample text', @v output
-select @v
+declare @e varchar(max)
+exec [web].[get_embedding] 'just a sample text', @v output ,@e output
+select @v,@e
+
 ```
 
 if no error are returned, you'll get a vector as a result.
