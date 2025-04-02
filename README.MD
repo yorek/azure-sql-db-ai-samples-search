@@ -122,6 +122,7 @@ The easiest way to deploy the full-stack application is to fork the repository a
 Make sure you give the user thay you are using to connect to the database the permission to run the needed stored procedures:
 
 ```sql
+GRANT SELECT ON SCHEMA::[dbo] TO [<your user>]
 GRANT EXECUTE ON SCHEMA::[web] TO [<your user>]
 GRANT EXECUTE ANY EXTERNAL ENDPOINT TO [<your user>];
 GRANT REFERENCES ON DATABASE SCOPED CREDENTIAL::[<openai_url>] TO [<your user>];
