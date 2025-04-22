@@ -1,4 +1,4 @@
-create or alter procedure [web].[orchestrate_request] 
+create or alter procedure [web].[orchestrate_request_smart] 
 @text nvarchar(max),
 @result_type varchar(50) output,
 @result_query nvarchar(max) output,

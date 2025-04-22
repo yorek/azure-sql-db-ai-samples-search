@@ -10,5 +10,11 @@ go
 exec [web].[find_samples] 'rag sample'
 go
 
-exec [web].[find_samples_langchain] 'any samples used at FabCon 2025?'
+exec [web].[find_samples] 'any samples used at FabCon 2025?'
+go
+
+exec [web].[find_samples] 'show me the most recent samples of 2025'
+go
+
+exec [web].[find_samples] 'show me the sample that davide used during the AI Agent Hackaton in April 2025'
 go

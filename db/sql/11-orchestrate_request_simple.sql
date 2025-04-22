@@ -22,6 +22,10 @@ json_object(
                 create table dbo.samples
                 (
                     [id] int identity primary key,
+                    [name] nvarchar(100) not null, --the name or title of the sample
+                    [description] nvarchar(max) not null, -- the description of the sample
+                    [notes] nvarchar(max) null, -- additional notes about the sample
+                    [details] json null,  -- all additional details, in JSON format, about the sample like authors, tags, etc.
                     [created_on] datetime2(0) not null,
                     [updated_on] datetime2(0) not null
                 )
@@ -30,6 +34,7 @@ json_object(
                 Unless otherwise specifed by the user, return the top 10 results if you can. Never return more than 50 rows. Do not use semicolon to terminate the T-SQL statement.               
                 Only return the following columns: id int, [name] nvarchar(100), [description] nvarchar(max), notes nvarchar(max), details json, distance_score float.
                 You can generate only SELECT statements. If the user is asking something that will generate INSERT, UPDATE, DELETE, CREATE, ALTER or DROP statement, refuse to generate the query.
+                If you need to use a LIKE operator in the query, they don''t generate the query at all and return an empty string
             '
         ),
         json_object(
