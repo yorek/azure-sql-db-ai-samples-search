@@ -37,21 +37,14 @@ delete from dbo.samples_embeddings where [id] = @sampleId
 /*
     Get the embeddings for the sample name and description
 */
-declare @embedding vector(1536)
-declare @name nvarchar(100) 
-declare @description nvarchar(max)
-declare @retval int, @error nvarchar(max)
-select @name = [name], @description = [description] from #samples;
-
-declare @sample nvarchar(max) = @name + ': ' + @description;
-exec @retval = web.get_embedding @sample, @embedding output, @error output;
-if (@retval != 0) begin
-    select @error as error; 
-    return;
-end
-
-insert into dbo.samples_embeddings (id, embedding, updated_on)
-select @sampleId as id, @embedding as [embedding], sysdatetime() as [updated_on];
+insert into dbo.samples_embeddings 
+    (id, embedding, updated_on)
+select 
+    @sampleId as id, 
+    ai_generate_embeddings([name] + ': ' + [description] model Text3Small) as embedding, 
+    sysdatetime() as updated_on
+from
+    #samples;
 
 /*
     Get the embeddings for the sample notes 
@@ -59,17 +52,14 @@ select @sampleId as id, @embedding as [embedding], sysdatetime() as [updated_on]
 if (exists(select * from #samples where [notes] is not null)) begin
     waitfor delay '00:00:01'; -- Try to avoid being throttled by the API
     
-    declare @notes_embedding vector(1536);
-    declare @notes nvarchar(max) = (select [notes] from #samples);
-    
-    exec @retval = web.get_embedding @notes, @notes_embedding output, @error output;
-    if (@retval != 0) begin
-        select @error as error; 
-        return;
-    end
-
-    insert into dbo.samples_notes_embeddings (id, embedding, updated_on)
-    select @sampleId as id, @notes_embedding as [embedding], sysdatetime() as [updated_on]
+    insert into dbo.samples_notes_embeddings 
+        (id, embedding, updated_on)
+    select 
+        @sampleId as id, 
+        ai_generate_embeddings([notes] model Text3Small) as embedding, 
+        sysdatetime() as [updated_on] 
+    from 
+        #samples;
 end
 
 /*
@@ -78,17 +68,14 @@ end
 if (exists(select * from #samples where [details] is not null)) begin
     waitfor delay '00:00:01'; -- Try to avoid being throttled by the API
 
-    declare @details_embedding vector(1536);
-    declare @details nvarchar(max) = (select [details] from #samples);
-    
-    exec @retval = web.get_embedding @details, @details_embedding output, @error output;
-    if (@retval != 0) begin
-        select @error as error; 
-        return;
-    end
-
-    insert into dbo.samples_details_embeddings (id, embedding, updated_on) 
-    select @sampleId as id, @details_embedding as [embedding], sysdatetime() as [updated_on]
+    insert into dbo.samples_details_embeddings 
+        (id, embedding, updated_on)
+    select 
+        @sampleId as id, 
+        ai_generate_embeddings(cast([details] as nvarchar(max)) model Text3Small) as embedding, 
+        sysdatetime() as [updated_on] 
+    from 
+        #samples;
 end
 
 select @sampleId as sample_id;

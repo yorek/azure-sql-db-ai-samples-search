@@ -35,9 +35,7 @@ json_object(
 
                 First, generate the embedding vector for the provided question using the following T-SQL query. ''<search text'' must be generating taking the relevant part from the user question.
 
-                declare @retval int, @qv vector(1536), @e nvarchar(max)
-                exec @retval = web.get_embedding ''<search text>'', @qv output, @e output;
-                if (@retval != 0) throw 50000, ''Error in getting the embedding'',1;
+                declare @qv vector(1536) = ai_generate_embeddings(''<search text>'' model Text3Small);
 
                 The vectors for details, notes and description columns are stored in the following tables: 
 

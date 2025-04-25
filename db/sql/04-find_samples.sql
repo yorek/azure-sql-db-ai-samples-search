@@ -9,12 +9,7 @@ declare @error nvarchar(max)
 if trim(@text) = '' return;
 
 /* Get the embedding for the requested text */
-declare @qv vector(1536)
-exec @retval = web.get_embedding @text, @qv output, @error output with result sets none 
-if (@retval != 0) begin
-    select @error as error; 
-    return;
-end
+declare @qv vector(1536) = ai_generate_embeddings(@text model Text3Small);
 
 /* Check in the semantic cache to see if a similar question has been already answered */
 delete from [dbo].[semantic_cache] where query_date < dateadd(hour, -1, sysdatetime())
