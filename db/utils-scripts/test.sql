@@ -18,3 +18,15 @@ go
 
 exec [web].[find_samples] 'show me the sample that davide used during the AI Agent Hackaton in April 2025'
 go
+
+exec [web].[find_samples] 'what are the sample that uses T-SQL'
+go
+
+
+select  * from dbo.samples where id = 24
+
+select * from dbo.samples_embeddings where id = 2
+
+select * from dbo.samples_notes_embeddings where id = 1
+
+

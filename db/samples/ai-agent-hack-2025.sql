@@ -1,5 +1,5 @@
 -- Demo: Add the event "AI Agent Hackaton 2025"
---         "events": ["AI Agent Hackaton 2025"],
+--        
 exec dbo.add_sample '
 {
     "name": "Chatbot on structured and unstructured data with Semantic Kernel", 
@@ -13,6 +13,7 @@ exec dbo.add_sample '
         "services": ["Azure SQL", "Azure Functions", "Azure Static Web Apps"],
         "license": "MIT",
         "tags": ["End-to-End", "Agentic RAG", "NL2SQL", "Natural Language to SQL"],
+        "events": ["AI Agent Hackaton 2025"],
         "conferences": ["VS Live 2025 Las Vegas", "PASS Summit 2024", "Live 360 Orlando 2024", "MCAPS Tech Connect 2025"],        
         "related-links": {
             "video": "https://www.youtube.com/watch?v=BuaKzm7Kq9Q",
@@ -59,6 +60,7 @@ exec dbo.add_sample '
             "NL2SQL",
             "Natural Language to SQL"            
         ],
+        "events": ["AI Agent Hackaton 2025"],
         "conferences": ["Live 360 Orlando 2024", "SQL Conf 2025", "SQL Conference 2025", "Fabric Community Conference 2025", "FabCon 2025"]
     }
 }
