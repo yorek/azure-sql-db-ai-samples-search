@@ -4,6 +4,10 @@ This sample demonstrates how to use Azure SQL to store and search data with AI. 
 
 The live websites is available here: https://ai.awesome.azuresql.dev/
 
+## See it in action!
+
+Recording of the demo of this sample is here: https://www.youtube.com/watch?v=1Idzjm05UmY
+
 ## Architecture
 
 The architecture of the sample is as follows:
