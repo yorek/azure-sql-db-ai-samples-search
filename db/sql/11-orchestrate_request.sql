@@ -51,7 +51,8 @@ json_object(
                         vector_distance(''cosine'', e.[embedding], @qv), 
                         vector_distance(''cosine'', ne.[embedding], @qv), 
                         vector_distance(''cosine'', de.[embedding], @qv) 
-                    ) as distance_score
+                    ) as distance_score,
+                    [created_on], [updated_on]
                 from 
                     dbo.samples s
                 inner join    
@@ -66,8 +67,9 @@ json_object(
                 When search in description, details and notes columns is not needed then you must use the following query:
 
                 select top(@k) 
-                    s.id, [name], [description], [notes], [details],
-                    0.0 as distance_score
+                    s.id, [name], [description], [notes], [details]
+                    0.0 as distance_score,
+                    [created_on], [updated_on]
                 from 
                     dbo.samples s
 

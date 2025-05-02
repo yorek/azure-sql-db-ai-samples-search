@@ -19,7 +19,7 @@ into #c
 from [dbo].[semantic_cache] order by d;
 --select * from #c
 
-select top(1) @cached_response = response from #c where d < 0.25
+select top(1) @cached_response = response from #c where d < 0.10
 if (@cached_response is not null) set @response = @cached_response
 
 /* If no cached response is available then generate a fresh answer */
@@ -46,7 +46,7 @@ if (@response is null) begin
         end
         --print @rq
         
-        create table #ts (id int, [name] nvarchar(100), [description] nvarchar(max), notes nvarchar(max), details json, distance_score float);
+        create table #ts (id int, [name] nvarchar(100), [description] nvarchar(max), notes nvarchar(max), details json, distance_score float, created_on date, updated_on date);
         insert into #ts exec sp_executesql @rq 
         set @samples = cast((select * from #ts for json auto) as nvarchar(max))
         --print @samples
@@ -134,7 +134,7 @@ if (@response is null) begin
                 similiarity_score desc
         )
         select top(@k)
-            s.[id], [name], [description], [notes], [details], 
+            s.[id], [name], [description], [notes], [details], [created_on], [updated_on]
             semantic_rank,
             keyword_rank,
             [similiarity_score]
@@ -149,8 +149,9 @@ if (@response is null) begin
         /* Prepare the JSON string with relevant results to be sent to LLM for evaluation */
         set @samples = (
             select top(10)
-                [id], [name], [description], [notes], [details], 
-                similiarity_score
+                [id], [name], [description], [notes], [details]
+                similiarity_score,
+                [created_on], [updated_on]
             from #s 
             where similiarity_score > 30
             order by similiarity_score desc for json path
