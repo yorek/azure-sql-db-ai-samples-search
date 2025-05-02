@@ -1,7 +1,7 @@
 -- Server: localhost\ctp15
 
 -- Let's take a look at our data
-
+-- (cleanup) exec dbo.delete_sample @url='https://localhost/sample/2025-05-02'
 select * from dbo.samples
 
 
@@ -192,6 +192,3 @@ go
 exec [web].[find_samples] 'samples published in april 2025'
 go
 
-
-exec [web].[find_samples] 'sample show in the Cozy Kitchen show with langchain'
-go
