@@ -80,7 +80,7 @@ json_object(
                 CAST([details] AS NVARCHAR(MAX)) LIKE ''search text''
 
                 The use question is provided in the next message. If the user question cannot be answered using the dbo.samples table and using a T-SQL query only, you should respond with an empty string.
-                Unless otherwise specifed by the user, return the top 10 results if you can. Never return more than 50 rows. Do not use semicolon to terminate the T-SQL statement. 
+                Unless otherwise specifed by the user, return the top 50 results if you can. Never return more than 50 rows. Do not use semicolon to terminate the T-SQL statement. 
                 Always return only the following columns in this exact sequence: id, name, description, notes, details, created_on, updated_on, distance_score 
                 You can generate only SELECT statements. If the user is asking something that will generate INSERT, UPDATE, DELETE, CREATE, ALTER or DROP statement, refuse to generate the query.
             '
@@ -90,7 +90,7 @@ json_object(
             'content': + @text
         )        
     ),
-    'temperature': 0.2,
+    'temperature': 0.4,
     'frequency_penalty': 0,
     'presence_penalty': 0,    
     'stop': null
