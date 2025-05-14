@@ -57,7 +57,7 @@ begin try
         if (@debug = 1) insert into @log ([message], [output]) values ('Orchestrating resolution strategies...', @response)
 
         declare @rt varchar(50), @rq nvarchar(max)    
-        exec @retval = [web].[orchestrate_request_smart] @text, @rt output, @rq output, @error output with result sets none  
+        exec @retval = [web].[orchestrate_request] @text, @rt output, @rq output, @error output with result sets none  
         if (@retval != 0) begin
             if (@debug = 1) insert into @log ([message], [output]) values ('Error during orchestration evaluation...', @error)
             if (@debug = 1) select * from @log;
@@ -68,7 +68,7 @@ begin try
         if (@debug = 1) insert into @log ([message], [output]) values ('Strategy determined.', @rt)
         if (@debug = 1) insert into @log ([message], [output]) values ('Query defined.', @rq)
 
-        if (@debug = 1) insert into @log ([message]) values ('Orchestration done.')
+        if (@debug = 1) insert into @log ([message]) values ('Orchestration planning complete, moving to execution.')
 
         /* 
             Find the samples using generated T-SQL 
@@ -76,6 +76,7 @@ begin try
         if (@rt = 'SQL') begin
             if (@debug = 1) insert into @log ([message]) values ('Starting executing generated SQL query...')
 
+            -- Simple sanitization
             declare @trq nvarchar(max) = trim(replace(replace(@rq, char(13), ' '), char(10), ' '));
             if (@trq like '%INSERT %' or @trq like '%UPDATE %' or @trq like '%DELETE %' or @trq like '%DROP %' or @trq like '%ALTER %' or @trq like '%CREATE %') begin
                 if (@debug = 1) insert into @log ([message]) values ('Unauthorized SQL command requested');
@@ -83,13 +84,12 @@ begin try
                 select 'NL2SQL' as [error], -1 as [error_code], 'Unauthorized SQL command requested' as [response]
                 return -1
             end
-
             if (@debug = 1) insert into @log ([message], [output]) values ('Query sanitized.', @trq)
             
+            -- Execute generate query
             create table #ts (id int, [name] nvarchar(100), [description] nvarchar(max), notes nvarchar(max), details json, created_on datetime2(0), updated_on datetime2(0), distance_score float);
             insert into #ts exec sp_executesql @rq 
             set @samples = cast((select * from #ts for json auto) as nvarchar(max))
-
             if (@debug = 1) insert into @log ([message], [output]) values ('Query executed.', @samples)
 
             /* If not results coming from SQL execution, try SEMANTIC anyway */

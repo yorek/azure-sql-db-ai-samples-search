@@ -16,7 +16,13 @@ go
 exec [web].[find_samples] 'Samples used at Orlando Live 360 in 2024', @debug=1, @nocache=1
 go
 
-exec [web].[find_samples] 'show me the most recent samples of 2025', @debug=1, @nocache=1
+exec [web].[find_samples] 'show me the most recent code samples of 2025', @debug=1, @nocache=1
+go
+
+exec [web].[find_samples] 'show me the last session recordings of 2025', @debug=1, @nocache=1
+go
+
+exec [web].[find_samples] 'show me the last code repos shared in 2025', @debug=1, @nocache=1
 go
 
 exec [web].[find_samples] 'show me samples that davide used during the AI Agent Hackaton in 2025', @debug=1, @nocache=1
