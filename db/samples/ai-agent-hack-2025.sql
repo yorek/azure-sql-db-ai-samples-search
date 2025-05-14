@@ -18,7 +18,8 @@ exec dbo.add_sample '
         "related-links": {
             "video": "https://www.youtube.com/watch?v=BuaKzm7Kq9Q",
             "blog": "https://devblogs.microsoft.com/azure-sql/the-ultimate-chatbot/"
-        }
+        },
+        "type": "code sample"
     }
 }
 ';
@@ -61,7 +62,8 @@ exec dbo.add_sample '
             "Natural Language to SQL"            
         ],
         "events": ["AI Agent Hackaton 2025"],
-        "conferences": ["Live 360 Orlando 2024", "SQL Conf 2025", "SQL Conference 2025", "Fabric Community Conference 2025", "FabCon 2025"]
+        "conferences": ["Live 360 Orlando 2024", "SQL Conf 2025", "SQL Conference 2025", "Fabric Community Conference 2025", "FabCon 2025"],
+        "type": "code sample"
     }
 }
 ';

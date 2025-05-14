@@ -9,7 +9,8 @@ exec dbo.add_sample '
         "languages": [".NET"],
         "license": "MIT",
         "services": ["Azure SQL"],
-        "tags": ["Azure", "SQL", "Embeddings", "Vectorizer"]
+        "tags": ["Azure", "SQL", "Embeddings", "Vectorizer"],
+        "type": "code sample"
     }
 }
 ';
@@ -25,7 +26,8 @@ exec dbo.add_sample '
         "languages": ["T-SQL", ".NET", "Python"],
         "services": ["Azure SQL"],
         "license": "MIT",
-        "conferences": ["PASS Summit 2024"]        
+        "conferences": ["PASS Summit 2024"],
+        "type": "code sample"
     }
 }
 ';
@@ -40,7 +42,8 @@ exec dbo.add_sample '
         "author": "Arvind Shyamsundar",
         "languages": ["T-SQL"],
         "services": ["Azure SQL"],
-        "license": "MIT"        
+        "license": "MIT",
+        "type": "code sample"
     }
 }
 ';
@@ -60,7 +63,8 @@ exec dbo.add_sample '
                 "name": "Fast Data Loading in Azure SQL DB using Azure Databricks",
                 "url": "https://github.com/Azure-Samples/azure-sql-db-databricks"
            }
-        ]
+        ],
+        "type": "code sample"
     }
 }
 ';
@@ -74,7 +78,8 @@ exec dbo.add_sample '
     "details": {
         "languages": ["T-SQL", "Python"],
         "services": ["Azure SQL", "Azure Cognitive Services"],        
-        "license": "MIT"        
+        "license": "MIT",
+        "type": "code sample"        
     }
 }
 ';
@@ -88,7 +93,8 @@ exec dbo.add_sample '
     "details": {
         "languages": ["T-SQL", "Python"],
         "services": ["Azure SQL", "Azure Promptflow"],
-        "license": "MIT"        
+        "license": "MIT",
+        "type": "code sample"     
     }
 }
 ';
@@ -104,7 +110,8 @@ exec dbo.add_sample '
         "services": ["Azure SQL"],
         "license": "MIT",      
         "tags": ["RRF", "Reciprocal Ranking Fusion", "BM25", "Fulltext", "Hybrid Search"],  
-        "conferences": ["VS Live 2025 Las Vegas"]
+        "conferences": ["VS Live 2025 Las Vegas"],
+        "type": "code sample"
     }
 }
 ';
@@ -122,7 +129,8 @@ exec dbo.add_sample '
         "related-links": {
             "blog": "https://devblogs.microsoft.com/azure-sql/vanna-ai-and-azure-sql-database/"
         },
-        "tags": ["NL2SQL", "Natural Language to SQL"]
+        "tags": ["NL2SQL", "Natural Language to SQL"],
+        "type": "code sample"
     }
 }
 ';
@@ -140,7 +148,8 @@ exec dbo.add_sample '
         "license": "MIT",        
         "related-links": {
             "blog": "https://devblogs.microsoft.com/azure-sql/unleashing-the-potential-of-generative-ai-in-azure-sql-database/"
-        }
+        },
+        "type": "code sample"
     }
 }
 ';
@@ -153,7 +162,8 @@ exec dbo.add_sample '
     "details": {
         "languages": ["T-SQL"],
         "services": ["Azure SQL"],
-        "license": "MIT"
+        "license": "MIT",
+        "type": "code sample"
     }
 }
 ';
@@ -167,7 +177,8 @@ exec dbo.add_sample '
         "languages": ["T-SQL"],
         "services": ["Azure SQL"],
         "license": "MIT",
-        "tags": ["NL2SQL", "Natural Language to SQL"]
+        "tags": ["NL2SQL", "Natural Language to SQL"],
+        "type": "code sample"
     }
 }
 ';
@@ -184,7 +195,8 @@ exec dbo.add_sample '
         "services": ["Azure SQL", "Azure Functions", "Azure Static Web Apps"],
         "tools": ["Data API Builder"],
         "license": "MIT",
-        "tags": ["End-to-End"]
+        "tags": ["End-to-End"],
+        "type": "code sample"
     }
 }
 ';
@@ -204,7 +216,8 @@ exec dbo.add_sample '
         "tags": ["End-to-End", "RAG"],
         "related-links": {
             "live-demo": "https://ai.microsofthq.vslive.com/"
-        }
+        },
+        "type": "code sample"
     }
 }
 ';
@@ -224,7 +237,8 @@ exec dbo.add_sample '
         "tags": ["End-to-End"],
         "related-links": {
             "blog": "https://devblogs.microsoft.com/azure-sql/build-a-chatbot-on-your-own-data-in-1-hour-with-azure-sql-langchain-and-chainlit/"
-        }
+        },
+        "type": "code sample"
     }
 }
 ';
@@ -246,7 +260,8 @@ exec dbo.add_sample '
         "related-links": {
             "video": "https://www.youtube.com/watch?v=BuaKzm7Kq9Q",
             "blog": "https://devblogs.microsoft.com/azure-sql/the-ultimate-chatbot/"
-        }
+        },
+        "type": "code sample"
     }
 }
 ';
@@ -260,7 +275,8 @@ exec dbo.add_sample '
         "languages": ["T-SQL"],
         "services": ["Azure SQL"],
         "license": "MIT",
-        "tags": ["End-to-End"]
+        "tags": ["End-to-End"],
+        "type": "code sample"
     }
 }
 ';
@@ -278,7 +294,8 @@ exec dbo.add_sample '
         "tags": ["End-to-End"],
         "related-links": {
             "blog": "https://aka.ms/azuresql-faiss"
-        }
+        },
+        "type": "code sample"
     }
 }
 ';
@@ -293,7 +310,8 @@ exec dbo.add_sample '
         "languages": ["T-SQL", "Python"],        
         "services": ["Azure SQL"],
         "license": "MIT",
-        "tags": ["End-to-End"]
+        "tags": ["End-to-End"],
+        "type": "code sample"
     }
 }
 ';
@@ -310,11 +328,11 @@ exec dbo.add_sample '
         "frameworks": ["Scikit-Learn"],
         "services": ["Azure SQL"],
         "license": "MIT",
-        "tags": ["End-to-End", "Index", "IVFFlat"]
+        "tags": ["End-to-End", "Index", "IVFFlat"],
+        "type": "code sample"
     }
 }
 ';
-
 
 exec dbo.add_sample '
 {
@@ -326,7 +344,8 @@ exec dbo.add_sample '
         "authors": ["Davide Mauri", "Pooja Kamath"],
         "languages": ["T-SQL", "Python", ".NET", "C#"],                
         "services": ["Azure SQL"],
-        "license": "MIT"        
+        "license": "MIT",
+        "type": "code sample"        
     }
 }
 ';
@@ -342,7 +361,8 @@ exec dbo.add_sample '
         "languages": ["T-SQL", "Python"],
         "services": ["Azure SQL"],
         "license": "MIT",
-        "tags": ["BM25", "RRF"]
+        "tags": ["BM25", "RRF"],
+        "type": "code sample"
     }
 }
 ';
@@ -357,7 +377,8 @@ exec dbo.add_sample '
         "authors": ["Pooja Kamath"],
         "languages": ["T-SQL", "Python"],                
         "services": ["Azure SQL"],
-        "license": "MIT"
+        "license": "MIT",
+        "type": "code sample"
     }
 }
 ';
@@ -398,7 +419,8 @@ exec dbo.add_sample '
             "NL2SQL",
             "Natural Language to SQL"
         ],
-        "conferences": ["Live 360 Orlando 2024", "SQL Conf 2025", "SQL Conference 2025", "Fabric Community Conference 2025", "FabCon 2025"]
+        "conferences": ["Live 360 Orlando 2024", "SQL Conf 2025", "SQL Conference 2025", "Fabric Community Conference 2025", "FabCon 2025"],
+        "type": "code sample"
     }
 }
 ';
@@ -416,7 +438,8 @@ exec dbo.add_sample '{
         "services": [
             "Azure SQL",            
             "Azure Functions"
-        ]
+        ],
+        "type": "code sample"
     },
     "url": "https://github.com/yorek/live360-2024-orlando"
 }';
@@ -439,7 +462,8 @@ exec dbo.add_sample '{
         "frameworks": [
             "LangChain",
             "LangGraph"
-        ]
+        ],
+        "type": "code sample"
     },
     "url": "https://github.com/Azure-Samples/azure-sql-langchain"
 }';
@@ -463,7 +487,8 @@ exec dbo.add_sample '
          "frameworks": [
             "LangChain",
             "Chainlit"
-        ]
+        ],
+        "type": "code sample"
     }
 }
 ';
@@ -481,7 +506,8 @@ exec dbo.add_sample '
         "tags": ["End-to-End", "Workshop", "Hands-On Lab"],
         "related-links": {
             "blog": "https://devblogs.microsoft.com/azure-sql/building-an-ai-app-graphql-endpoint-with-sql-db-in-fabric/"
-        }
+        },
+        "type": "code sample"
     }
 }
 ';
@@ -498,7 +524,8 @@ exec dbo.add_sample '
         "languages": ["T-SQL", "REST", "GraphQL"],        
         "services": ["Azure SQL", "Azure Open AI"],
         "license": "MIT",
-        "tags": ["End-to-End", "Modernize", "Innovate", "Migrate", "RAG", "Embeddings", "Vectors"]        
+        "tags": ["End-to-End", "Modernize", "Innovate", "Migrate", "RAG", "Embeddings", "Vectors"],
+        "type": "code sample"   
     }
 }
 ';
@@ -515,7 +542,8 @@ exec dbo.add_sample '
         "languages": ["T-SQL", "C#"],        
         "services": ["Azure SQL", "Azure Open AI"],
         "license": "MIT",
-        "tags": ["End-to-End", "RAG", "Embeddings", "Vectors", "EFCore", "Semantic Kernel", "UX", "UI", "Chat", "Response Streaming"]        
+        "tags": ["End-to-End", "RAG", "Embeddings", "Vectors", "EFCore", "Semantic Kernel", "UX", "UI", "Chat", "Response Streaming"],
+        "type": "code sample"    
     }
 }
 ';
@@ -534,7 +562,8 @@ exec dbo.add_sample '
         "frameworks": ["Vue", "Vue.js"],
         "license": "MIT",
         "tags": ["End-to-End", "Aspire", "EFCore", "UX", "UI", ".NET", "DotNet", "Fullstack", "Data API Buider", "DAB"],        
-        "conferences": ["VS Live 2025 Las Vegas"]
+        "conferences": ["VS Live 2025 Las Vegas"],
+        "type": "code sample"
     }
 }
 ';
@@ -556,12 +585,18 @@ exec dbo.add_sample '
         "license": "MIT",
         "tags": ["CI/CD", "DevOps", "GitHub Actions"],        
         "tools": ["SqlPackage", "DacFx"],
-        "conferences": [".NET Conf 2024"]
+        "conferences": [".NET Conf 2024"],
+        "type": "code sample"
     }
-}';
+}
+';
 GO
 
-select id, name, created_on, updated_on from dbo.samples order by created_on desc;
+select 
+    id, name, created_on, updated_on, 
+    json_value(details, '$.type')
+from 
+    dbo.samples order by created_on desc;
 --where [url] like '%kmeans%'
 GO
 

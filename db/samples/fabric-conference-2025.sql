@@ -11,7 +11,8 @@ exec dbo.add_sample '
         "license": "MIT",
         "libraries": ["Semantic Kernel", "LangChain"],
         "tags": ["RAG", "Vectors", "Retrieval Augmented Generation", "AI", "GenAI"],        
-        "conferences": ["Fabric Community Conference 2025", "FabCon 2025"]
+        "conferences": ["Fabric Community Conference 2025", "FabCon 2025"],
+        "type": "code sample"
     }
 }';
 GO

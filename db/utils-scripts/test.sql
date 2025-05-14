@@ -1,5 +1,5 @@
 exec [web].[get_total_sample_count]
-GO
+go
 
 exec [web].[find_samples] 'migrate and modernzine', @debug=1, @nocache=1
 go
@@ -11,6 +11,9 @@ exec [web].[find_samples] 'rag sample'
 go
 
 exec [web].[find_samples] 'any samples used at FabCon 2025?'
+go
+
+exec [web].[find_samples] 'Samples used at Orlando Live 360 in 2024', @debug=1, @nocache=1
 go
 
 exec [web].[find_samples] 'show me the most recent samples of 2025', @debug=1, @nocache=1
