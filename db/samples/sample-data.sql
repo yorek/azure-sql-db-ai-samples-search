@@ -256,9 +256,10 @@ exec dbo.add_sample '
         "services": ["Azure SQL", "Azure Functions", "Azure Static Web Apps"],
         "license": "MIT",
         "tags": ["End-to-End", "Agentic RAG", "NL2SQL", "Natural Language to SQL"],
-        "conferences": ["VS Live 2025 Las Vegas", "PASS Summit 2024", "Live 360 Orlando 2024", "MCAPS Tech Connect 2025"],
+        "events": ["AI Agent Hackaton 2025"],
+        "conferences": ["VS Live 2025 Las Vegas", "PASS Summit 2024", "Live 360 Orlando 2024", "MCAPS Tech Connect 2025"],        
         "related-links": {
-            "video": "https://www.youtube.com/watch?v=BuaKzm7Kq9Q",
+            "video": "https://www.youtube.com/watch?v=1Idzjm05UmY?t=1837s",
             "blog": "https://devblogs.microsoft.com/azure-sql/the-ultimate-chatbot/"
         },
         "type": "code sample"
@@ -417,10 +418,14 @@ exec dbo.add_sample '
             "Hybrid RAG",
             "Agentic RAG",
             "NL2SQL",
-            "Natural Language to SQL"
+            "Natural Language to SQL"            
         ],
+        "events": ["AI Agent Hackaton 2025"],
         "conferences": ["Live 360 Orlando 2024", "SQL Conf 2025", "SQL Conference 2025", "Fabric Community Conference 2025", "FabCon 2025"],
-        "type": "code sample"
+        "type": "code sample",
+        "related-links": {
+            "video": "https://www.youtube.com/watch?v=1Idzjm05UmY"            
+        }
     }
 }
 ';

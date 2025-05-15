@@ -1,3 +1,5 @@
+select * from dbo.samples
+
 exec [web].[get_total_sample_count]
 go
 
