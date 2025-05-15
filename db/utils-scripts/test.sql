@@ -47,6 +47,8 @@ select * from dbo.semantic_cache
 
 --delete from dbo.semantic_cache
 
+select * from dbo.samples where [url] like 'https://blog.fabric.microsoft.com/%'
+
 
 
 
