@@ -94,7 +94,7 @@ begin try
 
             /* If not results coming from SQL execution, try SEMANTIC anyway */
             if (@samples is null) begin
-                set @rt = 'SQL+SEMANTIC'
+                set @rt = 'SEMANTIC'
                 if (@debug = 1) insert into @log ([message], [output]) values ('Empty resultset returned, switching strategy.', @rt)
             end
         end
@@ -159,7 +159,7 @@ begin try
             ), 
             keyword_search as
             (
-                select top(50)
+                select top(@k)
                     id, 
                     rank() over (order by ft_rank desc) as rank            
                 from
@@ -195,7 +195,7 @@ begin try
 
             /* Prepare the JSON string with relevant results to be sent to LLM for evaluation */
             set @samples = (
-                select top(10)
+                select top(@k)
                     [id], [name], [description], [notes], [details], 
                     similiarity_score
                 from #s 

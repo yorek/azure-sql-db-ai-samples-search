@@ -33,6 +33,9 @@ go
 exec [web].[find_samples] 'what are the sample that uses T-SQL'
 go
 
+exec [web].[find_samples] 'code samples used at the ai agent hackaton event in 2025', @debug=1, @nocache=1
+go
+
 
 select  * from dbo.samples where id in (21, 14)
 
@@ -43,4 +46,7 @@ select * from dbo.samples_notes_embeddings where id = 1
 select * from dbo.semantic_cache
 
 --delete from dbo.semantic_cache
+
+
+
 

@@ -31,10 +31,16 @@ json_object(
                 )
                 
                 The use question is provided in the next message. If the user question cannot be answered using the dbo.samples table and using a T-SQL query only, you should respond with an empty string.
-                Unless otherwise specifed by the user, return the top 10 results if you can. Never return more than 50 rows. Do not use semicolon to terminate the T-SQL statement.               
-                Only return the following columns: id int, [name] nvarchar(100), [description] nvarchar(max), notes nvarchar(max), details json, distance_score float.
+                Unless otherwise specifed by the user, return the top 50 results if you can. Never return more than 50 rows. Do not use semicolon to terminate the T-SQL statement. 
+                Always return only the following columns in this exact sequence: id, name, description, notes, details, created_on, updated_on, distance_score 
                 You can generate only SELECT statements. If the user is asking something that will generate INSERT, UPDATE, DELETE, CREATE, ALTER or DROP statement, refuse to generate the query.
-                If you need to use a LIKE operator in the query, they don''t generate the query at all and return an empty string
+
+                In the details columns the json document may have a "type" property. If the user is asking for a certain type of sample (a code sample or a video or a recording) you can use JSON_VALUE to extract that data.
+                For example: JSON_VALUE(details, ''$.type'') = ''code sample''
+                Generate a combination of values for filtering on the type. 
+                For example if user is asking for "recordings" look for "video", "recording", "youtube" etc. If the user is asking for "code samples" search for "code examples", "github repos" or similar.
+
+                If you need to use a LIKE operator in the query to search in [description], [notes], [details] then don''t generate the query at all and return an empty string
             '
         ),
         json_object(
