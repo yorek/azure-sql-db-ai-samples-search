@@ -3,12 +3,11 @@
   "configurations": {
     "azure-sql-db-ai-samples-search": {
       "appLocation": "client-v2",
-      "outputLocation": "dist",
+      "outputLocation": "build",
       "dataApiLocation": "swa-db-connections",
       "appBuildCommand": "npm run build",
-      "apiBuildCommand": "dotnet publish -c Release",
       "run": "npm start",
-      "appDevserverUrl": "http://127.0.0.1:3000"
+      "appDevserverUrl": "http://localhost:3000"
     }
   }
 }
