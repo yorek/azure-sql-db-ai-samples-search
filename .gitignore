@@ -405,4 +405,5 @@ FodyWeavers.xsd
 # Customer
 *.local.sql
 .env
+.fabric.env
 dist/

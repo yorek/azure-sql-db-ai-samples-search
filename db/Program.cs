@@ -11,12 +11,16 @@ namespace Database.Deploy
 {
     class Program
     {
-        const string sqlFolder = "./db/sql";
-        const string envFile = ".env";
+        private static readonly string sqlFolder = "./db/sql";
+        private static string envFile = ".env";
 
         static int Main(string[] args)
         {
             // This will load the content of .env and create related environment variables
+            if (args.Length == 2 && args[0] == "--env-file")
+            {
+                envFile = args[1];
+            }
             Env.Load(envFile);           
 
             // Connection string for deploying the database (high-privileged account as it needs to be able to CREATE/ALTER/DROP)
@@ -29,7 +33,7 @@ namespace Database.Deploy
             }
             
             var csb = new SqlConnectionStringBuilder(connectionString);
-            Console.WriteLine($"Deploying database: {csb.InitialCatalog}");
+            Console.WriteLine($"Deploying database: {csb.InitialCatalog}@{csb.DataSource}");
 
             Console.WriteLine("Testing connection...");
             var conn = new SqlConnection(csb.ToString());
