@@ -74,7 +74,7 @@ const RecordDetails = (props: RecordDetailsProps) => {
                                 <div className={classes.right}>
                                     {window.innerWidth > 640 && 
                                     <TagsGenerator sample={search.sampleDetails.sample} />
-                        }
+                                    }
                                 </div>
                             </div>
                         }

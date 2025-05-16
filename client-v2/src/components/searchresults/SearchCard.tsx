@@ -31,15 +31,14 @@ const SearchCard = (props: CardProps) => {
         setOpenDialog(true);
     };
 
+    console.log(sample);
+
     return (
         <>
         <Card className={classes.card} key={sample.id} title={sample.name} style={{ height: `${cardHeight}px` }}>
             <CardHeader
                 image={<img src={process.env.PUBLIC_URL + "/favicon.png"} alt="logo" className={classes.cardlogo} />}
-                header={<Text weight="semibold">{sample.name}</Text>}
-                description={
-                    <Caption1 className={classes.cardcaption}><strong>AUTHOR:&nbsp;</strong>{sample.details?.author ?? 'n/a'}</Caption1>
-                }
+                header={<Text weight="semibold">{sample.name}</Text>}                
             />
             <div className={cardHeight === 210 ? classes.cardbody : classes.cardbodyExpand}>
                 <p>{sample.description}</p>
