@@ -19,8 +19,9 @@
       "allow-introspection": true
     },
     "host": {
+      "mode": "production",
       "cors": {
-        "origins": [],
+        "origins": ["*"],
         "allow-credentials": false
       },
       "authentication": {
@@ -133,6 +134,87 @@
         "path": "/latestSamples",
         "methods": [
           "post", "get"
+        ]
+      },
+      "permissions": [
+        {
+          "role": "anonymous",
+          "actions": [
+            {
+              "action": "*"
+            }
+          ]
+        }
+      ]
+    },
+    "DeleteSample": {
+      "source":{
+        "object": "dbo.delete_sample",
+        "type": "stored-procedure",
+        "parameters": {
+          "id": "",
+          "url": ""
+        }
+      },
+      "rest": {
+        "enabled": true,
+        "path": "/deleteSample",
+        "methods": [
+          "delete"
+        ]
+      },
+      "permissions": [
+        {
+          "role": "anonymous",
+          "actions": [
+            {
+              "action": "*"
+            }
+          ]
+        }
+      ]
+    },
+    "SampleDetails": {
+      "source": {
+        "object": "dbo.get_sample",
+        "type": "stored-procedure",
+        "parameters": {
+          "id": "",
+          "url": ""
+        }
+      },
+      "rest": {
+        "enabled": true,
+        "path": "/sampleDetails",
+        "methods": [
+          "get",
+          "post"
+        ]
+      },
+      "permissions": [
+        {
+          "role": "anonymous",
+          "actions": [
+            {
+              "action": "*"
+            }
+          ]
+        }
+      ]
+    },
+    "CreateSample": {
+      "source": {
+        "object": "dbo.add_sample",
+        "type": "stored-procedure",
+        "parameters": {
+          "payload": ""
+        }
+      },
+      "rest": {
+        "enabled": true,
+        "path": "/createSample",
+        "methods": [
+          "post"
         ]
       },
       "permissions": [
