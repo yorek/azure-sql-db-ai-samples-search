@@ -16,7 +16,8 @@ exec dbo.add_sample '
 {
     "name": "AI Ready Apps: build RAG Data pipeline from Azure Blob Storage to SQL Database in Microsoft Fabric within minutes", 
     "url": "https://blog.fabric.microsoft.com/en-us/blog/ai-ready-apps-build-rag-data-pipeline-from-azure-blob-storage-to-sql-database-in-microsoft-fabric-within-minutes",
-    "notes": "Learn how to build a Retrieval Augmented Generation (RAG) pipeline using SQL Database in Microsoft Fabric—a low-code platform for secure, enterprise-grade AI applications.",
+    "description": "Learn how to build a Retrieval Augmented Generation (RAG) pipeline using SQL Database in Microsoft Fabric—a low-code platform for secure, enterprise-grade AI applications.",
+    "notes": "Microsoft Fabric is a unified, secure, and user-friendly data platform equipped with features necessary for developing enterprise-grade applications with minimal or no coding required. Last year, the platform was enhanced by introducing SQL Database in Fabric, facilitating AI application development within Microsoft Fabric. In a previous blog post, we discussed how to build a chatbot using SQL Database in Fabric. This blog post will provide step-by-step instructions for creating a Retrieval Augmented Generation (RAG) pipeline to prepare your data for AI integration using SQL Database in Microsoft Fabric.",
     "details": {
         "author": "Arun Vijayraghavan",
         "services": ["Fabric SQL", "Azure Blob Storage"],        
