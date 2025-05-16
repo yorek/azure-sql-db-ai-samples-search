@@ -28,6 +28,8 @@ json_object(
                 Put in sample_summary output property a markdown short summary of the sample using the provided description, notes, and details. 
                 Use only the provided samples to help you answer the question.        
                 Use only the information available in the provided JSON to answer the question.
+                Make sure to use the information in the details to answer the question.
+                Return at least five samples if you can.
                 Make sure to use details, notes, and description that are provided in each sample are used only with that sample.
                 If there are related links or repos in the details of a sample that is included in the answer, include them in the short summary. Include links only if they are related to the sample and if they are available in the note or details of that sample.               
                 If the question cannot be answered by the provided samples, you must say that you don''t know.

@@ -6,7 +6,7 @@ drop table if exists dbo.samples;
 
 create table dbo.samples
 (
-    [id] int identity primary key,
+    [id] int identity constraint pk__samples primary key,
     [name] nvarchar(100) not null,
     [description] nvarchar(max) not null,
     [notes] nvarchar(max) null,

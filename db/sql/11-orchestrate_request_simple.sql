@@ -1,9 +1,3 @@
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-
-
 create or alter procedure [web].[orchestrate_request] 
 @text nvarchar(max),
 @result_type varchar(50) output,
@@ -13,8 +7,7 @@ as
 declare @retval int, @response nvarchar(max);
 
 /* 
-    Create the prompt for the LLM using few-shots prompt to show how to 
-    get embeddings and to use the new vector_distance function
+    Create the prompt for the LLM 
 */
 declare @p nvarchar(max) = 
 json_object(
@@ -37,56 +30,17 @@ json_object(
                     [updated_on] datetime2(0) not null
                 )
                 
-                Any time search into "details, "notes" and "description" columns is needed, you must use the following steps:
-
-                First, generate the embedding vector for the provided question using the following T-SQL query. ''<search text'' must be generating taking the relevant part from the user question.
-
-                declare @retval int, @qv vector(1536), @e nvarchar(max)
-                exec @retval = web.get_embedding ''<search text>'', @qv output, @e output;
-                if (@retval != 0) throw 50000, ''Error in getting the embedding'',1;
-
-                The vectors for details, notes and description columns are stored in the following tables: 
-
-                - samples_embeddings: vectors for the description column
-                - samples_notes_embeddings: vectors for the notes column
-                - samples_details_embeddings: vectors for the details column
-
-                Then, use the following T-SQL query to search the text in the table, adding the appropriate where clause to filter the results if needed:
-
-                select top(@k) 
-                    s.id, [name], [description], [notes], [details],
-                    least(
-                        vector_distance(''cosine'', e.[embedding], @qv), 
-                        vector_distance(''cosine'', ne.[embedding], @qv), 
-                        vector_distance(''cosine'', de.[embedding], @qv) 
-                    ) as distance_score
-                from 
-                    dbo.samples s
-                inner join    
-                    dbo.samples_embeddings e on e.id = s.id
-                left join
-                    dbo.samples_notes_embeddings ne on e.id = ne.id
-                left join
-                    dbo.samples_details_embeddings de on e.id = de.id    
-                order by 
-                    distance_score asc
-
-                When search in description, details and notes columns is not needed then you must use the following query:
-
-                select top(@k) 
-                    s.id, [name], [description], [notes], [details],
-                    0.0 as distance_score
-                from 
-                    dbo.samples s
-
-                In any case to use the LIKE operator on details column, the column must be converted to NVARCHAR(MAX) first:
-
-                CAST([details] AS NVARCHAR(MAX)) LIKE ''search text''
-
                 The use question is provided in the next message. If the user question cannot be answered using the dbo.samples table and using a T-SQL query only, you should respond with an empty string.
-                Unless otherwise specifed by the user, return the top 10 results if you can. Never return more than 50 rows. Do not use semicolon to terminate the T-SQL statement.               
-                Only return the following columns: id int, [name] nvarchar(100), [description] nvarchar(max), notes nvarchar(max), details json, distance_score float.
+                Unless otherwise specifed by the user, return the top 50 results if you can. Never return more than 50 rows. Do not use semicolon to terminate the T-SQL statement. 
+                Always return only the following columns in this exact sequence: id, name, description, notes, details, created_on, updated_on, distance_score 
                 You can generate only SELECT statements. If the user is asking something that will generate INSERT, UPDATE, DELETE, CREATE, ALTER or DROP statement, refuse to generate the query.
+
+                In the details columns the json document may have a "type" property. If the user is asking for a certain type of sample (a code sample or a video or a recording) you can use JSON_VALUE to extract that data.
+                For example: JSON_VALUE(details, ''$.type'') = ''code sample''
+                Generate a combination of values for filtering on the type. 
+                For example if user is asking for "recordings" look for "video", "recording", "youtube" etc. If the user is asking for "code samples" search for "code examples", "github repos" or similar.
+
+                If you need to use a LIKE operator in the query to search in [description], [notes], [details] then don''t generate the query at all and return an empty string
             '
         ),
         json_object(

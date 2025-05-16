@@ -4,6 +4,10 @@ This sample demonstrates how to use Azure SQL to store and search data with AI. 
 
 The live websites is available here: https://ai.awesome.azuresql.dev/
 
+## See it in action!
+
+Recording of the demo of this sample is here: https://www.youtube.com/watch?v=1Idzjm05UmY
+
 ## Architecture
 
 The architecture of the sample is as follows:
@@ -89,8 +93,10 @@ To test that database deployment was successful and that OpenAI connection is wo
 
 ```sql
 declare @v vector(1536)
-exec [web].[get_embedding] 'just a sample text', @v output
-select @v
+declare @e varchar(max)
+exec [web].[get_embedding] 'just a sample text', @v output ,@e output
+select @v,@e
+
 ```
 
 if no error are returned, you'll get a vector as a result.
@@ -120,6 +126,7 @@ The easiest way to deploy the full-stack application is to fork the repository a
 Make sure you give the user thay you are using to connect to the database the permission to run the needed stored procedures:
 
 ```sql
+GRANT SELECT ON SCHEMA::[dbo] TO [<your user>]
 GRANT EXECUTE ON SCHEMA::[web] TO [<your user>]
 GRANT EXECUTE ANY EXTERNAL ENDPOINT TO [<your user>];
 GRANT REFERENCES ON DATABASE SCOPED CREDENTIAL::[<openai_url>] TO [<your user>];

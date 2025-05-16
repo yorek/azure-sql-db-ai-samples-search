@@ -9,7 +9,8 @@ exec dbo.add_sample '
         "languages": [".NET"],
         "license": "MIT",
         "services": ["Azure SQL"],
-        "tags": ["Azure", "SQL", "Embeddings", "Vectorizer"]
+        "tags": ["Azure", "SQL", "Embeddings", "Vectorizer"],
+        "type": "code sample"
     }
 }
 ';
@@ -25,7 +26,8 @@ exec dbo.add_sample '
         "languages": ["T-SQL", ".NET", "Python"],
         "services": ["Azure SQL"],
         "license": "MIT",
-        "conferences": ["PASS Summit 2024"]        
+        "conferences": ["PASS Summit 2024"],
+        "type": "code sample"
     }
 }
 ';
@@ -40,7 +42,8 @@ exec dbo.add_sample '
         "author": "Arvind Shyamsundar",
         "languages": ["T-SQL"],
         "services": ["Azure SQL"],
-        "license": "MIT"        
+        "license": "MIT",
+        "type": "code sample"
     }
 }
 ';
@@ -60,7 +63,8 @@ exec dbo.add_sample '
                 "name": "Fast Data Loading in Azure SQL DB using Azure Databricks",
                 "url": "https://github.com/Azure-Samples/azure-sql-db-databricks"
            }
-        ]
+        ],
+        "type": "code sample"
     }
 }
 ';
@@ -74,7 +78,8 @@ exec dbo.add_sample '
     "details": {
         "languages": ["T-SQL", "Python"],
         "services": ["Azure SQL", "Azure Cognitive Services"],        
-        "license": "MIT"        
+        "license": "MIT",
+        "type": "code sample"        
     }
 }
 ';
@@ -88,7 +93,8 @@ exec dbo.add_sample '
     "details": {
         "languages": ["T-SQL", "Python"],
         "services": ["Azure SQL", "Azure Promptflow"],
-        "license": "MIT"        
+        "license": "MIT",
+        "type": "code sample"     
     }
 }
 ';
@@ -98,10 +104,14 @@ exec dbo.add_sample '
     "name": "Vector similarity search with Azure SQL & Azure OpenAI", 
     "description": "This example shows how to use Azure OpenAI from Azure SQL database to get the vector embeddings of any chosen text, and then calculate the cosine similarity against the Wikipedia articles (for which vector embeddings have been already calculated,) to find the articles that covers topics that are close - or similar - to the provided text.", 
     "url": "https://github.com/Azure-Samples/azure-sql-db-openai",
+    "notes": "The sample has been enriched lately with hybrid search, showing how to use fulltext with BM25, reciprocal ranking fusion (RRF) to improve search results in wikipedia sample dataset.",
     "details": {
         "languages": ["T-SQL", "Python"],
         "services": ["Azure SQL"],
-        "license": "MIT"        
+        "license": "MIT",      
+        "tags": ["RRF", "Reciprocal Ranking Fusion", "BM25", "Fulltext", "Hybrid Search"],  
+        "conferences": ["VS Live 2025 Las Vegas"],
+        "type": "code sample"
     }
 }
 ';
@@ -119,7 +129,8 @@ exec dbo.add_sample '
         "related-links": {
             "blog": "https://devblogs.microsoft.com/azure-sql/vanna-ai-and-azure-sql-database/"
         },
-        "tags": ["NL2SQL", "Natural Language to SQL"]
+        "tags": ["NL2SQL", "Natural Language to SQL"],
+        "type": "code sample"
     }
 }
 ';
@@ -137,7 +148,8 @@ exec dbo.add_sample '
         "license": "MIT",        
         "related-links": {
             "blog": "https://devblogs.microsoft.com/azure-sql/unleashing-the-potential-of-generative-ai-in-azure-sql-database/"
-        }
+        },
+        "type": "code sample"
     }
 }
 ';
@@ -150,7 +162,8 @@ exec dbo.add_sample '
     "details": {
         "languages": ["T-SQL"],
         "services": ["Azure SQL"],
-        "license": "MIT"
+        "license": "MIT",
+        "type": "code sample"
     }
 }
 ';
@@ -164,7 +177,8 @@ exec dbo.add_sample '
         "languages": ["T-SQL"],
         "services": ["Azure SQL"],
         "license": "MIT",
-        "tags": ["NL2SQL", "Natural Language to SQL"]
+        "tags": ["NL2SQL", "Natural Language to SQL"],
+        "type": "code sample"
     }
 }
 ';
@@ -181,7 +195,8 @@ exec dbo.add_sample '
         "services": ["Azure SQL", "Azure Functions", "Azure Static Web Apps"],
         "tools": ["Data API Builder"],
         "license": "MIT",
-        "tags": ["End-to-End"]
+        "tags": ["End-to-End"],
+        "type": "code sample"
     }
 }
 ';
@@ -201,7 +216,8 @@ exec dbo.add_sample '
         "tags": ["End-to-End", "RAG"],
         "related-links": {
             "live-demo": "https://ai.microsofthq.vslive.com/"
-        }
+        },
+        "type": "code sample"
     }
 }
 ';
@@ -221,7 +237,8 @@ exec dbo.add_sample '
         "tags": ["End-to-End"],
         "related-links": {
             "blog": "https://devblogs.microsoft.com/azure-sql/build-a-chatbot-on-your-own-data-in-1-hour-with-azure-sql-langchain-and-chainlit/"
-        }
+        },
+        "type": "code sample"
     }
 }
 ';
@@ -230,7 +247,7 @@ exec dbo.add_sample '
 {
     "name": "Chatbot on structured and unstructured data with Semantic Kernel", 
     "description": "Using Azure SQL and Semantic Kernel to chat with your own data using a mix of NL2SQL and RAG",
-    "notes": "This sample shows how to build a chatbot that can answer using RAG and using SQL Queries to answer any question you may want to ask it, be it on unstructured data (eg: what is the common issue raised for product XYZ) or on structured data (eg: how many customers from Canada called the support line?). Built using Semantic Kernel. This is the sample Davide used in many keynotes and demos, including PASS Summit 2024 and Live 360 Orlando 2024, where the data source was the database of a fictional insurance company, Contoso Insurance.",
+    "notes": "This sample shows how to build a chatbot that can answer using RAG and using SQL Queries to answer any question you may want to ask it, be it on unstructured data (eg: what is the common issue raised for product XYZ) or on structured data (eg: how many customers from Canada called the support line?). Built using Semantic Kernel. This sample shows also how to build an Agentic RAG solution for a fictional insurance company, Contoso Insurance.",
     "url": "https://github.com/Azure-Samples/azure-sql-db-chat-sk",
     "details": {
         "author": "Davide Mauri",
@@ -239,11 +256,13 @@ exec dbo.add_sample '
         "services": ["Azure SQL", "Azure Functions", "Azure Static Web Apps"],
         "license": "MIT",
         "tags": ["End-to-End", "Agentic RAG", "NL2SQL", "Natural Language to SQL"],
-        "conferences": ["PASS Summit 2024", "Live 360 Orlando 2024", "MCAPS Tech Connect 2025"],
+        "events": ["AI Agent Hackaton 2025"],
+        "conferences": ["VS Live 2025 Las Vegas", "PASS Summit 2024", "Live 360 Orlando 2024", "MCAPS Tech Connect 2025"],        
         "related-links": {
-            "video": "https://www.youtube.com/watch?v=BuaKzm7Kq9Q",
+            "video": "https://www.youtube.com/watch?v=1Idzjm05UmY?t=1837s",
             "blog": "https://devblogs.microsoft.com/azure-sql/the-ultimate-chatbot/"
-        }
+        },
+        "type": "code sample"
     }
 }
 ';
@@ -257,7 +276,8 @@ exec dbo.add_sample '
         "languages": ["T-SQL"],
         "services": ["Azure SQL"],
         "license": "MIT",
-        "tags": ["End-to-End"]
+        "tags": ["End-to-End"],
+        "type": "code sample"
     }
 }
 ';
@@ -275,7 +295,8 @@ exec dbo.add_sample '
         "tags": ["End-to-End"],
         "related-links": {
             "blog": "https://aka.ms/azuresql-faiss"
-        }
+        },
+        "type": "code sample"
     }
 }
 ';
@@ -290,7 +311,8 @@ exec dbo.add_sample '
         "languages": ["T-SQL", "Python"],        
         "services": ["Azure SQL"],
         "license": "MIT",
-        "tags": ["End-to-End"]
+        "tags": ["End-to-End"],
+        "type": "code sample"
     }
 }
 ';
@@ -307,11 +329,11 @@ exec dbo.add_sample '
         "frameworks": ["Scikit-Learn"],
         "services": ["Azure SQL"],
         "license": "MIT",
-        "tags": ["End-to-End", "Index", "IVFFlat"]
+        "tags": ["End-to-End", "Index", "IVFFlat"],
+        "type": "code sample"
     }
 }
 ';
-
 
 exec dbo.add_sample '
 {
@@ -323,7 +345,8 @@ exec dbo.add_sample '
         "authors": ["Davide Mauri", "Pooja Kamath"],
         "languages": ["T-SQL", "Python", ".NET", "C#"],                
         "services": ["Azure SQL"],
-        "license": "MIT"        
+        "license": "MIT",
+        "type": "code sample"        
     }
 }
 ';
@@ -339,7 +362,8 @@ exec dbo.add_sample '
         "languages": ["T-SQL", "Python"],
         "services": ["Azure SQL"],
         "license": "MIT",
-        "tags": ["BM25", "RRF"]
+        "tags": ["BM25", "RRF"],
+        "type": "code sample"
     }
 }
 ';
@@ -354,7 +378,8 @@ exec dbo.add_sample '
         "authors": ["Pooja Kamath"],
         "languages": ["T-SQL", "Python"],                
         "services": ["Azure SQL"],
-        "license": "MIT"
+        "license": "MIT",
+        "type": "code sample"
     }
 }
 ';
@@ -393,9 +418,14 @@ exec dbo.add_sample '
             "Hybrid RAG",
             "Agentic RAG",
             "NL2SQL",
-            "Natural Language to SQL"
+            "Natural Language to SQL"            
         ],
-        "conferences": ["Live 360 Orlando 2024", "SQL Conf 2025", "SQL Conference 2025"]
+        "events": ["AI Agent Hackaton 2025"],
+        "conferences": ["Live 360 Orlando 2024", "SQL Conf 2025", "SQL Conference 2025", "Fabric Community Conference 2025", "FabCon 2025"],
+        "type": "code sample",
+        "related-links": {
+            "video": "https://www.youtube.com/watch?v=1Idzjm05UmY"            
+        }
     }
 }
 ';
@@ -413,7 +443,8 @@ exec dbo.add_sample '{
         "services": [
             "Azure SQL",            
             "Azure Functions"
-        ]
+        ],
+        "type": "code sample"
     },
     "url": "https://github.com/yorek/live360-2024-orlando"
 }';
@@ -436,7 +467,8 @@ exec dbo.add_sample '{
         "frameworks": [
             "LangChain",
             "LangGraph"
-        ]
+        ],
+        "type": "code sample"
     },
     "url": "https://github.com/Azure-Samples/azure-sql-langchain"
 }';
@@ -460,7 +492,8 @@ exec dbo.add_sample '
          "frameworks": [
             "LangChain",
             "Chainlit"
-        ]
+        ],
+        "type": "code sample"
     }
 }
 ';
@@ -478,7 +511,8 @@ exec dbo.add_sample '
         "tags": ["End-to-End", "Workshop", "Hands-On Lab"],
         "related-links": {
             "blog": "https://devblogs.microsoft.com/azure-sql/building-an-ai-app-graphql-endpoint-with-sql-db-in-fabric/"
-        }
+        },
+        "type": "code sample"
     }
 }
 ';
@@ -495,18 +529,79 @@ exec dbo.add_sample '
         "languages": ["T-SQL", "REST", "GraphQL"],        
         "services": ["Azure SQL", "Azure Open AI"],
         "license": "MIT",
-        "tags": ["End-to-End", "Modernize", "Innovate", "Migrate", "RAG", "Embeddings", "Vectors"]        
+        "tags": ["End-to-End", "Modernize", "Innovate", "Migrate", "RAG", "Embeddings", "Vectors"],
+        "type": "code sample"   
     }
 }
 ';
 GO
 
-select id, name, created_on, updated_on from dbo.samples order by created_on desc;
+exec dbo.add_sample '
+{
+    "name": "SQL Database Vector Search", 
+    "description": "A repository that showcases the native VECTOR type in Azure SQL Database to perform embeddings and RAG with Azure OpenAI, using DOC, PDF, TXT and MD documents.",
+    "notes": "A repository that showcases the native VECTOR type in Azure SQL Database to perform embeddings and RAG with Azure OpenAI. The application allows to load documents, generate embeddings and save them into the database as Vectors, and perform searches using Vector Search and RAG. Currently, PDF, DOCX, TXT and MD files are supported. Vectors are saved and retrieved with Entity Framework Core using the EFCore.SqlServer.VectorSearch library. Embedding and Chat Completion are integrated with Semantic Kernel. This repository contains a Blazor Web App as well as a Minimal API that allows to programatically interact with embeddings and RAG.",
+    "url": "https://github.com/marcominerva/SqlDatabaseVectorSearch",
+    "details": {
+        "author": "Marco Minerva",
+        "languages": ["T-SQL", "C#"],        
+        "services": ["Azure SQL", "Azure Open AI"],
+        "license": "MIT",
+        "tags": ["End-to-End", "RAG", "Embeddings", "Vectors", "EFCore", "Semantic Kernel", "UX", "UI", "Chat", "Response Streaming"],
+        "type": "code sample"    
+    }
+}
+';
+GO
+
+exec dbo.add_sample '
+{
+    "name": "Azure SQL and SQL Server with .NET Aspire", 
+    "description": "Samples on how to use SQL Server and Azure SQL with .NET Aspire. The samples cover also usage of DbUp, Database Projects, Data API Builder, Node+Vue and also a full end-to-end fullstack application with Aspire, SQL Server, Database Projects, Data API Builder, Node and Vue",
+    "notes": "A set of samples showing how to use Azure SQL and SQL Server with Aspire. Starting from using an existing SQL Server instance through using SQL Server hosted in Aspire, and then deploying the database using DBUp, Database Projects and Entity Framework integration. Data API builder is also integrated to have a CRUD service ready in seconds and then a full end-to-end solution is provided using .NEt Aspire, SQL Server, Data API Builder, Database Projects, Node and Vue.Js as a frontend. The end-to-end application is the well-known ToDo application.",
+    "url": "https://github.com/Azure-Samples/azure-sql-db-aspire",
+    "details": {
+        "author": "Davide Mauri",
+        "languages": ["T-SQL", "C#", "Node"],        
+        "services": ["Azure SQL", "SQL Server"],
+        "frameworks": ["Vue", "Vue.js"],
+        "license": "MIT",
+        "tags": ["End-to-End", "Aspire", "EFCore", "UX", "UI", ".NET", "DotNet", "Fullstack", "Data API Buider", "DAB"],        
+        "conferences": ["VS Live 2025 Las Vegas"],
+        "type": "code sample"
+    }
+}
+';
+GO
+
+exec dbo.add_sample '
+{
+    "name": "SQL projects DevOps samples", 
+    "description": "CI/CD for SQL databases with SQL projects - Azure SQL and SQL Server. This repository contains sample workflows for several scenarios related to SQL projects, including CI checks and deployments to multiple environments.",
+    "notes": "Following this sample you''ll be able to setup CI/CD workflows for database development and deployment, including:\n- getting started from an existing database\n- a CI check that validates all object references with dotnet build\n- a CI check for SQL code quality with code analysis\n- incorporating additional database objects in your build, such as system objects\n- a deployment workflow that checks for deployment warnings\n a deployment workflow that updates a testing environment\n- a deployment workflow that generates a script for review\nThe .NET Conf 2024 session Next-gen SQL projects with Microsoft.Build.Sql covered the topics in this repository for some background on establishing a database development lifecycle.",
+    "url": "https://github.com/Azure-Samples/sql-projects-devops-samples",
+    "details": {
+        "related-links": {
+            "blog": "https://techcommunity.microsoft.com/blog/azuresqlblog/the-microsoft-build-sql-project-sdk-is-now-generally-available/4392063"
+        }, 
+        "author": "Drew Skwiers-Koballa",
+        "languages": ["T-SQL"],        
+        "services": ["Azure SQL", "SQL Server"],
+        "license": "MIT",
+        "tags": ["CI/CD", "DevOps", "GitHub Actions"],        
+        "tools": ["SqlPackage", "DacFx"],
+        "conferences": [".NET Conf 2024"],
+        "type": "code sample"
+    }
+}
+';
+GO
+
+select 
+    id, name, created_on, updated_on, 
+    json_value(details, '$.type')
+from 
+    dbo.samples order by created_on desc;
 --where [url] like '%kmeans%'
 GO
 
-exec [web].[get_total_sample_count]
-GO
-
-exec [web].[find_samples] 'migrate and modernzine'
-go

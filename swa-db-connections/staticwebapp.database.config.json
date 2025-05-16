@@ -26,7 +26,8 @@
       },
       "authentication": {
         "provider": "StaticWebApps"
-      }
+      },
+      "mode": "development"
     },
     "cache": {
       "enabled": true,
@@ -61,7 +62,9 @@
         "type": "stored-procedure",
         "parameters": {
           "text": "",
-          "k": 50
+          "k": 50,
+          "debug": 0,
+          "nocache": 0
         }
       },
       "graphql": {
