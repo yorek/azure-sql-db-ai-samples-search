@@ -1,5 +1,5 @@
 import { Card, CardHeader, Text, Caption1, CardFooter, Menu, MenuTrigger, Button, MenuPopover, MenuList, MenuItem } from "@fluentui/react-components";
-import { LinkMultipleRegular, MoreHorizontal20Regular, EditRegular, DeleteRegular, ArrowDownRegular, ArrowUpRegular } from "@fluentui/react-icons";
+import { LinkMultipleRegular, MoreHorizontal20Regular, EditRegular, DeleteRegular, ArrowDownRegular } from "@fluentui/react-icons";
 
 import Style from "./SearchCard.style";
 import React from "react";
@@ -19,7 +19,7 @@ const SearchCard = (props: CardProps) => {
     const classes = Style();
 
     const user = useSelector((state: RootState) => state.user);
-    const [cardHeight, setCardHeight] = React.useState(210);
+    const [cardHeight] = React.useState(210);
     const [openDialog, setOpenDialog] = React.useState(false);
     const [openDetails, setOpenDetails] = React.useState(false);
 

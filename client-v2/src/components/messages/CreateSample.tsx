@@ -54,7 +54,7 @@ const CreateSample = (props: CreateProps) => {
         details: Yup.string().required('Some details are required, in JSON format')
     });
 
-    const { register, trigger, formState: { errors }, reset, getValues, setValue } = useForm({
+    const { register, trigger, formState: { errors }, reset, getValues } = useForm({
         resolver: yupResolver(validationSchema),
       });
 

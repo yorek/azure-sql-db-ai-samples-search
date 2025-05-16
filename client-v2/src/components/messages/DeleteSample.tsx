@@ -2,9 +2,8 @@ import { Dialog, DialogTrigger, Button, DialogSurface, DialogBody, DialogTitle, 
 import Sample from "../../types/Sample";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../store/store";
-import { deleteSampleAsync, resetDeleteState } from "../../store/slices/SearchSlice";
+import { deleteSampleAsync } from "../../store/slices/SearchSlice";
 import Styles from "./DeleteSample.style";
-import { useEffect } from "react";
 
 interface DeleteProps {
     sample: Sample;

@@ -1,6 +1,6 @@
 import React from 'react';
 import Sample from '../../types/Sample';
-import { Field, makeStyles, Tag, TagGroup } from '@fluentui/react-components';
+import { Field, makeStyles, Tag } from '@fluentui/react-components';
 
 interface TagsGeneratorProps {
     sample: Sample | undefined;
