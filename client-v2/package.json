@@ -2,6 +2,9 @@
   "name": "client-v2",
   "version": "0.1.0",
   "private": true,
+  "engines": {
+    "node": "=20.18"
+  },
   "dependencies": {
     "@fluentui/react-components": "^9.60.0",
     "@hookform/resolvers": "^4.1.3",
