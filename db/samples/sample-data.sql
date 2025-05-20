@@ -421,7 +421,7 @@ exec dbo.add_sample '
             "Natural Language to SQL"            
         ],
         "events": ["AI Agent Hackaton 2025"],
-        "conferences": ["Live 360 Orlando 2024", "SQL Conf 2025", "SQL Conference 2025", "Fabric Community Conference 2025", "FabCon 2025"],
+        "conferences": ["Live 360 Orlando 2024", "SQL Conf 2025", "SQL Conference 2025", "Fabric Community Conference 2025", "FabCon 2025", "Build 2025"],
         "type": "code sample",
         "related-links": {
             "video": "https://www.youtube.com/watch?v=1Idzjm05UmY"            
