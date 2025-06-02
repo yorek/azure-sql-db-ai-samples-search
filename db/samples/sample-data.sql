@@ -597,6 +597,28 @@ exec dbo.add_sample '
 ';
 GO
 
+exec dbo.add_sample '
+{
+    "name": "Azure SQL NL2SQL", 
+    "description": "Two-Experts Agent Model to general high-quality SQL queries from Natural Language request",
+    "notes": "The blog post A story of collaborating agents: chatting with your database the right way by Davide Mauri discusses a two-step approach using collaborating agents to enable natural language access to structured data in databases.",
+    "url": "https://github.com/Azure-Samples/azure-sql-nl2sql",
+    "details": {
+        "related-links": {
+            "blog": "https://devblogs.microsoft.com/azure-sql/a-story-of-collaborating-agents-chatting-with-your-database-the-right-way/"
+        }, 
+        "author": "Davide Mauri",
+        "languages": ["T-SQL", "C#"],        
+        "services": ["Azure SQL", "SQL Server"],
+        "license": "MIT",
+        "tags": ["NL2SQL", "Natural Language to SQL", "RAG", "Retrieval Augmented Generation", "Agentic RAG"],        
+        "tools": ["Semantic Kernel"],        
+        "type": "code sample"
+    }
+}
+';
+GO
+
 select 
     id, name, created_on, updated_on, 
     json_value(details, '$.type')
@@ -604,4 +626,3 @@ from
     dbo.samples order by created_on desc;
 --where [url] like '%kmeans%'
 GO
-
