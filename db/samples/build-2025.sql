@@ -9,10 +9,23 @@ exec dbo.add_sample '
     "url": "https://www.youtube.com/watch?v=suqgkUZ9TgU",
     "details": {
         "type": "recording",
-        "author": "Davide Mauri",        
+        "speakers": "Davide Mauri",        
         "conference": "Microsoft Build 2025"     
     }
 }
 ';
 GO
 
+exec dbo.add_sample '
+{
+    "name": "SQL Server 2025: The Database Developer Reimagined | BRK207", 
+    "description": "In this session, you will get a deep dive into how SQL Server 2025 brings new features to redefine the database developer experience. This includes vector search with AI models, a new JSON type and index, RegEx and other T-SQL enhancements, Change Event Streaming (CES), and built-in REST API support. Developers can deploy databases on Windows, Linux, containers, k8s, or Azure SQL VM. Copilot assistance is available through SSMS and GitHub. Come see the new path forward for developers using SQL.",
+    "url": "https://www.youtube.com/watch?v=6EEhG1VQWnc",
+    "details": {
+        "type": "recording",
+        "speakers": ["Bob Ward", "Muazma Zahid"],        
+        "conference": "Microsoft Build 2025"     
+    }
+}
+';
+GO

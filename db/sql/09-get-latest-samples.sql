@@ -13,5 +13,5 @@ from
     dbo.samples as s
 order by 
     created_on desc
-offset 0 rows fetch next 3 rows only
+offset 0 rows fetch next 6 rows only
 GO
