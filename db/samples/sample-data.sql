@@ -619,6 +619,30 @@ exec dbo.add_sample '
 ';
 GO
 
+exec dbo.add_sample '
+{
+    "name": "DiskANN Vector Index in SQL Server 2025", 
+    "description": "Sample solution using DiskANN on SQL Server 2025. The sample uses many of the new SQL Server 2025 features and it also uses Streamlit to present a nice and interactive UI",
+    "notes": "This sample shows how to use the DiskANN vector index in SQL Server 2025 along with other features introduced in SQL Server 2025 like: External Models, Azure AI integration, Invoking REST endpoints, JSON Data Type. It uses AirBnB data to build a semantic search solution.",
+    "url": "https://github.com/Azure-Samples/azure-sql-diskann",
+    "details": {
+        "related-links": {
+            "blog": "https://devblogs.microsoft.com/azure-sql/sql-server-2025-ctp-2-1-diskann-improvements/"
+        }, 
+        "author": "Davide Mauri",
+        "languages": ["T-SQL", "Python"],        
+        "services": ["SQL Server 2025"],
+        "license": "MIT",
+        "tags": ["DiskANN", "Vector Search", "Approximate Vector Search", "AirBnB", "Semantic Search"],        
+        "tools": ["Streamlit"],        
+        "type": "code sample"
+    }
+}
+';
+GO
+
+
+
 select 
     id, name, created_on, updated_on, 
     json_value(details, '$.type')
