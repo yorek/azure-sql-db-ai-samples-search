@@ -641,6 +641,25 @@ exec dbo.add_sample '
 ';
 GO
 
+exec dbo.add_sample '
+{
+    "name": "Demystifying Agents: Build an AI Agent from Scratch on Your Own Data using Azure SQL", 
+    "description": "Unlock the power of AI by constructing an AI agent from the ground up using T-SQL, without altering your existing applications. This hands-on session will guide you through the entire process of building an AI agent from scratch, providing you with a deep understanding of how AI agents function. Additionally, we’ll explore alternative approaches for greenfield applications by implementing the same solution using Semantic Kernel and .NET. By the end of this session, you will possess a comprehensive grasp of AI agents and practical skills to enhance your data with advanced AI capabilities efficiently.",
+    "notes": "This sample shows how to use the DiskANN vector index in SQL Server 2025 along with other features introduced in SQL Server 2025 like: External Models, Azure AI integration, Invoking REST endpoints, JSON Data Type. It uses AirBnB data to build a semantic search solution.",
+    "url": "https://www.youtube.com/watch?v=1Idzjm05UmY",
+    "details": {
+        "author": "Davide Mauri",
+        "languages": ["T-SQL", "C#"],        
+        "services": ["Azure SQL"],
+        "tags": ["Agent", "Agentic RAG", "Semantic Search"],        
+        "tools": ["Semantic Kernel"],        
+        "type": "recording",
+        "conference": "AI Agents Hackaton 2025"     
+    }
+}
+';
+GO
+
 
 
 select 
