@@ -1,0 +1,5 @@
+POST http://localhost:5000/rest/findSamples
+
+{
+    "text": "show the sample that davide showed at MS Build 2025"
+}

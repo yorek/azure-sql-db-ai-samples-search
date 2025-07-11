@@ -421,7 +421,7 @@ exec dbo.add_sample '
             "Natural Language to SQL"            
         ],
         "events": ["AI Agent Hackaton 2025"],
-        "conferences": ["Live 360 Orlando 2024", "SQL Conf 2025", "SQL Conference 2025", "Fabric Community Conference 2025", "FabCon 2025"],
+        "conferences": ["Live 360 Orlando 2024", "SQL Conf 2025", "SQL Conference 2025", "Fabric Community Conference 2025", "FabCon 2025", "Build 2025"],
         "type": "code sample",
         "related-links": {
             "video": "https://www.youtube.com/watch?v=1Idzjm05UmY"            
@@ -597,6 +597,90 @@ exec dbo.add_sample '
 ';
 GO
 
+exec dbo.add_sample '
+{
+    "name": "Azure SQL NL2SQL", 
+    "description": "Two-Experts Agent Model to general high-quality SQL queries from Natural Language request",
+    "notes": "The blog post A story of collaborating agents: chatting with your database the right way by Davide Mauri discusses a two-step approach using collaborating agents to enable natural language access to structured data in databases.",
+    "url": "https://github.com/Azure-Samples/azure-sql-nl2sql",
+    "details": {
+        "related-links": {
+            "blog": "https://devblogs.microsoft.com/azure-sql/a-story-of-collaborating-agents-chatting-with-your-database-the-right-way/"
+        }, 
+        "author": "Davide Mauri",
+        "languages": ["T-SQL", "C#"],        
+        "services": ["Azure SQL", "SQL Server"],
+        "license": "MIT",
+        "tags": ["NL2SQL", "Natural Language to SQL", "RAG", "Retrieval Augmented Generation", "Agentic RAG"],        
+        "tools": ["Semantic Kernel"],        
+        "type": "code sample"
+    }
+}
+';
+GO
+
+exec dbo.add_sample '
+{
+    "name": "DiskANN Vector Index in SQL Server 2025", 
+    "description": "Sample solution using DiskANN on SQL Server 2025. The sample uses many of the new SQL Server 2025 features and it also uses Streamlit to present a nice and interactive UI",
+    "notes": "This sample shows how to use the DiskANN vector index in SQL Server 2025 along with other features introduced in SQL Server 2025 like: External Models, Azure AI integration, Invoking REST endpoints, JSON Data Type. It uses AirBnB data to build a semantic search solution.",
+    "url": "https://github.com/Azure-Samples/azure-sql-diskann",
+    "details": {
+        "related-links": {
+            "blog": "https://devblogs.microsoft.com/azure-sql/sql-server-2025-ctp-2-1-diskann-improvements/"
+        }, 
+        "author": "Davide Mauri",
+        "languages": ["T-SQL", "Python"],        
+        "services": ["SQL Server 2025"],
+        "license": "MIT",
+        "tags": ["DiskANN", "Vector Search", "Approximate Vector Search", "AirBnB", "Semantic Search"],        
+        "tools": ["Streamlit"],        
+        "type": "code sample"
+    }
+}
+';
+GO
+
+exec dbo.add_sample '
+{
+    "name": "Demystifying Agents: Build an AI Agent from Scratch on Your Own Data using Azure SQL", 
+    "description": "Unlock the power of AI by constructing an AI agent from the ground up using T-SQL, without altering your existing applications. This hands-on session will guide you through the entire process of building an AI agent from scratch, providing you with a deep understanding of how AI agents function. Additionally, we’ll explore alternative approaches for greenfield applications by implementing the same solution using Semantic Kernel and .NET. By the end of this session, you will possess a comprehensive grasp of AI agents and practical skills to enhance your data with advanced AI capabilities efficiently.",
+    "notes": "The recording demos the Insurance AI Agent (built using Semantic Kernel) and the Sample Search Agent (Built with t-SQL only)",
+    "url": "https://www.youtube.com/watch?v=1Idzjm05UmY",
+    "details": {
+        "author": "Davide Mauri",
+        "languages": ["T-SQL", "C#"],        
+        "services": ["Azure SQL"],
+        "tags": ["Agent", "Agentic RAG", "Semantic Search"],        
+        "tools": ["Semantic Kernel"],        
+        "type": "recording",
+        "events": ["AI Agent Hackaton 2025"]
+    }
+}
+';
+GO
+
+exec dbo.add_sample '
+{
+    "name": ".NET Data Community Standup - Azure SQL vector search", 
+    "description": "Join us for a special edition of the .NET Data Community Standup as we welcome Davide Mauri, Principal Product Manager at Microsoft, to explore the exciting new vector search capabilities in Azure SQL. With the rise of AI-powered applications and semantic search, vector databases are more relevant than ever. In this session, Davide will demonstrate how Azure SQL is evolving to meet these modern needs with integrated vector search features.",
+    "notes": "Vector data type (preview) in Azure SQL Database, Semantic Kernel vs Microsoft.Extensions.VectorData, Azure SQL DB Chat Semantic Kernel (on sample insurance data)",
+    "url": "https://www.youtube.com/live/RksCLw2OU_M?t=173",
+    "details": {
+        "authors": ["Davide Mauri", "Jiri Cincura", "Shay Rojansky"],
+        "languages": ["T-SQL", "C#"],        
+        "services": ["Azure SQL", "SQL Server 2025"],
+        "tags": ["Agent", "Agentic RAG", "Semantic Search", "Microsoft.Extensions.VectorData"],        
+        "tools": ["Semantic Kernel", "Entity Framework"],        
+        "type": "recording",
+        "events": [".NET Data Community Standup"]
+    }
+}
+';
+GO
+
+
+
 select 
     id, name, created_on, updated_on, 
     json_value(details, '$.type')
@@ -604,4 +688,3 @@ from
     dbo.samples order by created_on desc;
 --where [url] like '%kmeans%'
 GO
-

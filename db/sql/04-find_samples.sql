@@ -141,7 +141,7 @@ begin try
             from 
                 dbo.samples w
             inner join 
-                FREETEXTTABLE(dbo.samples, *, @text) as ftt on w.id = ftt.[KEY]
+                FREETEXTTABLE(dbo.samples, *, @text) as ftt on w.id = ftt.[KEY] -- BM25
             order by
                 ft_rank desc;
             --select * from #ks;
