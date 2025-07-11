@@ -645,7 +645,7 @@ exec dbo.add_sample '
 {
     "name": "Demystifying Agents: Build an AI Agent from Scratch on Your Own Data using Azure SQL", 
     "description": "Unlock the power of AI by constructing an AI agent from the ground up using T-SQL, without altering your existing applications. This hands-on session will guide you through the entire process of building an AI agent from scratch, providing you with a deep understanding of how AI agents function. Additionally, we’ll explore alternative approaches for greenfield applications by implementing the same solution using Semantic Kernel and .NET. By the end of this session, you will possess a comprehensive grasp of AI agents and practical skills to enhance your data with advanced AI capabilities efficiently.",
-    "notes": "This sample shows how to use the DiskANN vector index in SQL Server 2025 along with other features introduced in SQL Server 2025 like: External Models, Azure AI integration, Invoking REST endpoints, JSON Data Type. It uses AirBnB data to build a semantic search solution.",
+    "notes": "The recording demos the Insurance AI Agent (built using Semantic Kernel) and the Sample Search Agent (Built with t-SQL only)",
     "url": "https://www.youtube.com/watch?v=1Idzjm05UmY",
     "details": {
         "author": "Davide Mauri",
@@ -654,7 +654,26 @@ exec dbo.add_sample '
         "tags": ["Agent", "Agentic RAG", "Semantic Search"],        
         "tools": ["Semantic Kernel"],        
         "type": "recording",
-        "conference": "AI Agents Hackaton 2025"     
+        "events": ["AI Agent Hackaton 2025"]
+    }
+}
+';
+GO
+
+exec dbo.add_sample '
+{
+    "name": ".NET Data Community Standup - Azure SQL vector search", 
+    "description": "Join us for a special edition of the .NET Data Community Standup as we welcome Davide Mauri, Principal Product Manager at Microsoft, to explore the exciting new vector search capabilities in Azure SQL. With the rise of AI-powered applications and semantic search, vector databases are more relevant than ever. In this session, Davide will demonstrate how Azure SQL is evolving to meet these modern needs with integrated vector search features.",
+    "notes": "Vector data type (preview) in Azure SQL Database, Semantic Kernel vs Microsoft.Extensions.VectorData, Azure SQL DB Chat Semantic Kernel (on sample insurance data)",
+    "url": "https://www.youtube.com/live/RksCLw2OU_M?t=173",
+    "details": {
+        "authors": ["Davide Mauri", "Jiri Cincura", "Shay Rojansky"],
+        "languages": ["T-SQL", "C#"],        
+        "services": ["Azure SQL", "SQL Server 2025"],
+        "tags": ["Agent", "Agentic RAG", "Semantic Search", "Microsoft.Extensions.VectorData"],        
+        "tools": ["Semantic Kernel", "Entity Framework"],        
+        "type": "recording",
+        "events": [".NET Data Community Standup"]
     }
 }
 ';
