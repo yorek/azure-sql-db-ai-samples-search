@@ -420,7 +420,7 @@ exec dbo.add_sample '
             "NL2SQL",
             "Natural Language to SQL"            
         ],
-        "events": ["AI Agent Hackaton 2025"],
+        "events": ["AI Agent Hackaton 2025", "Cozy AI Kitchen"],
         "conferences": ["Live 360 Orlando 2024", "SQL Conf 2025", "SQL Conference 2025", "Fabric Community Conference 2025", "FabCon 2025", "Build 2025"],
         "type": "code sample",
         "related-links": {
