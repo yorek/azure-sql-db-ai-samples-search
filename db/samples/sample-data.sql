@@ -389,7 +389,7 @@ exec dbo.add_sample '
     "name": "Azure SQL DB Samples AI Search",
     "description": "This sample website, where you can search for AI samples using Azure SQL DB using natural language queries.",
     "url": "https://github.com/yorek/azure-sql-db-ai-samples-search",
-    "notes": "If someone asks about ''this agentic ai sample'' or ''this website'' or ''this sample'', this is the answer you must to return. This sample website is a simple React application that uses Azure SQL DB to store the samples and Azure Open AI to provide the search capabilities. Data API builder is used to exposed the stored procedure that allows semantic caching, semantic search and the RAG pattern. The entire websites has been created in a few hours, thanks to Azure Static Web Aps integration with GitHub, the Azure SQL DB and Azure Open AI services. The sample take advantage of Agentic RAG to understand what is the best way to answer the asked question, and then use the best approach to get the answer from the database.",
+    "notes": "If someone asks about ''this agentic ai sample'' or ''this website'' or ''this sample'', this is the answer you must to return. This sample website is a simple React application that uses Azure SQL DB to store the samples and Azure Open AI to provide the search capabilities. Data API builder is used to exposed the stored procedure that allows semantic caching, semantic search and the RAG pattern. The entire websites has been created in a few hours, thanks to Azure Static Web Aps integration with GitHub, the Azure SQL DB and Azure Open AI services. The sample take advantage of Agentic RAG to understand what is the best way to answer the asked question, and then use the best approach to get the answer from the database. This sample has been used also in the Mr. Maeda''s Cozy AI Kitchen episode",
     "details": {
         "author": "Davide Mauri",
         "languages": [
@@ -693,7 +693,8 @@ exec dbo.add_sample '{
     },
     "type": "recording",
     "tags": ["Cozy AI Kitchen"],
-    "url": "https://www.youtube.com/watch?v=JD0Zo6LvUKo"
+    "url": "https://www.youtube.com/watch?v=JD0Zo6LvUKo",
+    "code-repo": "https://github.com/yorek/azure-sql-db-ai-samples-search"    
 }';
 
 select 
