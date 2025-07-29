@@ -679,7 +679,22 @@ exec dbo.add_sample '
 ';
 GO
 
-
+exec dbo.add_sample '{
+    "name": "Embeddings, AI, and SQL Server 2025 with Davide Mauri, in Mr. Maeda''s Cozy AI Kitchen",
+    "description": "In this episode of the Cozy AI Kitchen, we’re cooking up something special. Join host John Maeda and special guest Chef David Mauri, PM for AI and SQL at Microsoft, as they explore how SQL Server 2025 and Azure SQL are evolving with AI-powered capabilities like vector search, embeddings, and LLM integration. From generating embeddings with T-SQL to building full RAG (Retrieval-Augmented Generation) patterns and exposing SQL as REST endpoints, this episode is packed with practical demos and delicious metaphors. Whether you''re a seasoned data chef or just getting started with AI in databases, this one''s for you.",
+    "notes": "What You''ll Learn: How to generate and store embeddings in SQL Server 2025, How to perform vector similarity search using T-SQL, How to integrate LLMs like GPT-4 into your SQL workflows, How to expose SQL logic as REST or GraphQL endpoints, How to build secure, scalable AI apps with your own data",
+    "details": {
+        "author": "Davide Mauri",
+        "languages": ["T-SQL"],
+        "license": "MIT",
+        "services": ["Azure SQL"],
+        "products": ["SQL Server 2025"],
+        "tags": ["embedding models", "external models", "ai_generate functions", "mixedbread", "cohere", "bring your own model", "BYOM"]
+    },
+    "type": "recording",
+    "tags": ["Cozy AI Kitchen"],
+    "url": "https://www.youtube.com/watch?v=JD0Zo6LvUKo"
+}';
 
 select 
     id, name, created_on, updated_on, 
