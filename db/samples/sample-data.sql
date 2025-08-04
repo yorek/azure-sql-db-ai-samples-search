@@ -139,7 +139,7 @@ exec dbo.add_sample '
 {
     "name": "Azure SQL DB - Retrieval Augmented Generation (RAG) with OpenAI", 
     "description": "Implement a RAG solution and call OpenAI right from Azure SQL DB to ask questions about your data", 
-    "notes": "In this repo you will find a step-by-step guide on how to use Azure SQL Database to do Retrieval Augmented Generation (RAG) using the data you have in Azure SQL and integrating with OpenAI, directly from the Azure SQL database itself. You''ll be able to ask queries in natural language and get answers from the OpenAI GPT model, using the data you have in Azure SQL Database. The sample data is the Walmart US Product dataset, so that you can you RAG on product data and ask question like \"What are some good products to organize a birthday party for teenager boy?\" or \"Show me the best product for cleaning my car\" and get answers from the OpenAI model using the product data. The sample is using only and pure T-SQL.",
+    "notes": "In this repo you will find a step-by-step guide on how to use Azure SQL Database to do Retrieval Augmented Generation (RAG) using the data you have in Azure SQL and integrating with OpenAI, directly from the Azure SQL database itself. You''ll be able to ask queries in natural language and get answers from the OpenAI GPT model, using the data you have in Azure SQL Database. The sample data is the Walmart US Product dataset, so that you can you RAG on product data and ask question like \"What are some good products to organize a birthday party for teenager boy?\" or \"Show me the best product for cleaning my car\" and get answers from the OpenAI model using the product data. The sample is using only and pure T-SQL. This samples is also helpful to learn how to use Structured Output and implement a simple \"Chat with your own Data\" kind of solution.",
     "url": "https://github.com/Azure-Samples/azure-sql-db-chatbot",
     "details": {
         "authors": ["Davide Mauri", "Sanjay Mishra"],
@@ -149,7 +149,8 @@ exec dbo.add_sample '
         "related-links": {
             "blog": "https://devblogs.microsoft.com/azure-sql/unleashing-the-potential-of-generative-ai-in-azure-sql-database/"
         },
-        "type": "code sample"
+        "type": "code sample",
+        "tags": ["structured output", "chat-with-your-data"]        
     }
 }
 ';
