@@ -110,7 +110,7 @@ exec dbo.add_sample '
         "services": ["Azure SQL"],
         "license": "MIT",      
         "tags": ["RRF", "Reciprocal Ranking Fusion", "BM25", "Fulltext", "Hybrid Search"],  
-        "conferences": ["VS Live 2025 Las Vegas"],
+        "conferences": ["VS Live 2025 Las Vegas", "VS Live 2025 Redmond HQ"],
         "type": "code sample"
     }
 }
@@ -614,7 +614,8 @@ exec dbo.add_sample '
         "license": "MIT",
         "tags": ["NL2SQL", "Natural Language to SQL", "RAG", "Retrieval Augmented Generation", "Agentic RAG"],        
         "tools": ["Semantic Kernel"],        
-        "type": "code sample"
+        "type": "code sample",
+        "conferences": ["VS Live 2025 Redmond HQ"]
     }
 }
 ';
@@ -697,6 +698,24 @@ exec dbo.add_sample '{
     "url": "https://www.youtube.com/watch?v=JD0Zo6LvUKo",
     "code-repo": "https://github.com/yorek/azure-sql-db-ai-samples-search"    
 }';
+
+exec dbo.add_sample '
+{
+    "name": "Approximate Nearest Neighbor Search", 
+    "description": "SQL Server 2025 introduces a new VECTOR_SEARCH function that allows you to perform approximate nearest neighbor search using the DiskANN algorithm. This function is designed to work with vector columns in SQL Server, enabling efficient similarity search on high-dimensional data.",
+    "notes": "The samples in this folder demonstrate how to use the VECTOR_SEARCH function with DiskANN. The samples include: Creating a table with a vector column, importing data from a CSV file, and inserting data into the table. Performing approximate nearest neighbor search using the VECTOR_SEARCH function. Performing hybrid search using the VECTOR_SEARCH function along with full-text search.",
+    "url": "https://github.com/Azure-Samples/azure-sql-db-vector-search/tree/main/DiskANN",
+    "details": {
+        "authors": ["Davide Mauri"],
+        "languages": ["T-SQL"],                
+        "services": ["Azure SQL"],
+        "license": "MIT",
+        "type": "code sample",
+        "tags": ["DiskANN", "Semantic Search", "Similarity Search", "RRF", "Reciprocal Ranking Fusion"],
+        "conferences": ["VS Live 2025 Redmond HQ"]
+    }
+}
+';
 
 select 
     id, name, created_on, updated_on, 
