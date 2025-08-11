@@ -49,6 +49,11 @@ select * from dbo.semantic_cache
 
 select * from dbo.samples where [url] like 'https://blog.fabric.microsoft.com/%'
 
+select [url], json_value(details, '$.type') 
+from dbo.samples 
+where json_value(details, '$.type') = 'code sample'
+order by [url]
+
 
 
 

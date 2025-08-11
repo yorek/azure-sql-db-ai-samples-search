@@ -1,5 +1,5 @@
 /*
-    SQL Conf() 2025
+    Build 2025
 */
 
 exec dbo.add_sample '
