@@ -717,6 +717,31 @@ exec dbo.add_sample '
 }
 ';
 
+exec dbo.add_sample '
+{
+    "name": "Migrate and modernize Windows Server, SQL Server, and .NET workloads", 
+    "description": "Learn how to enhance and boost the performance, scalability and security of your SQL Server and .NET workloads, and be AI-ready by migrating and modernizing to Microsoft Azure.",
+    "notes": "Use Azure SQL MI (Managed Instance) to migrate applications to the cloud and modernize it with the AI capabilities embedded in SQL Server engine. Take an existing app and modernize it without having to re-write, re-architect and re-deploy it!",
+    "url": "https://www.youtube.com/watch?v=H_2OgOL3fpo&t=982s",
+    "details": {
+        "type": "recording",
+        "speakers": "Davide Mauri",        
+        "solution": "Migrate, modernize, innovate",
+        "urls": [
+            {
+                "Homepage": "https://azure.microsoft.com/en-us/solutions/migrate-to-innovate"
+            },
+            {
+                "Sample Repo": "https://github.com/Azure-Samples/azure-sql-modernize-app-with-ai"
+            }
+        ],
+        "tags": ["Managed Instance", "Semantic Search", "Similarity Search", "RAG", "Retrieval Augmented Generation"]
+    }
+}
+';
+GO
+
+
 select 
     id, name, created_on, updated_on, 
     json_value(details, '$.type')
