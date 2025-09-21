@@ -28,7 +28,7 @@ import GitHash from './components/GitVersion';
 import PageTitle from './components/PageTitle';
 
 // Add fecthRetry utility: behaves like fetch but retries up to `retries` times on network errors or 5xx responses
-async function fecthRetry(input, init = undefined, retries = 3, retryDelay = 500) {
+async function fetchRetry(input, init = undefined, retries = 3, retryDelay = 500) {
   let lastError;
   for (let attempt = 1; attempt <= retries; attempt++) {
     try {
@@ -84,7 +84,7 @@ const SearchPage = () => {
 
   const getLatestSamples = async () => {
     try {
-      const response = await fecthRetry('./data-api/rest/latestSamples');
+      const response = await fetchRetry('./data-api/rest/latestSamples');
       if (response.ok) {
         const data = await response.json();
         //console.log(data.value);
@@ -136,7 +136,7 @@ const SearchPage = () => {
     setSearchCompleted(false);
     //console.log('searchQuery:', searchQuery);
     try {
-      const response = await fecthRetry('./data-api/rest/findSamples', {
+      const response = await fetchRetry('./data-api/rest/findSamples', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
