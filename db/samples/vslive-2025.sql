@@ -10,7 +10,7 @@ exec dbo.add_sample '
     "details": {
         "author": "Davide Mauri",
         "languages": ["T-SQL"],        
-        "services": ["Azure SQL", "SQL Server"],
+        "services": ["Azure SQL", "SQL Server", "Vectors", "Embeddings", "Semantic Search", "RAG", "Retrieval Augmented Generation"],
         "license": "MIT",
         "tags": ["SQL Server 2025", "JSON"],                 
         "type": "code sample",
@@ -20,3 +20,21 @@ exec dbo.add_sample '
 ';
 GO
 
+
+exec dbo.add_sample '
+{
+    "name": "VS Live 2025 - San Diego", 
+    "description": "Demos used as VS Live 2025 San Diego. Sessions: ''AI Meets Data: Unlocking Insights with a Database-First Approach'', ''Unleashing the Power of Semantic Kernel with Azure SQL''",
+    "url": "https://github.com/yorek/vs-live-2025-san-diego",
+    "details": {
+        "author": "Davide Mauri",
+        "languages": ["T-SQL"],        
+        "services": ["Azure SQL", "SQL Server"],
+        "license": "MIT",
+        "tags": ["SQL Server 2025", "Semantic Kernel", "Vectors", "Embeddings", "Semantic Search", "RAG", "Retrieval Augmented Generation"],                 
+        "type": "code sample",
+        "conferences": ["VS Live 2025 San Diego"]
+    }
+}
+';
+GO
