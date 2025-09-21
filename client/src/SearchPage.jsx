@@ -31,6 +31,7 @@ import PageTitle from './components/PageTitle';
 async function fetchRetry(input, init = undefined, retries = 3, retryDelay = 500) {
   let lastError;
   for (let attempt = 1; attempt <= retries; attempt++) {
+    console.log(`Fetch attempt ${attempt} to ${input}`);
     try {
       const response = await fetch(input, init);
       // If server error (5xx) and we still have attempts left, retry
