@@ -36,6 +36,7 @@ async function fetchRetry(input, init = undefined, retries = 3, retryDelay = 500
       // If server error (5xx) and we still have attempts left, retry
       if (!response.ok && response.status >= 500 && attempt < retries) {
         lastError = new Error(`HTTP ${response.status} ${response.statusText}`);
+        console.log(`Fetch attempt ${attempt} failed: ${lastError.message}. Retrying in ${retryDelay * attempt}ms...`);
         await new Promise((res) => setTimeout(res, retryDelay * attempt));
         continue;
       }
