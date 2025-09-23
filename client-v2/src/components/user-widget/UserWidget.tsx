@@ -62,13 +62,14 @@ const UserWidget = () => {
         <>
             {user.isAuth ? (
                 <div className={classes.authBox}>
+                    {/* -- For now we are not using create button --                     
                     <Button
                         icon={<AddRegular />}
                         appearance="primary"
                         size="medium"
                         shape="circular"
                         onClick={onCreate}
-                    >Create</Button>
+                    >Create</Button> */}
                     <Popover trapFocus withArrow>
                         <PopoverTrigger>
                             <div className={classes.avatar}>
