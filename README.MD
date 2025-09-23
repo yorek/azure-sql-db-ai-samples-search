@@ -4,6 +4,9 @@ This sample demonstrates how to use Azure SQL to store and search data with AI. 
 
 The live websites is available here: https://ai.awesome.azuresql.dev/
 
+>[!NOTE]
+> If you are looking for the sample used in the Mr. Maeda's Cozy AI Kitchen, using SQL Server 2025, please check the `sql-server-2025` branch.
+
 ## See it in action!
 
 Recording of the demo of this sample is here: https://www.youtube.com/watch?v=1Idzjm05UmY

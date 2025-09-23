@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useLocation } from 'react-router';
 import {
   Button,
@@ -9,7 +9,6 @@ import {
   Text,
   Link,
   SearchBox,
-  Tag,
   TeachingPopover,
   TeachingPopoverBody,
   TeachingPopoverHeader,
@@ -18,7 +17,7 @@ import {
   TeachingPopoverTrigger,
   TeachingPopoverFooter,
 } from '@fluentui/react-components';
-import { Alert12Filled, AlertOn16Filled, Note16Filled, Search24Regular, Warning12Filled, Warning16Color, Warning20Color } from '@fluentui/react-icons';
+import { Alert12Filled, Search24Regular, Warning12Filled, } from '@fluentui/react-icons';
 import ReactMarkdown from 'react-markdown';
 import Cookies from 'js-cookie';
 
@@ -26,6 +25,7 @@ import styles from './assets/styles/SearchPage.module.css';
 
 import GitHash from './components/GitVersion';
 import PageTitle from './components/PageTitle';
+import fetchRetry from './utils/fetchRetry';
 
 let pageStatus = "first_load";
 
@@ -57,7 +57,7 @@ const SearchPage = () => {
 
   const getLatestSamples = async () => {
     try {
-      const response = await fetch('./data-api/rest/latestSamples');
+      const response = await fetchRetry('./data-api/rest/latestSamples');
       if (response.ok) {
         const data = await response.json();
         //console.log(data.value);
@@ -109,7 +109,7 @@ const SearchPage = () => {
     setSearchCompleted(false);
     //console.log('searchQuery:', searchQuery);
     try {
-      const response = await fetch('./data-api/rest/findSamples', {
+      const response = await fetchRetry('./data-api/rest/findSamples', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -182,7 +182,7 @@ const SearchPage = () => {
                   <li>Results are then passed to a GPT-4o model to generate a sample summary and thoughts with a defined <Link href='https://learn.microsoft.com/en-us/azure/ai-services/openai/how-to/structured-outputs?tabs=rest' target="_blank">structured output</Link>.</li>
                   <li><strong>Semantic caching</strong> is used to improve the performance of the search engine and reduce LLM calls costs.</li>
                 </ul>
-                If you want to have more details and get the source code of this sample, just ask about "this agentic AI sample" or "this website sample". Read more about creating AI apps with Azure SQL here: <Link href="https://aka.ms/sqlai" target="_blank">https://aka.ms/sqlai</Link>
+                If you want to have more details and get the source code of this sample, just ask about &quot;this agentic AI sample&quot; or &quot;this website sample&quot;. Read more about creating AI apps with Azure SQL here: <Link href="https://aka.ms/sqlai" target="_blank">https://aka.ms/sqlai</Link>
               </div>
             </TeachingPopoverBody>
             <TeachingPopoverFooter primary="Got it" />
@@ -215,7 +215,7 @@ const SearchPage = () => {
       </div>
       
       <Text block style={{ textAlign: 'center', marginBottom: '20px' }}>
-        <Alert12Filled /> <strong>Tip:</strong> Try asking questions like "Samples used in Orlando Live 360 in 2024" or "Show me the latest 5 samples".
+        <Alert12Filled /> <strong>Tip:</strong> Try asking questions like &quot;Samples used in Orlando Live 360 in 2024&quot; or &quot;Show me the latest 5 samples&quot;.
         <br />
         <Warning12Filled/> <strong>Warning!</strong> This sample is using free Azure OpenAI SKU so throttling and 500 errors can happen during peak usage.      
       </Text>
@@ -228,7 +228,7 @@ const SearchPage = () => {
 
       {(pageStatus == "error") && (
         <Text block style={{ textAlign: 'center', color: 'red', marginBottom: '20px' }}>
-          Source: "{error[0].source}" - Code: "{error[0].code}"<br/>{error[0].description}
+          Source: `{error[0].source}` - Code: `{error[0].code}`<br/>{error[0].description}
         </Text>
       )}
 

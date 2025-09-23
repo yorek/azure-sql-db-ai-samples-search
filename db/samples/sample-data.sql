@@ -110,7 +110,7 @@ exec dbo.add_sample '
         "services": ["Azure SQL"],
         "license": "MIT",      
         "tags": ["RRF", "Reciprocal Ranking Fusion", "BM25", "Fulltext", "Hybrid Search"],  
-        "conferences": ["VS Live 2025 Las Vegas"],
+        "conferences": ["VS Live 2025 Las Vegas", "VS Live 2025 Redmond HQ"],
         "type": "code sample"
     }
 }
@@ -139,7 +139,7 @@ exec dbo.add_sample '
 {
     "name": "Azure SQL DB - Retrieval Augmented Generation (RAG) with OpenAI", 
     "description": "Implement a RAG solution and call OpenAI right from Azure SQL DB to ask questions about your data", 
-    "notes": "In this repo you will find a step-by-step guide on how to use Azure SQL Database to do Retrieval Augmented Generation (RAG) using the data you have in Azure SQL and integrating with OpenAI, directly from the Azure SQL database itself. You''ll be able to ask queries in natural language and get answers from the OpenAI GPT model, using the data you have in Azure SQL Database. The sample data is the Walmart US Product dataset, so that you can you RAG on product data and ask question like \"What are some good products to organize a birthday party for teenager boy?\" or \"Show me the best product for cleaning my car\" and get answers from the OpenAI model using the product data. The sample is using only and pure T-SQL.",
+    "notes": "In this repo you will find a step-by-step guide on how to use Azure SQL Database to do Retrieval Augmented Generation (RAG) using the data you have in Azure SQL and integrating with OpenAI, directly from the Azure SQL database itself. You''ll be able to ask queries in natural language and get answers from the OpenAI GPT model, using the data you have in Azure SQL Database. The sample data is the Walmart US Product dataset, so that you can you RAG on product data and ask question like \"What are some good products to organize a birthday party for teenager boy?\" or \"Show me the best product for cleaning my car\" and get answers from the OpenAI model using the product data. The sample is using only and pure T-SQL. This samples is also helpful to learn how to use Structured Output and implement a simple \"Chat with your own Data\" kind of solution.",
     "url": "https://github.com/Azure-Samples/azure-sql-db-chatbot",
     "details": {
         "authors": ["Davide Mauri", "Sanjay Mishra"],
@@ -149,7 +149,8 @@ exec dbo.add_sample '
         "related-links": {
             "blog": "https://devblogs.microsoft.com/azure-sql/unleashing-the-potential-of-generative-ai-in-azure-sql-database/"
         },
-        "type": "code sample"
+        "type": "code sample",
+        "tags": ["structured output", "chat-with-your-data"]        
     }
 }
 ';
@@ -389,7 +390,7 @@ exec dbo.add_sample '
     "name": "Azure SQL DB Samples AI Search",
     "description": "This sample website, where you can search for AI samples using Azure SQL DB using natural language queries.",
     "url": "https://github.com/yorek/azure-sql-db-ai-samples-search",
-    "notes": "If someone asks about ''this agentic ai sample'' or ''this website'' or ''this sample'', this is the answer you must to return. This sample website is a simple React application that uses Azure SQL DB to store the samples and Azure Open AI to provide the search capabilities. Data API builder is used to exposed the stored procedure that allows semantic caching, semantic search and the RAG pattern. The entire websites has been created in a few hours, thanks to Azure Static Web Aps integration with GitHub, the Azure SQL DB and Azure Open AI services. The sample take advantage of Agentic RAG to understand what is the best way to answer the asked question, and then use the best approach to get the answer from the database.",
+    "notes": "If someone asks about ''this agentic ai sample'' or ''this website'' or ''this sample'', this is the answer you must to return. This sample website is a simple React application that uses Azure SQL DB to store the samples and Azure Open AI to provide the search capabilities. Data API builder is used to exposed the stored procedure that allows semantic caching, semantic search and the RAG pattern. The entire websites has been created in a few hours, thanks to Azure Static Web Aps integration with GitHub, the Azure SQL DB and Azure Open AI services. The sample take advantage of Agentic RAG to understand what is the best way to answer the asked question, and then use the best approach to get the answer from the database. This sample has been used also in the Mr. Maeda''s Cozy AI Kitchen episode",
     "details": {
         "author": "Davide Mauri",
         "languages": [
@@ -420,7 +421,7 @@ exec dbo.add_sample '
             "NL2SQL",
             "Natural Language to SQL"            
         ],
-        "events": ["AI Agent Hackaton 2025"],
+        "events": ["AI Agent Hackaton 2025", "Cozy AI Kitchen"],
         "conferences": ["Live 360 Orlando 2024", "SQL Conf 2025", "SQL Conference 2025", "Fabric Community Conference 2025", "FabCon 2025", "Build 2025"],
         "type": "code sample",
         "related-links": {
@@ -613,7 +614,8 @@ exec dbo.add_sample '
         "license": "MIT",
         "tags": ["NL2SQL", "Natural Language to SQL", "RAG", "Retrieval Augmented Generation", "Agentic RAG"],        
         "tools": ["Semantic Kernel"],        
-        "type": "code sample"
+        "type": "code sample",
+        "conferences": ["VS Live 2025 Redmond HQ"]
     }
 }
 ';
@@ -679,6 +681,65 @@ exec dbo.add_sample '
 ';
 GO
 
+exec dbo.add_sample '{
+    "name": "Embeddings, AI, and SQL Server 2025 with Davide Mauri, in Mr. Maeda''s Cozy AI Kitchen",
+    "description": "In this episode of the Cozy AI Kitchen, we’re cooking up something special. Join host John Maeda and special guest Chef David Mauri, PM for AI and SQL at Microsoft, as they explore how SQL Server 2025 and Azure SQL are evolving with AI-powered capabilities like vector search, embeddings, and LLM integration. From generating embeddings with T-SQL to building full RAG (Retrieval-Augmented Generation) patterns and exposing SQL as REST endpoints, this episode is packed with practical demos and delicious metaphors. Whether you''re a seasoned data chef or just getting started with AI in databases, this one''s for you.",
+    "notes": "What You''ll Learn: How to generate and store embeddings in SQL Server 2025, How to perform vector similarity search using T-SQL, How to integrate LLMs like GPT-4 into your SQL workflows, How to expose SQL logic as REST or GraphQL endpoints, How to build secure, scalable AI apps with your own data",
+    "details": {
+        "author": "Davide Mauri",
+        "languages": ["T-SQL"],
+        "license": "MIT",
+        "services": ["Azure SQL"],
+        "products": ["SQL Server 2025"],
+        "tags": ["embedding models", "external models", "ai_generate functions", "mixedbread", "cohere", "bring your own model", "BYOM"]
+    },
+    "type": "recording",
+    "tags": ["Cozy AI Kitchen"],
+    "url": "https://www.youtube.com/watch?v=JD0Zo6LvUKo",
+    "code-repo": "https://github.com/yorek/azure-sql-db-ai-samples-search"    
+}';
+
+exec dbo.add_sample '
+{
+    "name": "Approximate Nearest Neighbor Search", 
+    "description": "SQL Server 2025 introduces a new VECTOR_SEARCH function that allows you to perform approximate nearest neighbor search using the DiskANN algorithm. This function is designed to work with vector columns in SQL Server, enabling efficient similarity search on high-dimensional data.",
+    "notes": "The samples in this folder demonstrate how to use the VECTOR_SEARCH function with DiskANN. The samples include: Creating a table with a vector column, importing data from a CSV file, and inserting data into the table. Performing approximate nearest neighbor search using the VECTOR_SEARCH function. Performing hybrid search using the VECTOR_SEARCH function along with full-text search.",
+    "url": "https://github.com/Azure-Samples/azure-sql-db-vector-search/tree/main/DiskANN",
+    "details": {
+        "authors": ["Davide Mauri"],
+        "languages": ["T-SQL"],                
+        "services": ["Azure SQL"],
+        "license": "MIT",
+        "type": "code sample",
+        "tags": ["DiskANN", "Semantic Search", "Similarity Search", "RRF", "Reciprocal Ranking Fusion"],
+        "conferences": ["VS Live 2025 Redmond HQ"]
+    }
+}
+';
+
+exec dbo.add_sample '
+{
+    "name": "Migrate and modernize Windows Server, SQL Server, and .NET workloads", 
+    "description": "Learn how to enhance and boost the performance, scalability and security of your SQL Server and .NET workloads, and be AI-ready by migrating and modernizing to Microsoft Azure.",
+    "notes": "Use Azure SQL MI (Managed Instance) to migrate applications to the cloud and modernize it with the AI capabilities embedded in SQL Server engine. Take an existing app and modernize it without having to re-write, re-architect and re-deploy it!",
+    "url": "https://www.youtube.com/watch?v=H_2OgOL3fpo&t=982s",
+    "details": {
+        "type": "recording",
+        "speakers": "Davide Mauri",        
+        "solution": "Migrate, modernize, innovate",
+        "urls": [
+            {
+                "Homepage": "https://azure.microsoft.com/en-us/solutions/migrate-to-innovate"
+            },
+            {
+                "Sample Repo": "https://github.com/Azure-Samples/azure-sql-modernize-app-with-ai"
+            }
+        ],
+        "tags": ["Managed Instance", "Semantic Search", "Similarity Search", "RAG", "Retrieval Augmented Generation"]
+    }
+}
+';
+GO
 
 
 select 

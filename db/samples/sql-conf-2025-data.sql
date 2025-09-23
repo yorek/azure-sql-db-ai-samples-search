@@ -11,8 +11,9 @@ exec dbo.add_sample '
     "details": {
         "type": "recording",
         "author": "Davide Mauri",        
-        "conference": "SQL Conf() 2025"     
-    }
+        "conference": "SQL Conf() 2025",     
+        "tags": ["agentic ai", "agentic rag", "row level security"]
+    }    
 }
 ';
 GO
