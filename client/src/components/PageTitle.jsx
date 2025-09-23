@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { Link } from '@fluentui/react-components';
 import styles from './PageTitle.module.css';
+import fetchRetry from '../utils/fetchRetry';
 
 export default function PageTitle() {
   const [sampleCount, setSampleCount] = useState(0);
@@ -10,7 +11,7 @@ export default function PageTitle() {
     const fetchSampleCount = async () => {
       setIsSampleCountLoading(true);
       try {
-        const response = await fetch('./data-api/rest/countSamples');
+        const response = await fetchRetry('./data-api/rest/countSamples');
         if (response.ok) {
           const data = await response.json();
           const count = data.value[0].total_sample_count;
@@ -24,7 +25,7 @@ export default function PageTitle() {
     };
 
     fetchSampleCount();
-  }, [location]);
+  }, []);
 
   return (
     <div className={styles.header}>
