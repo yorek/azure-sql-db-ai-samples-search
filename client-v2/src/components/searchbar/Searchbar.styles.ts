@@ -7,7 +7,7 @@ const Styles = makeStyles({
         display: "flex",
         flexDirection: "column",
         backgroundColor: tokens.colorBrandBackground2,
-        gap: "16px",
+        gap: "0px",
         alignItems: "center",
     },
     title: {
