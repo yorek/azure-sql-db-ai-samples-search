@@ -1,5 +1,5 @@
 import { Card, CardHeader, Text, CardFooter, Menu, MenuTrigger, Button, MenuPopover, MenuList, MenuItem } from "@fluentui/react-components";
-import { LinkMultipleRegular, MoreHorizontal20Regular, EditRegular, DeleteRegular, ArrowDownRegular } from "@fluentui/react-icons";
+import { LinkMultipleRegular, MoreHorizontal20Regular, EditRegular, DeleteRegular, ArrowDownRegular, Glasses16Regular } from "@fluentui/react-icons";
 
 import Style from "./SearchCard.style";
 import React from "react";
@@ -71,10 +71,9 @@ const SearchCard = (props: CardProps) => {
                     appearance="primary"
                     icon={<LinkMultipleRegular />}>Open</Button>
                  <Button
-                        appearance="transparent"
-                        onClick={() => setOpenDetails(true)}
-                        icon={<ArrowDownRegular />}>Read all</Button>
-
+                    appearance="secondary"
+                    onClick={() => setOpenDetails(true)}
+                    icon={<Glasses16Regular />}>Details</Button>
             </CardFooter>
         </Card>
         <DeleteSample sample={sample} open={openDialog} setOpen={setOpenDialog} />
