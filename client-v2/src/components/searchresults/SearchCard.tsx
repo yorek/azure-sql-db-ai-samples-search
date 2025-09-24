@@ -1,5 +1,5 @@
 import { Card, CardHeader, Text, CardFooter, Menu, MenuTrigger, Button, MenuPopover, MenuList, MenuItem } from "@fluentui/react-components";
-import { LinkMultipleRegular, MoreHorizontal20Regular, EditRegular, DeleteRegular, ArrowDownRegular, Glasses16Regular } from "@fluentui/react-icons";
+import { LinkMultipleRegular, MoreHorizontal20Regular, EditRegular, DeleteRegular, Glasses16Regular } from "@fluentui/react-icons";
 
 import Style from "./SearchCard.style";
 import React from "react";
