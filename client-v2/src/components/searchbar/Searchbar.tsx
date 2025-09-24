@@ -26,11 +26,20 @@ const Searchbar = () => {
 
     const dispatch: AppDispatch = useDispatch();
 
-    /* onLoad clean and load total and latest samples */
+    /* onLoad clean and load total and latest samples, check for q parameter */
     useEffect(() => {
+        const urlParams = new URLSearchParams(window.location.search);
+        const qParam = urlParams.get('q');
+        
         dispatch(resetSearchState());
         dispatch(getTotalSamplesAsync());
-        dispatch(getLatestSamplesAsync());
+        
+        if (qParam) {
+            setSearchValue(qParam);
+            dispatch(searchSamplesAsync(qParam));
+        } else {
+            dispatch(getLatestSamplesAsync());
+        }
     }, [dispatch]);
 
     /* Search
