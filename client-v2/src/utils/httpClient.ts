@@ -8,7 +8,7 @@ interface RetryConfig {
 }
 
 const DEFAULT_RETRY_CONFIG: RetryConfig = {
-  maxRetries: 3,
+  maxRetries: 5,
   baseDelay: 1000, // 1 second
   maxDelay: 10000, // 10 seconds
 };
