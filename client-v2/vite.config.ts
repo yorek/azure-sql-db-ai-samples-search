@@ -9,8 +9,8 @@ export default defineConfig({
     open: true,
     proxy: {
       // Proxy API calls to your backend if needed
-      '/api': {
-        target: 'http://localhost:7071',
+      '/data-api/rest': {
+        target: 'http://localhost:4280/data-api/rest',
         changeOrigin: true,
         secure: false,
       },
