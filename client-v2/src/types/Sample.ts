@@ -2,6 +2,8 @@ export default interface Sample {
     id: number;
     name: string;
     description: string;
+    sample_summary: string,
+    thoughts: string,
     notes: string;
     details: {
         [key: string]: any;

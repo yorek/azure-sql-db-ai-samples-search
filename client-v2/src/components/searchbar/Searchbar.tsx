@@ -16,6 +16,7 @@ import Styles from './Searchbar.styles';
 import { resetSearchState, getAllSamplesAsync, getLatestSamplesAsync, searchSamplesAsync, getTotalSamplesAsync } from '../../store/slices/SearchSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '../../store/store';
+import { on } from 'events';
 
 const Searchbar = () => {
 
@@ -50,6 +51,13 @@ const Searchbar = () => {
         setSearchValue(data.value);
     };
 
+    /* Handle key down events on search input */
+    const onSearchKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
+        if (event.key === 'Enter' && searchValue.trim() !== '' && search.samples.status !== 'loading') {
+            handleSearch();
+        }
+    };
+
     /* Open HowItWorks dialog */
     const handleOpen = () => {
         setOpenDialog(true);
@@ -59,12 +67,6 @@ const Searchbar = () => {
     const handleSearch = () => {
         dispatch(resetSearchState());
         dispatch(searchSamplesAsync(searchValue));
-    };
-
-    /* Handle reset */
-    const handleReset = () => {
-        dispatch(resetSearchState());
-        dispatch(getLatestSamplesAsync());
     };
 
     /* Handle all samples */
@@ -77,24 +79,20 @@ const Searchbar = () => {
             <Title1 className={classes.title}>Azure SQL DB Samples AI Agentic RAG Search</Title1>
             <Title3 className={classes.subtitle}>Find samples using AI Agents search capabilities</Title3>
             <div className={classes.fieldWrapper}>
-                <SearchBox style={{ minWidth: "350px" }}
+                <SearchBox style={{ minWidth: "350px", width: "50vw", maxWidth: "800px" }}
                     size="large"
                     placeholder='Samples used in Orlando Live 360 in 2024'
                     value={searchValue}
-                    onChange={onSearchChange} />
+                    onChange={onSearchChange}
+                    onKeyDown={onSearchKeyDown} />
                 <div className={classes.buttonsWrapper}>
                     <Button
                         disabled={search.samples.status === 'loading' || searchValue === ''}
                         size='large'
                         appearance="primary"
                         icon={<SearchRegular />}
-                        onClick={() => handleSearch()}>Search</Button>
-                    <Button
-                        disabled={search.samples.status === 'loading'}
-                        size='large'
-                        appearance="transparent"
-                        icon={<ArrowUndoRegular />}
-                        onClick={() => handleReset()}>Reset</Button>
+                        onClick={() => handleSearch()}                        
+                        >Search</Button>                  
                 </div>
             </div>
             <Subtitle2 style={{ fontWeight: "normal", textAlign: "center" }}>
@@ -104,7 +102,6 @@ const Searchbar = () => {
             <br/>
             You can read more on <Link className={classes.link} as="a" inline onClick={() => handleOpen()}>how it works here</Link>.
             You can visit our <Link className={classes.link} inline href="https://github.com/yorek/azure-sql-db-ai-samples-search" target='_blank'>GitHub repository here</Link>.
-
             </Subtitle2>
             <HowItWorks open={openDialog} setOpen={setOpenDialog} />
         </div>

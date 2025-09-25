@@ -19,7 +19,6 @@ const SearchCard = (props: CardProps) => {
     const classes = Style();
 
     const user = useSelector((state: RootState) => state.user);
-    const [cardHeight] = React.useState(210);
     const [openDialog, setOpenDialog] = React.useState(false);
     const [openDetails, setOpenDetails] = React.useState(false);
 
@@ -31,18 +30,19 @@ const SearchCard = (props: CardProps) => {
         setOpenDialog(true);
     };
 
-    console.log(sample);
+    //console.log(sample);
 
     return (
         <>
-        <Card className={classes.card} key={sample.id} title={sample.name} style={{ height: `${cardHeight}px` }}>
+        <Card className={classes.card} key={sample.id} title={sample.name}>
             <CardHeader
                 image={<img src={process.env.PUBLIC_URL + "/favicon.png"} alt="logo" className={classes.cardlogo} />}
                 header={<Text weight="semibold">{sample.name}</Text>}                
             />
-            <div className={cardHeight === 210 ? classes.cardbody : classes.cardbodyExpand}>
-                <p>{sample.description}</p>
+            <div className={classes.cardbodyExpand}>
+                <p>{sample.sample_summary}</p>
                 <p><em>{sample.notes}</em></p>
+                <p><em>{sample.thoughts}</em></p>
             </div>
             <CardFooter
                 action={

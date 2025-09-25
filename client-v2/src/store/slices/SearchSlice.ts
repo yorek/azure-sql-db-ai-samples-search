@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import axios from 'axios';
+import { HttpClient } from '../../utils/httpClient';
 import SearchState from './SearchState';
 import Sample from '../../types/Sample';
 
@@ -8,7 +8,7 @@ const delay = (ms: number | undefined) => new Promise(resolve => setTimeout(reso
 
 // async search total samples
 export const getTotalSamplesAsync = createAsyncThunk<number>('search/getTotalSamples', async () => {
-  const response = await axios.get(`${process.env.REACT_APP_API_URL}countSamples`, {
+  const response = await HttpClient.get(`${process.env.REACT_APP_API_URL}countSamples`, {
     withCredentials: false,
     headers: {
       'Content-Type': 'application/json',
@@ -20,7 +20,7 @@ export const getTotalSamplesAsync = createAsyncThunk<number>('search/getTotalSam
 
 // async list all samples
 export const getAllSamplesAsync = createAsyncThunk<Sample[]>('search/getAllSamplesAsync', async () => {
-  const response = await axios.get(`${process.env.REACT_APP_API_URL}samples`, {
+  const response = await HttpClient.get(`${process.env.REACT_APP_API_URL}samples`, {
     withCredentials: false,
     headers: {
       'Content-Type': 'application/json',
@@ -32,7 +32,7 @@ export const getAllSamplesAsync = createAsyncThunk<Sample[]>('search/getAllSampl
 
 // async list latest samples
 export const getLatestSamplesAsync = createAsyncThunk<Sample[]>('search/getLatestSamples', async () => {
-  const response = await axios.get(`${process.env.REACT_APP_API_URL}latestSamples`, {
+  const response = await HttpClient.get(`${process.env.REACT_APP_API_URL}latestSamples`, {
     withCredentials: false,
     headers: {
       'Content-Type': 'application/json',
@@ -44,7 +44,7 @@ export const getLatestSamplesAsync = createAsyncThunk<Sample[]>('search/getLates
 
 // async search specific samples
 export const searchSamplesAsync = createAsyncThunk<Sample[], string>('search/searchSamplesAsync', async (query: string) => {
-  const response = await axios.get(`${process.env.REACT_APP_API_URL}findSamples?text=${query}`, {
+  const response = await HttpClient.get(`${process.env.REACT_APP_API_URL}findSamples?text=${query}`, {
     withCredentials: false,
     headers: {
       'Content-Type': 'application/json',
@@ -57,7 +57,7 @@ export const searchSamplesAsync = createAsyncThunk<Sample[], string>('search/sea
 // delete a sample
 export const deleteSampleAsync = createAsyncThunk<number, string>('search/deleteSampleAsync', async (id: string) => {
   await delay(1000).then(async () => { // for better user experience
-    await axios.delete(`${process.env.REACT_APP_API_URL}deleteSample`, {
+    await HttpClient.delete(`${process.env.REACT_APP_API_URL}deleteSample`, {
       data: { id: id, url: null },
       withCredentials: false,
       headers: {
@@ -72,7 +72,7 @@ export const deleteSampleAsync = createAsyncThunk<number, string>('search/delete
 
 // get the details
 export const getSampleDetailsAsync = createAsyncThunk<Sample, string>('search/getSampleDetailsAsync', async (id: string) => {
-  const response = await axios.post(`${process.env.REACT_APP_API_URL}sampleDetails`, { id: id, url: null }, {
+  const response = await HttpClient.post(`${process.env.REACT_APP_API_URL}sampleDetails`, { id: id, url: null }, {
     // withCredentials: false,
     headers: {
       'Content-Type': 'application/json',
@@ -85,7 +85,7 @@ export const getSampleDetailsAsync = createAsyncThunk<Sample, string>('search/ge
 
 // create a sample
 export const createSampleAsync = createAsyncThunk<number, string>('search/createSampleAsync', async (payload: string) => {
-  const response = await axios.post(`${process.env.REACT_APP_API_URL}createSample`, { payload: payload }, {
+  const response = await HttpClient.post(`${process.env.REACT_APP_API_URL}createSample`, { payload: payload }, {
     // withCredentials: false,
     headers: {
       'Content-Type': 'application/json',

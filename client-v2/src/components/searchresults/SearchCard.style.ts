@@ -6,6 +6,7 @@ const Styles = makeStyles({
         width: "calc((100vw / 3) - 20px)",
         maxWidth: "500px",
         minWidth: "350px",
+        height: "250px",
         animationIterationCount: '1',
         animationDuration: '0.5s',
         animationName: {
@@ -34,6 +35,7 @@ const Styles = makeStyles({
         WebkitLineClamp: 4,
         WebkitBoxOrient: "vertical",
         marginBlockStart: "0",
+        height: "250px",
     },
     cardbodyExpand: {
         marginBlockStart: "0",

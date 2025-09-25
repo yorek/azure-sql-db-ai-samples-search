@@ -6,23 +6,24 @@ const Style = makeStyles({
   },
   details: {
     display: "flex",
-    flexDirection: "row",
+    flexDirection: "column",
+    gap: "20px",
   },
-  left: {
+  content: {
     margin: "0 10px",
-
   },
-  right: {
-    width: "min(15em, 100%)"
+  tags: {
+    margin: "0 10px",
+    borderTop: "1px solid #e1e1e1",
+    paddingTop: "15px",
   },
   description: {
     fontWeight: "normal",
     fontSize: tokens.fontSizeBase400
   },
   notes: {
-    fontWeight: "normal",
-    fontStyle: "italic",
-    fontSize: tokens.fontSizeBase300
+    fontWeight: "normal",   
+    fontSize: tokens.fontSizeBase400
   },  
   link: {
     fontSize: tokens.fontSizeBase400,

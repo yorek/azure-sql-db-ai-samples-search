@@ -1,12 +1,12 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import UserState from "./UserState";
 import sha256 from "crypto-js/sha256";
-import axios from "axios";
+import { HttpClient } from "../../utils/httpClient";
 import { User } from "../../types/User";
 
 // retrieve the current user and verify if it is authenticated
 export const getUserAsync = createAsyncThunk<User>('user/getUserAsync', async () => {
-    const response = await axios.get(`/.auth/me`, {
+    const response = await HttpClient.get(`/.auth/me`, {
       withCredentials: false,
       headers: {
         'Content-Type': 'application/json',

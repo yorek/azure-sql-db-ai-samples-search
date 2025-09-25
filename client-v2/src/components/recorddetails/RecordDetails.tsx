@@ -59,7 +59,7 @@ const RecordDetails = (props: RecordDetailsProps) => {
                         */}
                         {search.sampleDetails.status === 'succeeded' &&
                             <div className={classes.details}>
-                                <div className={classes.left}>
+                                <div className={classes.content}>
                                     <Link className={classes.link} href={
                                         search.sampleDetails.sample?.url ?? '#'
                                     } target="_blank">
@@ -67,14 +67,14 @@ const RecordDetails = (props: RecordDetailsProps) => {
                                     <p className={classes.description}>
                                         <strong>Description:</strong><br />{search.sampleDetails.sample?.description}
                                     </p>
+                                    {search.sampleDetails.sample?.notes &&
                                     <p className={classes.notes}>
-                                        <strong>Notes:</strong><br />{search.sampleDetails.sample?.notes ?? 'No notes available.'}
+                                        <strong>Notes:</strong><br />{search.sampleDetails.sample?.notes}
                                     </p>
-                                </div>
-                                <div className={classes.right}>
-                                    {window.innerWidth > 640 && 
-                                    <TagsGenerator sample={search.sampleDetails.sample} />
                                     }
+                                </div>
+                                <div className={classes.tags}>
+                                    <TagsGenerator sample={search.sampleDetails.sample} />
                                 </div>
                             </div>
                         }

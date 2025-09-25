@@ -3,7 +3,7 @@ import { makeStyles, tokens } from "@fluentui/react-components";
 const Styles = makeStyles({
     root: {
         margin: 0,
-        padding: "16px",
+        padding: "12px",
         display: "flex",
         flexDirection: "column",
         backgroundColor: tokens.colorBrandBackground2,
@@ -12,7 +12,7 @@ const Styles = makeStyles({
     },
     title: {
         textAlign: "center",
-        padding: "16px",
+        padding: "12px",
         "@media(max-width: 768px)": {
             fontSize: tokens.fontSizeBase600,
             padding: "0",
@@ -20,7 +20,7 @@ const Styles = makeStyles({
     },
     subtitle: {
         textAlign: "center",
-        padding: "16px",
+        padding: "12x",
         fontWeight: "normal",
         "@media(max-width: 768px)": {
             fontSize: tokens.fontSizeBase500,
