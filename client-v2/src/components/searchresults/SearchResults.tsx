@@ -29,9 +29,7 @@ const SearchResults = () => {
                 Search results stats.
             */}
             {search.samples.status === 'succeeded' &&
-                <Subtitle2 style={{ fontWeight: "normal", textAlign: "center", margin: "10px 0" }}>
-                    Your query returned <strong>{search.samples.results?.length}</strong> results.
-                </Subtitle2>
+                <Subtitle2 style={{ fontWeight: "normal", textAlign: "center", margin: "10px 0" }}></Subtitle2>
             }
             {/* 
                 Search results stats.
@@ -52,6 +50,17 @@ const SearchResults = () => {
                     ))}
                 </div>
             }
+            {/* 
+                Search results stats - always at bottom.
+            */}
+            <div className={classes.footer}>
+                {search.samples.status === 'succeeded' &&
+                    <Subtitle2 className={classes.footerText}>
+                        Returned <strong>{search.samples.results.length}</strong> samples.
+                    </Subtitle2>
+                }
+
+            </div>
         </div >
     );
 };
