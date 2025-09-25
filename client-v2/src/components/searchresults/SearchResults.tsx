@@ -58,10 +58,7 @@ const SearchResults = () => {
                     <Subtitle2 className={classes.footerText}>                        
                         Returned <strong>{search.samples.results.length}</strong> samples.&nbsp;
                         Commit date: {__COMMIT_DATE__}, Commit hash: {__COMMIT_HASH__}
-                    </Subtitle2>
-                    
-                }
-
+                    </Subtitle2>}
             </div>
         </div >
     );
