@@ -7,7 +7,7 @@ import {
     Title3
 } from '@fluentui/react-components';
 
-import { SearchRegular, ArrowUndoRegular } from '@fluentui/react-icons'
+import { SearchRegular } from '@fluentui/react-icons'
 
 import HowItWorks from '../messages/HowItWorks';
 import { useEffect, useState } from 'react';
@@ -16,7 +16,6 @@ import Styles from './Searchbar.styles';
 import { resetSearchState, getAllSamplesAsync, getLatestSamplesAsync, searchSamplesAsync, getTotalSamplesAsync } from '../../store/slices/SearchSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '../../store/store';
-import { on } from 'events';
 
 const Searchbar = () => {
 
