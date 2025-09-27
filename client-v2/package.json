@@ -4,7 +4,7 @@
   "private": true,
   "type": "module",
   "engines": {
-    "node": "=20.18"
+    "node": "=22"
   },
   "dependencies": {
     "@fluentui/react-components": "^9.60.0",
@@ -16,7 +16,6 @@
     "axios": "^1.8.1",
     "crypto-js": "^4.2.0",
     "react": "^18.3.1",
-    "react-ace": "^14.0.1",
     "react-dom": "^18.3.1",
     "react-hook-form": "^7.54.2",
     "react-redux": "^9.2.0",
