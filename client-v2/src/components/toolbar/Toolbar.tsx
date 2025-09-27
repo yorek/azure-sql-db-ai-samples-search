@@ -6,10 +6,10 @@ const Toolbar = () => {
     return (
         <div className={classes.root}>
             {window.innerWidth < 640 && 
-                <img src={process.env.PUBLIC_URL + "/favicon.png"} alt="logo" className={classes.imageMobile}/>
+                <img src="/favicon.png" alt="logo" className={classes.imageMobile}/>
             }
             {window.innerWidth >= 640 && 
-                <img src={process.env.PUBLIC_URL + "/MS-logo-horizontal.png"} alt="logo" className={classes.image}/>
+                <img src="/MS-logo-horizontal.png" alt="logo" className={classes.image}/>
             }
             <UserWidget />
         </div>

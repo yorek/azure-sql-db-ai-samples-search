@@ -55,11 +55,10 @@ const SearchResults = () => {
             */}
             <div className={classes.footer}>
                 {search.samples.status === 'succeeded' &&
-                    <Subtitle2 className={classes.footerText}>
-                        Returned <strong>{search.samples.results.length}</strong> samples.
-                    </Subtitle2>
-                }
-
+                    <Subtitle2 className={classes.footerText}>                        
+                        Returned <strong>{search.samples.results.length}</strong> samples.&nbsp;
+                        Commit date: {__COMMIT_DATE__}, Commit hash: {__COMMIT_HASH__}
+                    </Subtitle2>}
             </div>
         </div >
     );

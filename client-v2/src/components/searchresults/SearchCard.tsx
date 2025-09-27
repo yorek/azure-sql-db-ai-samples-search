@@ -36,7 +36,7 @@ const SearchCard = (props: CardProps) => {
         <>
         <Card className={classes.card} key={sample.id} title={sample.name}>
             <CardHeader
-                image={<img src={process.env.PUBLIC_URL + "/favicon.png"} alt="logo" className={classes.cardlogo} />}
+                image={<img src="/favicon.png" alt="logo" className={classes.cardlogo} />}
                 header={<Text weight="semibold">{sample.name}</Text>}                
             />
             <div className={classes.cardbodyExpand}>
