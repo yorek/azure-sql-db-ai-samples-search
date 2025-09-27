@@ -103,6 +103,13 @@ export class HttpClient {
   }
 }
 
+function getDataAPIUrl() {
+  if (import.meta.env.VITE_API_URL) {
+    return import.meta.env.VITE_API_URL;
+  }
+  return './data-api/rest/';
+}
+
 // Export the retry function for custom use cases
-export { withRetry, DEFAULT_RETRY_CONFIG };
+export { getDataAPIUrl, withRetry, DEFAULT_RETRY_CONFIG };
 export type { RetryConfig };
