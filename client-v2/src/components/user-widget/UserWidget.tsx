@@ -20,7 +20,7 @@ import {
     WeatherSunnyRegular,
     ArrowEnterRegular,
     ArrowExitRegular,
-    //AddRegular
+    AddRegular
 } from "@fluentui/react-icons"
 
 // redux
@@ -41,8 +41,7 @@ const UserWidget = () => {
 
     useEffect(() => {
         dispatch(getUserAsync());
-    }
-        , [dispatch]);
+    }, [dispatch]);
 
     const onLogin = (provider: "aad" | "github") => {
         const url = `/.auth/login/${provider}?post_login_redirect_uri=${window.location.origin}`;
@@ -54,22 +53,21 @@ const UserWidget = () => {
         window.location.href = url;
     };
 
-    // const onCreate = () => {
-    //     setCreateOpen(true);
-    // };
+    const onCreate = () => {
+        setCreateOpen(true);
+    };
 
     return (
         <>
             {user.isAuth ? (
-                <div className={classes.authBox}>
-                    {/* -- For now we are not using create button --                     
+                <div className={classes.authBox}>           
                     <Button
                         icon={<AddRegular />}
                         appearance="primary"
                         size="medium"
                         shape="circular"
                         onClick={onCreate}
-                    >Create</Button> */}
+                    >Create</Button> 
                     <Popover trapFocus withArrow>
                         <PopoverTrigger>
                             <div className={classes.avatar}>
