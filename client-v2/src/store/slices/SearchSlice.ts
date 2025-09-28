@@ -95,6 +95,18 @@ export const createSampleAsync = createAsyncThunk<number, string>('search/create
   return response.data;
 });
 
+// update a sample
+export const updateSampleAsync = createAsyncThunk<number, string>('search/updateSampleAsync', async (payload:string) => {
+  const response = await HttpClient.post(`${getDataAPIUrl()}createSample`, { payload: payload }, {
+    // withCredentials: false,
+    headers: {
+      'Content-Type': 'application/json',
+      'Accept': 'application/json',
+    }
+  });
+  return response.data;
+});
+
 
 const initialState: SearchState = {
   samples: {
@@ -120,6 +132,11 @@ const initialState: SearchState = {
     status: 'idle', 
     error: undefined,
     id: 0
+  },
+  updateSample: {
+    status: 'idle',
+    error: undefined,
+    id: 0
   }
 };
 
@@ -132,6 +149,15 @@ const SearchSlice = createSlice({
     },
     resetDeleteState: (state) => {
       state.delete = initialState.delete;
+    },
+    resetUpdateState: (state) => {
+      state.updateSample = initialState.updateSample;
+    },
+    resetCreateState: (state) => {
+      state.createSample = initialState.createSample;
+    },
+    resetSampleDetailsState: (state) => {
+      state.sampleDetails = initialState.sampleDetails;
     }
   },
   extraReducers: (builder) => {
@@ -226,9 +252,21 @@ const SearchSlice = createSlice({
         state.createSample.status = 'failed';
         state.createSample.error = action.error.message;
       })
+      // update sample
+      .addCase(updateSampleAsync.pending, (state) => {
+        state.updateSample.status = 'loading';
+      })
+      .addCase(updateSampleAsync.fulfilled, (state, action) => {
+        state.updateSample.status = 'succeeded';
+        state.updateSample.id = action.payload;
+      })
+      .addCase(updateSampleAsync.rejected, (state, action) => {
+        state.updateSample.status = 'failed';
+        state.updateSample.error = action.error.message;
+      })
       ;
   }
 });
 
-export const { resetSearchState, resetDeleteState } = SearchSlice.actions;
+export const { resetSearchState, resetDeleteState, resetUpdateState, resetCreateState, resetSampleDetailsState } = SearchSlice.actions;
 export default SearchSlice;

@@ -8,6 +8,7 @@ import { RootState } from "../../store/store";
 import { useSelector } from "react-redux";
 import DeleteSample from "../messages/DeleteSample";
 import RecordDetails from "../recorddetails/RecordDetails";
+import CreateSample from "../messages/CreateSample";
 
 interface CardProps {
     sample: Sample;
@@ -21,6 +22,7 @@ const SearchCard = (props: CardProps) => {
     const user = useSelector((state: RootState) => state.user);
     const [openDelete, setOpenDelete] = React.useState(false);
     const [openDetails, setOpenDetails] = React.useState(false);
+    const [openEdit, setOpenEdit] = React.useState(false);
 
     const handleOpen = (sample: Sample) => {
         window?.open(sample.url, '_blank')?.focus();
@@ -31,7 +33,7 @@ const SearchCard = (props: CardProps) => {
     };
     
     const handleEdit = () => {
-        //Todo
+        setOpenEdit(true);
     };
     //console.log(sample);
 
@@ -60,7 +62,10 @@ const SearchCard = (props: CardProps) => {
                         </MenuTrigger>
                         <MenuPopover>
                             <MenuList>
-                                <MenuItem disabled={!user.isAdmin} icon={<EditRegular />} onClick={() => handleEdit()}>Edit</MenuItem>
+                                <MenuItem 
+                                    disabled={!user.isAdmin} 
+                                    icon={<EditRegular />} 
+                                    onClick={() => handleEdit()}>Edit</MenuItem>
                                 <MenuItem 
                                     disabled={!user.isAdmin} 
                                     icon={<DeleteRegular />}
@@ -81,6 +86,7 @@ const SearchCard = (props: CardProps) => {
         </Card>
         <DeleteSample sample={sample} open={openDelete} setOpen={setOpenDelete} />
         <RecordDetails open={openDetails} setOpen={setOpenDetails} id={sample.id} />
+        <CreateSample open={openEdit} setOpen={setOpenEdit} editSample={sample} isEditMode={true} />
         </>
     );
 };

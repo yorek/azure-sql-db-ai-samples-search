@@ -24,5 +24,10 @@ export default interface SearchState {
         status: 'idle' | 'loading' | 'succeeded' | 'failed';
         error: string | undefined;
         id: number;
-    } 
+    },
+    updateSample: {
+        status: 'idle' | 'loading' | 'succeeded' | 'failed';
+        error: string | undefined;
+        id: number;
+    }
 }
