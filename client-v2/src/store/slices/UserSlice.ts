@@ -3,6 +3,8 @@ import UserState from "./UserState";
 import sha256 from "crypto-js/sha256";
 import { HttpClient } from "../../utils/httpClient";
 import { User } from "../../types/User";
+import { stat } from "fs";
+import { isDataView } from "util/types";
 
 // retrieve the current user and verify if it is authenticated
 export const getUserAsync = createAsyncThunk<User>('user/getUserAsync', async () => {
@@ -22,13 +24,10 @@ const initialState: UserState = {
     emailHash: "",
     userId: "",
     provider: "",
-    roles: [],
+    roles: ["anonymous"],
     isAuth: false,
-    theme: "light",
-    canCreate: false,
-    canEdit: false,
-    canDelete: false,
-
+    isAdmin: false,
+    theme: "light"
 };
 
 // // Read state from cookie if available
@@ -53,7 +52,7 @@ export const UserSlice = createSlice({
         builder
             .addCase(getUserAsync.fulfilled, (state, action) => {
                 if (action.payload.clientPrincipal === null) {
-                    state.isAuth = false;
+                    state = initialState;
                     return;
                 }
                 state.email = action.payload.clientPrincipal.userDetails;
@@ -62,7 +61,8 @@ export const UserSlice = createSlice({
                 state.roles = action.payload.clientPrincipal.userRoles;
                 state.userId = action.payload.clientPrincipal.userId;
                 state.isAuth = true;    
-                state.canDelete = state.roles.includes("contributor");
+                state.isAdmin = state.roles.includes("admin");
+                state.roles = state.roles.filter(role => role !== "anonymous");
                 
             })
             .addCase(getUserAsync.rejected, (state) => {

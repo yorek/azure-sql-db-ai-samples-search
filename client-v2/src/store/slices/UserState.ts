@@ -5,9 +5,7 @@ type UserState = {
     provider: string;
     roles: string[];
     isAuth: boolean;
-    canEdit: boolean;
-    canDelete: boolean;
-    canCreate: boolean;
+    isAdmin: boolean;
     theme: string;
 }
 

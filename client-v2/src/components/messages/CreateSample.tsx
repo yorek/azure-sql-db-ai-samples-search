@@ -17,7 +17,7 @@ import CodeEditor from '@uiw/react-textarea-code-editor';
 
 import * as Yup from 'yup';
 import { yupResolver } from "@hookform/resolvers/yup";
-import { useForm } from "react-hook-form";
+import { useForm, Controller } from "react-hook-form";
 
 import Style from "./CreateSample.style";
 import { createSampleAsync } from "../../store/slices/SearchSlice";
@@ -47,18 +47,33 @@ const CreateSample = (props: CreateProps) => {
     
     // form validation hook
     const validationSchema = Yup.object().shape({
-        name: Yup.string().required('The Name is a mandatory field.'),
-        url: Yup.string().required('The URL is a mandatory field.'),
-        description: Yup.string().required('the Description is a mandatory field.'),
+        name: Yup.string().required('Name is a mandatory field.'),
+        url: Yup.string().required('URL is a mandatory field.'),
+        description: Yup.string().required('Description is a mandatory field.'),
         notes: Yup.string().optional(),
-        details: Yup.string().required('Some details are required, in JSON format')
+        details: Yup.string().required('Details are required, in JSON format')
     });
 
-    const { register, trigger, formState: { errors }, reset, getValues } = useForm({
+    const { register, trigger, formState: { errors }, reset, getValues, control } = useForm({
         resolver: yupResolver(validationSchema),
+        defaultValues: {
+            name: '',
+            url: '',
+            description: '',
+            notes: '',
+            details: `{
+    "author": "",
+    "languages": [""],        
+    "services": ["Azure SQL", "SQL Server"],
+    "license": "MIT",
+    "tags": [""],                 
+    "type": "",
+    "conferences": []
+}`
+        }
       });
 
-    // handle deletion of the sample and close the dialog
+    // handle creation of the sample and close the dialog
     const handleClose = (target: string) => {
         if (target === 'create') {
             // validate
@@ -133,21 +148,27 @@ const CreateSample = (props: CreateProps) => {
                                 label="Details (JSON object)"
                                 validationState={errors.details ? 'error' : 'none'}
                                 validationMessage={errors.details?.message}>
-                                    <CodeEditor
-                                        {...register("details")}
-                                        language="json"
-                                        placeholder="{}"
-                                        padding={10}
-                                        rows={6}
-                                        minHeight={100}
-                                        style={{
-                                            fontSize: 14,
-                                            backgroundColor: "#f5f5f5",
-                                            fontFamily:
-                                              "ui-monospace,SFMono-Regular,SF Mono,Consolas,Liberation Mono,Menlo,monospace"
-                                          }}
+                                    <Controller
+                                        name="details"
+                                        control={control}
+                                        render={({ field }) => (
+                                            <CodeEditor
+                                                value={field.value}
+                                                onChange={(evn) => field.onChange(evn.target.value)}
+                                                language="json"
+                                                placeholder="Enter JSON details..."
+                                                padding={10}
+                                                rows={12}
+                                                minHeight={200}
+                                                style={{
+                                                    fontSize: 14,
+                                                    backgroundColor: "#f5f5f5",
+                                                    fontFamily:
+                                                      "ui-monospace,SFMono-Regular,SF Mono,Consolas,Liberation Mono,Menlo,monospace"
+                                                  }}
+                                            />
+                                        )}
                                     />
-
                             </Field>
                         </DialogContent>
                         <DialogActions>

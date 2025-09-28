@@ -12,7 +12,7 @@ import {
     Popover,
     PopoverSurface,
     PopoverTrigger,
-    ToggleButton,
+    ToggleButton    
 } from "@fluentui/react-components";
 
 import {
@@ -60,14 +60,15 @@ const UserWidget = () => {
     return (
         <>
             {user.isAuth ? (
-                <div className={classes.authBox}>           
+                <div className={classes.authBox}>    
+                {user.isAdmin &&        
                     <Button
                         icon={<AddRegular />}
                         appearance="primary"
                         size="medium"
                         shape="circular"
                         onClick={onCreate}
-                    >Create</Button> 
+                    >Create</Button>} 
                     <Popover trapFocus withArrow>
                         <PopoverTrigger>
                             <div className={classes.avatar}>
@@ -97,7 +98,7 @@ const UserWidget = () => {
                                     badge={{ status: "available" }} size={48} />
                                 <div className={classes.menuOpenHeader}>
                                     <Body1Strong>{user.email}</Body1Strong>
-                                    <Body1>{user.roles.join(", ").toUpperCase()}</Body1>
+                                    <Body1>{user.roles.join(", ").toLowerCase()}</Body1>
                                 </div>
                             </div>
                         </PopoverSurface>

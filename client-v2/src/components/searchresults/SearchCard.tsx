@@ -19,7 +19,7 @@ const SearchCard = (props: CardProps) => {
     const classes = Style();
 
     const user = useSelector((state: RootState) => state.user);
-    const [openDialog, setOpenDialog] = React.useState(false);
+    const [openDelete, setOpenDelete] = React.useState(false);
     const [openDetails, setOpenDetails] = React.useState(false);
 
     const handleOpen = (sample: Sample) => {
@@ -27,9 +27,12 @@ const SearchCard = (props: CardProps) => {
     };
 
     const handleDelete = () => {
-        setOpenDialog(true);
+        setOpenDelete(true);
     };
-
+    
+    const handleEdit = () => {
+        //Todo
+    };
     //console.log(sample);
 
     return (
@@ -57,9 +60,9 @@ const SearchCard = (props: CardProps) => {
                         </MenuTrigger>
                         <MenuPopover>
                             <MenuList>
-                                <MenuItem disabled={!user.canEdit} icon={<EditRegular />}>Edit</MenuItem>
+                                <MenuItem disabled={!user.isAdmin} icon={<EditRegular />} onClick={() => handleEdit()}>Edit</MenuItem>
                                 <MenuItem 
-                                    disabled={!user.canDelete} 
+                                    disabled={!user.isAdmin} 
                                     icon={<DeleteRegular />}
                                     onClick={() => handleDelete()}>Delete</MenuItem>
                             </MenuList>
@@ -76,7 +79,7 @@ const SearchCard = (props: CardProps) => {
                     icon={<Glasses16Regular />}>Details</Button>
             </CardFooter>
         </Card>
-        <DeleteSample sample={sample} open={openDialog} setOpen={setOpenDialog} />
+        <DeleteSample sample={sample} open={openDelete} setOpen={setOpenDelete} />
         <RecordDetails open={openDetails} setOpen={setOpenDetails} id={sample.id} />
         </>
     );
