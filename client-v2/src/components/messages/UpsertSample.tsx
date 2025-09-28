@@ -19,7 +19,7 @@ import * as Yup from 'yup';
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm, Controller } from "react-hook-form";
 
-import Style from "./UpsertSample.style";
+import Styles from "./UpsertSample.style";
 import { createSampleAsync, updateSampleAsync, searchSamplesAsync, getLatestSamplesAsync, getAllSamplesAsync, getTotalSamplesAsync, resetCreateState, resetUpdateState, getSampleDetailsAsync, resetSampleDetailsState } from "../../store/slices/SearchSlice";
 import { AppDispatch, RootState } from "../../store/store";
 import { useDispatch, useSelector } from "react-redux";
@@ -40,7 +40,7 @@ const UpsertSample = (props: UpsertProps) => {
     const dispatch: AppDispatch = useDispatch();
     const search = useSelector((state: RootState) => state.search);
     
-    const classes = Style();
+    const classes = Styles();
 
     useEffect(() => {
         const createSucceeded = search.createSample.status === 'succeeded';

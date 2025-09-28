@@ -1,6 +1,6 @@
 import { makeStyles, tokens } from "@fluentui/react-components";
 
-const Style = makeStyles({
+const Styles = makeStyles({
     content: {
         display: 'flex',
         flexDirection: 'column',
@@ -15,4 +15,4 @@ const Style = makeStyles({
     }
 });
 
-export default Style;
+export default Styles;
