@@ -26,6 +26,13 @@ export default defineConfig({
     outDir: 'build',
     sourcemap: false,
     chunkSizeWarningLimit: 1000, // Increase warning limit to 1000kb
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          'vendor-fluentui': ['@fluentui/react-components', '@fluentui/react-icons'],
+        },
+      },
+    },
   },
   define: {
     __COMMIT_HASH__: JSON.stringify(commitHash),
