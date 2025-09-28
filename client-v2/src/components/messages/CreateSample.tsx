@@ -188,7 +188,7 @@ const CreateSample = (props: CreateProps) => {
                 handleClose(data.event.currentTarget.id);
             }
         }}>
-            <DialogSurface>
+            <DialogSurface className={classes.dialogSurface}>
                 <DialogBody>
                         <DialogTitle>{isEditMode ? 'Edit Sample' : 'Create a new Sample'}</DialogTitle>
                         <DialogContent className={classes.content}>
@@ -275,7 +275,9 @@ const CreateSample = (props: CreateProps) => {
                                                     fontSize: 14,
                                                     backgroundColor: "#f5f5f5",
                                                     fontFamily:
-                                                      "ui-monospace,SFMono-Regular,SF Mono,Consolas,Liberation Mono,Menlo,monospace"
+                                                      "ui-monospace,SFMono-Regular,SF Mono,Consolas,Liberation Mono,Menlo,monospace",
+                                                    maxHeight: "400px",
+                                                    overflow: "auto"
                                                   }}
                                             />
                                         )}

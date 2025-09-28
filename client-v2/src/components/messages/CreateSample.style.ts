@@ -6,9 +6,13 @@ const Style = makeStyles({
         flexDirection: 'column',
         gap: '10px'
     },
-        error: {
-            color: tokens.colorPaletteRedForeground1
-        }
+    error: {
+        color: tokens.colorPaletteRedForeground1
+    },
+    dialogSurface: {
+        width: '50vw',
+        maxWidth: '50vw'
+    }
 });
 
 export default Style;
