@@ -25,6 +25,33 @@ export default defineConfig({
   build: {
     outDir: 'build',
     sourcemap: true,
+    chunkSizeWarningLimit: 1000, // Increase warning limit to 1000kb
+    rollupOptions: {
+      output: {
+        manualChunks: (id: string) => {
+          // Create separate chunks for better caching and loading
+          if (id.indexOf('node_modules') !== -1) {
+            if (id.indexOf('react') !== -1 || id.indexOf('react-dom') !== -1) {
+              return 'vendor-react';
+            }
+            if (id.indexOf('@reduxjs/toolkit') !== -1 || id.indexOf('react-redux') !== -1) {
+              return 'vendor-redux';
+            }
+            if (id.indexOf('@fluentui') !== -1) {
+              return 'vendor-fluentui';
+            }
+            if (id.indexOf('react-hook-form') !== -1 || id.indexOf('@hookform') !== -1 || id.indexOf('yup') !== -1) {
+              return 'vendor-forms';
+            }
+            if (id.indexOf('axios') !== -1 || id.indexOf('crypto-js') !== -1) {
+              return 'vendor-utils';
+            }
+            // Group other smaller vendor libraries
+            return 'vendor';
+          }
+        },
+      },
+    },
   },
   define: {
     __COMMIT_HASH__: JSON.stringify(commitHash),
