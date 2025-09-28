@@ -30,7 +30,7 @@ import { RootState, AppDispatch } from "../../store/store";
 
 import Styles from "./UserWidget.styles";
 import { useEffect, useState } from "react";
-import CreateSample from "../messages/CreateSample";
+import UpsertSample from "../messages/UpsertSample";
 
 const UserWidget = () => {
 
@@ -107,7 +107,7 @@ const UserWidget = () => {
                         appearance="transparent"
                         icon={user.theme === "light" ? <WeatherSunnyRegular /> : <WeatherMoonFilled />}
                         onClick={() => dispatch(setTheme(user.theme === "dark" ? 'light' : 'dark'))} />
-                    <CreateSample open={createOpen} setOpen={setCreateOpen} />
+                    <UpsertSample open={createOpen} setOpen={setCreateOpen} />
                 </div>
             ) : (
                 <div className={classes.authBox}>

@@ -399,10 +399,7 @@ FodyWeavers.xsd
 # JetBrains Rider
 *.sln.iml
 
-# Node
-
-
-# Customer
+# Custom
 *.local.sql
 .env
 .fabric.env

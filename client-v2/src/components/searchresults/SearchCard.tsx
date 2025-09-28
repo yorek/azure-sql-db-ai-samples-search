@@ -8,7 +8,7 @@ import { RootState } from "../../store/store";
 import { useSelector } from "react-redux";
 import DeleteSample from "../messages/DeleteSample";
 import RecordDetails from "../recorddetails/RecordDetails";
-import CreateSample from "../messages/CreateSample";
+import UpsertSample from "../messages/UpsertSample";
 
 interface CardProps {
     sample: Sample;
@@ -86,7 +86,7 @@ const SearchCard = (props: CardProps) => {
         </Card>
         <DeleteSample sample={sample} open={openDelete} setOpen={setOpenDelete} />
         <RecordDetails open={openDetails} setOpen={setOpenDetails} id={sample.id} />
-        <CreateSample open={openEdit} setOpen={setOpenEdit} editSample={sample} isEditMode={true} />
+        <UpsertSample open={openEdit} setOpen={setOpenEdit} editSample={sample} isEditMode={true} />
         </>
     );
 };

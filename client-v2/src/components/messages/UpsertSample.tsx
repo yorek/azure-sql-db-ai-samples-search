@@ -19,7 +19,7 @@ import * as Yup from 'yup';
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm, Controller } from "react-hook-form";
 
-import Style from "./CreateSample.style";
+import Style from "./UpsertSample.style";
 import { createSampleAsync, updateSampleAsync, searchSamplesAsync, getLatestSamplesAsync, getAllSamplesAsync, getTotalSamplesAsync, resetCreateState, resetUpdateState, getSampleDetailsAsync, resetSampleDetailsState } from "../../store/slices/SearchSlice";
 import { AppDispatch, RootState } from "../../store/store";
 import { useDispatch, useSelector } from "react-redux";
@@ -27,14 +27,14 @@ import { Record } from "../../types/Record";
 import Sample from "../../types/Sample";
 import { useEffect } from "react";
 
-interface CreateProps {
+interface UpsertProps {
     open: boolean;
     setOpen: (open: boolean) => void;
     editSample?: Sample | null; // Optional sample to edit
     isEditMode?: boolean; // Flag to indicate edit mode
 }
 
-const CreateSample = (props: CreateProps) => {
+const UpsertSample = (props: UpsertProps) => {
 
     const { open, setOpen, editSample = null, isEditMode = false } = props;
     const dispatch: AppDispatch = useDispatch();
@@ -300,4 +300,4 @@ const CreateSample = (props: CreateProps) => {
     );
 };
 
-export default CreateSample;
+export default UpsertSample;
