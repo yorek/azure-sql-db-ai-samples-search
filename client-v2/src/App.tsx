@@ -11,6 +11,7 @@ import UserState from "./store/slices/UserState";
 import Toolbar from "./components/toolbar/Toolbar";
 import Searchbar from "./components/searchbar/Searchbar";
 import SearchResults from "./components/searchresults/SearchResults";
+import Footer from "./components/footer/Footer";
 
 const useStyles = makeStyles({
   root: {
@@ -20,7 +21,11 @@ const useStyles = makeStyles({
     flexDirection: "column",
     minHeight: "100vh",
     backgroundColor: tokens.colorNeutralBackground3,
-
+  },
+  content: {
+    flex: "1 0 auto",
+    display: "flex",
+    flexDirection: "column",
   }
 });
 
@@ -44,9 +49,12 @@ const App = () => {
   return (
     <FluentProvider theme={user.theme === "light" ? webLightTheme : webDarkTheme}>
       <div className={classes.root}>
-        <Toolbar />
-        <Searchbar />
-        <SearchResults />
+        <div className={classes.content}>
+          <Toolbar />
+          <Searchbar />
+          <SearchResults />
+        </div>
+        <Footer />
       </div>
     </FluentProvider>
 

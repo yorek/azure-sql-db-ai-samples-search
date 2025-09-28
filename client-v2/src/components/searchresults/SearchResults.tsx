@@ -26,13 +26,13 @@ const SearchResults = () => {
                 </>
             }
             {/* 
-                Search results stats.
+                Search results succeeded.
             */}
             {search.samples.status === 'succeeded' &&
                 <Subtitle2 style={{ fontWeight: "normal", textAlign: "center", margin: "10px 0" }}></Subtitle2>
             }
             {/* 
-                Search results stats.
+                Search results error.
             */}
             {search.samples.status === 'failed' &&
                 <Subtitle2 style={{ fontWeight: "normal", textAlign: "center", margin: "10px 0" }}>
@@ -49,17 +49,7 @@ const SearchResults = () => {
                         <SearchCard key={sample.id} sample={sample} />
                     ))}
                 </div>
-            }
-            {/* 
-                Search results stats - always at bottom.
-            */}
-            <div className={classes.footer}>
-                {search.samples.status === 'succeeded' &&
-                    <Subtitle2 className={classes.footerText}>                        
-                        Returned <strong>{search.samples.results.length}</strong> samples.&nbsp;
-                        Commit date: {__COMMIT_DATE__}, Commit hash: {__COMMIT_HASH__}
-                    </Subtitle2>}
-            </div>
+            }            
         </div >
     );
 };
