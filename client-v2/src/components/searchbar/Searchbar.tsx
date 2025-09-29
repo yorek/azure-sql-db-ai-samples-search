@@ -98,7 +98,7 @@ const Searchbar = () => {
                         onClick={() => handleSearch()}                        
                         >Search</Button>
                     <Button
-                        disabled={search.samples.status === 'loading' || searchValue === ''}
+                        disabled={search.samples.status === 'loading'}
                         size='large'
                         appearance="secondary"
                         icon={<ArrowClockwiseRegular />}
