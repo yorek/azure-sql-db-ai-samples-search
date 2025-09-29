@@ -7,7 +7,7 @@ import {
     Title3
 } from '@fluentui/react-components';
 
-import { SearchRegular } from '@fluentui/react-icons'
+import { SearchRegular, ArrowClockwiseRegular } from '@fluentui/react-icons'
 
 import HowItWorks from '../messages/HowItWorks';
 import { useEffect, useState } from 'react';
@@ -73,10 +73,15 @@ const Searchbar = () => {
         dispatch(getAllSamplesAsync());
     };
 
+    /* Handle reset - reload page with no search query */
+    const handleReset = () => {
+        window.location.href = window.location.pathname;
+    };
+
     return (
         <div className={classes.root}>
-            <Title1 className={classes.title}>Azure SQL DB Samples AI Agentic RAG Search</Title1>
-            <Title3 className={classes.subtitle}>Find samples using AI Agents search capabilities</Title3>
+            <Title1 className={classes.title}>Azure SQL DB Samples AI Agentic RAG Search 💡🔍</Title1>
+            <Title3 className={classes.subtitle}>Find samples using AI Agents search capabilities 🚀</Title3>
             <div className={classes.fieldWrapper}>
                 <SearchBox style={{ minWidth: "350px", width: "50vw", maxWidth: "800px" }}
                     size="large"
@@ -91,7 +96,14 @@ const Searchbar = () => {
                         appearance="primary"
                         icon={<SearchRegular />}
                         onClick={() => handleSearch()}                        
-                        >Search</Button>                  
+                        >Search</Button>
+                    <Button
+                        disabled={search.samples.status === 'loading' || searchValue === ''}
+                        size='large'
+                        appearance="secondary"
+                        icon={<ArrowClockwiseRegular />}
+                        onClick={() => handleReset()}                        
+                        >Reset</Button>                  
                 </div>
             </div>
             <Subtitle2 style={{ fontWeight: "normal", textAlign: "center" }}>
