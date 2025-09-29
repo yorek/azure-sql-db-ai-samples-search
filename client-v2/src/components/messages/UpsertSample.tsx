@@ -190,7 +190,7 @@ const UpsertSample = (props: UpsertProps) => {
         }}>
             <DialogSurface className={classes.dialogSurface}>
                 <DialogBody>
-                        <DialogTitle>{isEditMode ? 'Edit Sample' : 'Create a new Sample'}</DialogTitle>
+                        <DialogTitle>{isEditMode ? 'Edit Item' : 'New Item'}</DialogTitle>
                         <DialogContent className={classes.content}>
                             {(search.createSample.status === 'failed' || search.updateSample.status === 'failed' || 
                               (isEditMode && search.sampleDetails.status === 'failed')) &&
@@ -206,12 +206,12 @@ const UpsertSample = (props: UpsertProps) => {
                                 </>
                             }
                             {(search.createSample.status === 'loading' || search.updateSample.status === 'loading') &&
-                                <Field validationMessage={`${isEditMode ? 'Updating' : 'Creating'} the record, please wait ...`} validationState="none">
+                                <Field validationMessage={`${isEditMode ? 'Updating' : 'Creating'} item, please wait ...`} validationState="none">
                                     <ProgressBar />
                                 </Field>
                             }
                             {(isEditMode && search.sampleDetails.status === 'loading') &&
-                                <Field validationMessage="Loading sample details, please wait ..." validationState="none">
+                                <Field validationMessage="Loading item details, please wait ..." validationState="none">
                                     <ProgressBar />
                                 </Field>
                             }
@@ -223,11 +223,11 @@ const UpsertSample = (props: UpsertProps) => {
                                 label="Name"
                                 validationState={errors.name ? 'error' : 'none'}
                                 validationMessage={errors.name?.message}>
-                                <Input {...register('name')} placeholder="Sample name" />
+                                <Input {...register('name')} placeholder="Item name" />
                             </Field>
                             <Field
                                 required
-                                label="URL"
+                                label="URL (used as unique identifier)"
                                 validationState={errors.url ? 'error' : 'none'}
                                 validationMessage={errors.url?.message}>
                                 <Input 
@@ -246,13 +246,13 @@ const UpsertSample = (props: UpsertProps) => {
                                 label="Description"
                                 validationState={errors.description ? 'error' : 'none'}
                                 validationMessage={errors.description?.message}>
-                                <Textarea {...register('description')} placeholder="This Sample is related to ..."/>
+                                <Textarea {...register('description')} placeholder="Description of the item"/>
                             </Field>
                             <Field
-                                label="Notes"
+                                label="Notes (to give more context to the AI agent)"
                                 validationState={errors.notes ? 'error' : 'none'}
                                 validationMessage={errors.notes?.message}>
-                                <Textarea {...register('notes')} placeholder="In particular, it refers to ..."/>
+                                <Textarea {...register('notes')} placeholder="Details used to help the AI agent to understand what is this item about."/>
                             </Field>
                             <Field
                                 required
