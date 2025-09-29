@@ -3,6 +3,12 @@ select * from dbo.samples
 exec [web].[get_total_sample_count]
 go
 
+exec [web].[find_samples] 'nl2sql samples', @debug=1, @nocache=1
+go
+
+exec [web].[find_samples] 'natural language to sql samples', @debug=1, @nocache=1
+go
+
 exec [web].[find_samples] 'migrate and modernzine', @debug=1, @nocache=1
 go
 
@@ -53,7 +59,6 @@ select [url], json_value(details, '$.type')
 from dbo.samples 
 where json_value(details, '$.type') = 'code sample'
 order by [url]
-
 
 
 
