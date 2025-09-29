@@ -4,7 +4,15 @@
     Deploy Data API Builder (DAB) to Azure Container Apps with Storage Account and Managed Identity
     
 .DESCRIPTION
-    This script deploys a Data API Builder application to Azure Container Apps using:
+    This script deploys a Data A# Create Azure File share for DAB config
+Write-Host "📁 Creating Azure File share for DAB configuration..." -ForegroundColor Blue
+az storage share create `
+    --account-name $storageAccountName `
+    --name "dab-config" `
+    --quota 1 `
+    --output none
+
+Write-Host "✅ Azure File share 'dab-config' created" -ForegroundColor Green application to Azure Container Apps using:
     - Azure Storage Account to store the DAB configuration file
     - User-assigned Managed Identity for secure access to storage
     - Azure Container Registry for storing the DAB container image
@@ -132,7 +140,6 @@ Write-Host "✅ MSSQL connection string loaded from .env file" -ForegroundColor 
 # Generate unique names for resources
 $timestamp = Get-Date -Format "yyyyMMddHHmm"
 $uniqueSuffix = "$AppName$timestamp".ToLower() -replace '[^a-z0-9]', ''
-$storageAccountName = "st$($uniqueSuffix.Substring(0, [Math]::Min(18, $uniqueSuffix.Length)))"
 $acrName = "acr$($uniqueSuffix.Substring(0, [Math]::Min(15, $uniqueSuffix.Length)))"
 $managedIdentityName = "id-$AppName-dab"
 $containerAppEnvName = "cae-$AppName"
@@ -141,7 +148,6 @@ $logAnalyticsName = "law-$AppName"
 Write-Host "🚀 Starting deployment with the following configuration:" -ForegroundColor Blue
 Write-Host "   Resource Group: $ResourceGroupName" -ForegroundColor White
 Write-Host "   Location: $Location" -ForegroundColor White
-Write-Host "   Storage Account: $storageAccountName" -ForegroundColor White
 Write-Host "   Container Registry: $acrName" -ForegroundColor White
 Write-Host "   Managed Identity: $managedIdentityName" -ForegroundColor White
 Write-Host "   Container App Environment: $containerAppEnvName" -ForegroundColor White
@@ -180,78 +186,8 @@ Write-Host "✅ Managed identity created: $managedIdentityName" -ForegroundColor
 Write-Host "   Client ID: $identityClientId" -ForegroundColor White
 Write-Host "   Principal ID: $identityPrincipalId" -ForegroundColor White
 
-# Create Azure Storage Account
-Write-Host "💾 Creating storage account..." -ForegroundColor Blue
-az storage account create `
-    --resource-group $ResourceGroupName `
-    --name $storageAccountName `
-    --location $Location `
-    --sku Standard_LRS `
-    --kind StorageV2 `
-    --access-tier Hot `
-    --allow-blob-public-access false `
-    --allow-shared-key-access false `
-    --min-tls-version TLS1_2 `
-    --tags "Owner=$Owner" `
-    --output none
-
-Write-Host "✅ Storage account '$storageAccountName' created" -ForegroundColor Green
-
-# Assign Storage Blob Data Reader role to managed identity
-Write-Host "🔒 Assigning Storage Blob Data Reader role to managed identity..." -ForegroundColor Blue
-$storageAccountId = az storage account show --resource-group $ResourceGroupName --name $storageAccountName --query id --output tsv
-
-az role assignment create `
-    --assignee $identityPrincipalId `
-    --role "Storage Blob Data Reader" `
-    --scope $storageAccountId `
-    --output none
-
-Write-Host "✅ Storage Blob Data Reader role assigned" -ForegroundColor Green
-
-# Create container for DAB config
-Write-Host "📦 Creating blob container for DAB configuration..." -ForegroundColor Blue
-az storage container create `
-    --account-name $storageAccountName `
-    --name "dab-config" `
-    --auth-mode login `
-    --public-access off `
-    --output none
-
-Write-Host "✅ Blob container 'dab-config' created" -ForegroundColor Green
-
-# Upload DAB configuration file to storage
-Write-Host "📤 Uploading DAB configuration file..." -ForegroundColor Blue
-$dabConfigPath = "swa-db-connections\staticwebapp.database.config.json"
-
-if (-not (Test-Path $dabConfigPath)) {
-    Write-Error "❌ DAB configuration file not found at: $dabConfigPath"
-    exit 1
-}
-
-# Modify the DAB config to use production mode and environment variable for connection string
-$dabConfig = Get-Content $dabConfigPath -Raw | ConvertFrom-Json
-$dabConfig.runtime.host.mode = "production"
-$dabConfig.'data-source'.'connection-string' = "@env('MSSQL_CONNECTION_STRING')"
-
-# Save modified config to temp file
-$tempConfigPath = [System.IO.Path]::GetTempFileName() + ".json"
-$dabConfig | ConvertTo-Json -Depth 10 | Set-Content $tempConfigPath
-
-az storage blob upload `
-    --account-name $storageAccountName `
-    --container-name "dab-config" `
-    --name "dab-config.json" `
-    --file $tempConfigPath `
-    --auth-mode login `
-    --output none `
-    --overwrite
-
-Remove-Item $tempConfigPath -Force
-Write-Host "✅ DAB configuration uploaded to storage" -ForegroundColor Green
-
 # Create Azure Container Registry
-Write-Host "🐳 Creating Azure Container Registry..." -ForegroundColor Blue
+Write-Host "📒 Creating Azure Container Registry..." -ForegroundColor Blue
 az acr create `
     --resource-group $ResourceGroupName `
     --name $acrName `
@@ -264,6 +200,7 @@ az acr create `
 Write-Host "✅ Container registry '$acrName' created" -ForegroundColor Green
 
 # Assign AcrPull role to managed identity
+Write-Host "🔒 Assigning AcrPull role to managed identity..." -ForegroundColor Blue
 $acrId = az acr show --resource-group $ResourceGroupName --name $acrName --query id --output tsv
 az role assignment create `
     --assignee $identityPrincipalId `
@@ -273,59 +210,48 @@ az role assignment create `
 
 Write-Host "✅ AcrPull role assigned to managed identity" -ForegroundColor Green
 
-# Build and push DAB container image
+# Build and push DAB container image with embedded config
 if (-not $SkipBuild) {
-    Write-Host "🔨 Building and pushing DAB container image..." -ForegroundColor Blue
+    Write-Host "🔨 Building and pushing DAB container image from docker folder..." -ForegroundColor Blue
+
+    # Verify docker folder and files exist
+    $dockerFolder = "docker"
+    $dockerfilePath = "$dockerFolder\Dockerfile"
+    $configPath = "$dockerFolder\dab-config.json"
     
-    # Create Dockerfile for DAB
-    $dockerfileContent = @"
-FROM mcr.microsoft.com/azure-databases/data-api-builder:latest
-
-# Set environment variables
-ENV DAB_ENVIRONMENT=production
-ENV DAB_CONFIG_FILE_PATH="/app/dab-config.json"
-
-# Create app directory
-WORKDIR /app
-
-# Create startup script
-RUN echo '#!/bin/bash' > /app/start.sh && \
-    echo 'set -e' >> /app/start.sh && \
-    echo 'echo "Downloading DAB configuration from Azure Storage..."' >> /app/start.sh && \
-    echo 'curl -H "Authorization: Bearer \$AZURE_CLIENT_ID" -H "x-ms-version: 2020-04-08" -o /app/dab-config.json "https://'$storageAccountName'.blob.core.windows.net/dab-config/dab-config.json"' >> /app/start.sh && \
-    echo 'if [ ! -f /app/dab-config.json ]; then' >> /app/start.sh && \
-    echo '  echo "Failed to download DAB configuration file"' >> /app/start.sh && \
-    echo '  exit 1' >> /app/start.sh && \
-    echo 'fi' >> /app/start.sh && \
-    echo 'echo "Starting Data API Builder..."' >> /app/start.sh && \
-    echo 'exec dab start --config /app/dab-config.json --no-https-redirect' >> /app/start.sh && \
-    chmod +x /app/start.sh
-
-# Expose port
-EXPOSE 5000
-
-# Start the application
-CMD ["/app/start.sh"]
-"@
-
-    $dockerfileContent | Set-Content "Dockerfile.dab"
+    if (-not (Test-Path $dockerFolder)) {
+        Write-Error "❌ Docker folder not found at: $dockerFolder"
+        exit 1
+    }
     
+    if (-not (Test-Path $dockerfilePath)) {
+        Write-Error "❌ Dockerfile not found at: $dockerfilePath"
+        exit 1
+    }
+    
+    if (-not (Test-Path $configPath)) {
+        Write-Error "❌ DAB configuration file not found at: $configPath"
+        exit 1
+    }
+
+    Write-Host "   Using Dockerfile: $dockerfilePath" -ForegroundColor White
+    Write-Host "   Using DAB config: $configPath" -ForegroundColor White
+
     # Login to ACR using expose-token method
     Write-Host "   Logging into ACR..." -ForegroundColor White
     $acrToken = az acr login --name $acrName --expose-token --output json | ConvertFrom-Json
-    
+
     # Login to Docker using the ACR token
     $acrToken.accessToken | docker login $acrToken.loginServer --username 00000000-0000-0000-0000-000000000000 --password-stdin
-    
+
     $imageTag = "$acrName.azurecr.io/dab-api:latest"
-    
+
     Write-Host "   Building container image..." -ForegroundColor White
-    docker build -t $imageTag -f Dockerfile.dab .
-    
+    docker build -t $imageTag -f $dockerfilePath $dockerFolder
+
     Write-Host "   Pushing container image..." -ForegroundColor White
     docker push $imageTag
-    
-    Remove-Item "Dockerfile.dab" -Force
+
     Write-Host "✅ Container image built and pushed: $imageTag" -ForegroundColor Green
 }
 else {
@@ -381,11 +307,11 @@ az containerapp create `
     --ingress external `
     --min-replicas 1 `
     --max-replicas 10 `
-    --cpu 0.5 `
-    --memory 1Gi `
+    --cpu 2 `
+    --memory 4Gi `
     --registry-server "$acrName.azurecr.io" `
     --user-assigned $identityId `
-    --env-vars "MSSQL_CONNECTION_STRING=$SqlConnectionString" "AZURE_CLIENT_ID=$identityClientId" "STORAGE_ACCOUNT_NAME=$storageAccountName" `
+    --env-vars "MSSQL=$SqlConnectionString" `
     --tags "Owner=$Owner" `
     --output none
 
@@ -405,13 +331,14 @@ Write-Host "   Container App URL: https://$containerAppUrl" -ForegroundColor Whi
 Write-Host "   API Endpoint: https://$containerAppUrl/rest" -ForegroundColor White
 Write-Host "   Health Check: https://$containerAppUrl/health" -ForegroundColor White
 Write-Host "   Resource Group: $ResourceGroupName" -ForegroundColor White
-Write-Host "   Storage Account: $storageAccountName" -ForegroundColor White
 Write-Host "   Container Registry: $acrName" -ForegroundColor White
+Write-Host "   Container Image: $imageTag" -ForegroundColor White
 Write-Host "   Managed Identity: $managedIdentityName" -ForegroundColor White
 Write-Host ""
 Write-Host "🔗 Useful Commands:" -ForegroundColor Blue
 Write-Host "   View logs: az containerapp logs show --name $ContainerAppName --resource-group $ResourceGroupName --follow" -ForegroundColor White
-Write-Host "   Update config: az storage blob upload --account-name $storageAccountName --container-name dab-config --name dab-config.json --file <new-config-file> --auth-mode login --overwrite" -ForegroundColor White
+Write-Host "   Update config: Modify swa-db-connections/staticwebapp.database.config.json and rebuild/redeploy" -ForegroundColor White
+Write-Host "   Rebuild image: docker build -t $imageTag -f Dockerfile.dab . && docker push $imageTag" -ForegroundColor White
 Write-Host "   Restart app: az containerapp revision restart --name $ContainerAppName --resource-group $ResourceGroupName" -ForegroundColor White
 Write-Host ""
 Write-Host "🧪 Test your API:" -ForegroundColor Blue

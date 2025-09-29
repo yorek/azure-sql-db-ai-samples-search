@@ -107,7 +107,7 @@ function getDataAPIUrl() {
   if (import.meta.env.VITE_API_URL) {
     return import.meta.env.VITE_API_URL;
   }
-  return './data-api/rest/';
+  return './api/';
 }
 
 // Export the retry function for custom use cases

@@ -4,7 +4,6 @@
     "azure-sql-db-ai-samples-search": {
       "appLocation": "client-v2",
       "outputLocation": "build",
-      "dataApiLocation": "swa-db-connections",
       "appBuildCommand": "npm run build",
       "run": "npm run dev",
       "appDevserverUrl": "http://localhost:3000"

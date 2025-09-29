@@ -1,5 +1,5 @@
 {
-  "$schema": "https://github.com/Azure/data-api-builder/releases/download/v1.2.10/dab.draft.schema.json",
+  "$schema": "https://github.com/Azure/data-api-builder/releases/download/v1.5.56/dab.draft.schema.json",
   "data-source": {
     "database-type": "mssql",
     "connection-string": "@env('MSSQL')",
@@ -10,24 +10,23 @@
   "runtime": {
     "rest": {
       "enabled": true,
-      "path": "/rest",
+      "path": "/api",
       "request-body-strict": true
     },
     "graphql": {
-      "enabled": false,
+      "enabled": true,
       "path": "/graphql",
       "allow-introspection": true
     },
     "host": {
-      "mode": "production",
       "cors": {
-        "origins": ["*"],
+        "origins": [],
         "allow-credentials": false
       },
       "authentication": {
         "provider": "StaticWebApps"
       },
-      "mode": "development"
+      "mode": "production"
     },
     "cache": {
       "enabled": true,
