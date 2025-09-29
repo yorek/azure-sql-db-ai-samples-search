@@ -64,6 +64,11 @@ const Searchbar = () => {
 
     /* Handle search */
     const handleSearch = () => {
+        // Update URL with search query
+        const url = new URL(window.location.href);
+        url.searchParams.set('q', searchValue);
+        window.history.pushState({}, '', url);
+        
         dispatch(resetSearchState());
         dispatch(searchSamplesAsync(searchValue));
     };
