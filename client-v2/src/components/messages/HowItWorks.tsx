@@ -1,5 +1,6 @@
 import { Dialog, DialogBody, DialogContent, DialogSurface, DialogTitle, Link } from "@fluentui/react-components";
 import React from "react";
+import Styles from "./HowItWorks.style";
 
 interface HowItWorksProps {
     open: boolean;
@@ -7,6 +8,8 @@ interface HowItWorksProps {
 }
 
 const HowItWorks: React.FC<HowItWorksProps> = ({ open, setOpen }) => {
+    const classes = Styles();
+    
     const handleClose = () => {
         setOpen(false);
     };
@@ -19,7 +22,7 @@ const HowItWorks: React.FC<HowItWorksProps> = ({ open, setOpen }) => {
                 handleClose();
             }
         }}>
-            <DialogSurface>
+            <DialogSurface className={classes.dialogSurface}>
                 <DialogBody>
                     <DialogTitle>AI Agent Powered Search</DialogTitle>
                     <DialogContent>
