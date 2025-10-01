@@ -14,7 +14,7 @@
       "request-body-strict": true
     },
     "graphql": {
-      "enabled": true,
+      "enabled": false,
       "path": "/graphql",
       "allow-introspection": true
     },
@@ -151,7 +151,7 @@
         "object": "dbo.delete_sample",
         "type": "stored-procedure",
         "parameters": {
-          "id": "",
+          "id": 0,
           "url": ""
         }
       },
@@ -178,7 +178,7 @@
         "object": "dbo.get_sample",
         "type": "stored-procedure",
         "parameters": {
-          "id": "",
+          "id": 0,
           "url": ""
         }
       },
