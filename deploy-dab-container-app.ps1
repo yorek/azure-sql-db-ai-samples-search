@@ -215,12 +215,12 @@ if (-not $SkipBuild) {
     Write-Host "🔨 Building and pushing DAB container image from docker folder..." -ForegroundColor Blue
 
     # Verify docker folder and files exist
-    $dockerFolder = "docker"
-    $dockerfilePath = "$dockerFolder\Dockerfile"
-    $configPath = "$dockerFolder\dab-config.json"
+    $dabFolder = "dab"
+    $dockerfilePath = "$dabFolder\Dockerfile"
+    $configPath = "$dabFolder\dab-config.json"
     
-    if (-not (Test-Path $dockerFolder)) {
-        Write-Error "❌ Docker folder not found at: $dockerFolder"
+    if (-not (Test-Path $dabFolder)) {
+        Write-Error "❌ DAB folder not found at: $dabFolder"
         exit 1
     }
     
