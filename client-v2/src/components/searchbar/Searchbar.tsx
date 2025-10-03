@@ -88,9 +88,9 @@ const Searchbar = () => {
             <Title1 className={classes.title}>Azure SQL DB Samples AI Agentic RAG Search 💡🔍</Title1>
             <Title3 className={classes.subtitle}>Find samples using AI Agents search capabilities 🚀</Title3>
             <div className={classes.fieldWrapper}>
-                <SearchBox style={{ minWidth: "350px", width: "50vw", maxWidth: "800px" }}
+                <SearchBox className={classes.searchBox}
                     size="large"
-                    placeholder='Samples used in Orlando Live 360 in 2024'
+                    placeholder='Samples used at conference in Microsoft HQ in 2025'
                     value={searchValue}
                     onChange={onSearchChange}
                     onKeyDown={onSearchKeyDown} />

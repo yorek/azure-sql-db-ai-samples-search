@@ -44,6 +44,11 @@ const Styles = makeStyles({
     link : {
         fontWeight: "bold",
         fontSize: tokens.fontSizeBase400,
+    },
+    searchBox: {
+        minWidth: "350px", 
+        width: "50vw", 
+        maxWidth: "800px"
     }
 });
 
