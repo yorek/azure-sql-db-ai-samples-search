@@ -164,7 +164,7 @@
       },
       "permissions": [
         {
-          "role": "anonymous",
+          "role": "admin",
           "actions": [
             {
               "action": "*"
@@ -218,7 +218,7 @@
       },
       "permissions": [
         {
-          "role": "anonymous",
+          "role": "admin",
           "actions": [
             {
               "action": "*"
