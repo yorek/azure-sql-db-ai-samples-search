@@ -20,7 +20,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm, Controller } from "react-hook-form";
 
 import Styles from "./UpsertSample.style";
-import { createSampleAsync, updateSampleAsync, searchSamplesAsync, getLatestSamplesAsync, getAllSamplesAsync, getTotalSamplesAsync, resetCreateState, resetUpdateState, getSampleDetailsAsync, resetSampleDetailsState } from "../../store/slices/SearchSlice";
+import { upsertSampleAsync, searchSamplesAsync, getLatestSamplesAsync, getAllSamplesAsync, getTotalSamplesAsync, resetUpsertState, getSampleDetailsAsync, resetSampleDetailsState } from "../../store/slices/SearchSlice";
 import { AppDispatch, RootState } from "../../store/store";
 import { useDispatch, useSelector } from "react-redux";
 import { Record } from "../../types/Record";
@@ -43,25 +43,19 @@ const UpsertSample = (props: UpsertProps) => {
     const classes = Styles();
 
     useEffect(() => {
-        const createSucceeded = search.createSample.status === 'succeeded';
-        const updateSucceeded = search.updateSample.status === 'succeeded';
+        const upsertSucceeded = search.upsertSample.status === 'succeeded';
         
-        if (createSucceeded || updateSucceeded) {
+        if (upsertSucceeded) {
             setOpen(false);
             
-            // Reset the states immediately to prevent infinite loop
-            if (createSucceeded) {
-                dispatch(resetCreateState());
-            }
-            if (updateSucceeded) {
-                dispatch(resetUpdateState());
-            }
+            // Reset the state immediately to prevent infinite loop
+            dispatch(resetUpsertState());
             
             // Refresh the search results based on current state
             const urlParams = new URLSearchParams(window.location.search);
             const qParam = urlParams.get('q');
             
-            // Update total samples count
+            // Update total samples count (only needed for create operations, but getTotalSamplesAsync will get the correct count regardless)
             dispatch(getTotalSamplesAsync());
             
             // Small delay to ensure operations are processed
@@ -77,7 +71,7 @@ const UpsertSample = (props: UpsertProps) => {
                 }
             }, 100);
         }
-    }, [search.createSample.status, search.updateSample.status, setOpen, dispatch]);
+    }, [search.upsertSample.status, setOpen, dispatch]);
     
     // form validation hook
     const validationSchema = Yup.object().shape({
@@ -168,11 +162,10 @@ const UpsertSample = (props: UpsertProps) => {
             const values = getValues();
             // upsert
             const record = new Record(values.name, values.url, values.description, values.notes ?? '', values.details);
-            if (isEditMode && editSample) {
-                dispatch(updateSampleAsync(JSON.stringify(record)));
-            } else {
-                dispatch(createSampleAsync(JSON.stringify(record)));
-            }
+            dispatch(upsertSampleAsync({ 
+                payload: JSON.stringify(record), 
+                isCreate: !isEditMode 
+            }));
             reset();
         }
         if (target === 'cancel') {
@@ -192,21 +185,21 @@ const UpsertSample = (props: UpsertProps) => {
                 <DialogBody>
                         <DialogTitle>{isEditMode ? 'Edit Item' : 'New Item'}</DialogTitle>
                         <DialogContent className={classes.content}>
-                            {(search.createSample.status === 'failed' || search.updateSample.status === 'failed' || 
+                            {(search.upsertSample.status === 'failed' || 
                               (isEditMode && search.sampleDetails.status === 'failed')) &&
                                 <>
                                 <p className={classes.error}>Failed to {
                                     isEditMode && search.sampleDetails.status === 'failed' ? 'load sample details' :
-                                    isEditMode ? 'update' : 'create'
+                                    search.upsertSample.isCreate ? 'create' : 'update'
                                 } the sample. Please try again.</p>
                                 <code>{
                                     isEditMode && search.sampleDetails.status === 'failed' ? search.sampleDetails.error :
-                                    isEditMode ? search.updateSample.error : search.createSample.error
+                                    search.upsertSample.error
                                 }</code>                            
                                 </>
                             }
-                            {(search.createSample.status === 'loading' || search.updateSample.status === 'loading') &&
-                                <Field validationMessage={`${isEditMode ? 'Updating' : 'Creating'} item, please wait ...`} validationState="none">
+                            {search.upsertSample.status === 'loading' &&
+                                <Field validationMessage={`${search.upsertSample.isCreate ? 'Creating' : 'Updating'} item, please wait ...`} validationState="none">
                                     <ProgressBar />
                                 </Field>
                             }
@@ -215,8 +208,8 @@ const UpsertSample = (props: UpsertProps) => {
                                     <ProgressBar />
                                 </Field>
                             }
-                            {(search.createSample.status === 'succeeded' || search.updateSample.status === 'succeeded') &&
-                                <p>Record {isEditMode ? 'updated' : 'created'}.</p>
+                            {search.upsertSample.status === 'succeeded' &&
+                                <p>Record {search.upsertSample.isCreate ? 'created' : 'updated'}.</p>
                             }
                             <Field
                                 required

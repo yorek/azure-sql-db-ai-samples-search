@@ -6,7 +6,8 @@
       "outputLocation": "build",
       "appBuildCommand": "npm run build",
       "run": "npm run dev",
-      "appDevserverUrl": "http://localhost:3000"
+      "appDevserverUrl": "http://localhost:3000",
+      "apiDevserverUrl": "http://localhost:5000"
     }
   }
 }

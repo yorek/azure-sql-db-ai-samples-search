@@ -2,7 +2,7 @@
   "$schema": "https://github.com/Azure/data-api-builder/releases/download/v1.5.56/dab.draft.schema.json",
   "data-source": {
     "database-type": "mssql",
-    "connection-string": "@env('MSSQL')",
+    "connection-string": "@env(\u0027MSSQL\u0027)",
     "options": {
       "set-session-context": false
     }
@@ -26,7 +26,7 @@
       "authentication": {
         "provider": "StaticWebApps"
       },
-      "mode": "production"
+      "mode": "development"
     },
     "cache": {
       "enabled": true,
@@ -42,7 +42,9 @@
       "rest": {
         "enabled": true,
         "path": "/samples",
-        "methods": [ "get" ]
+        "methods": [
+          "get"
+        ]
       },
       "permissions": [
         {
@@ -78,7 +80,8 @@
         "enabled": true,
         "path": "/findSamples",
         "methods": [
-          "post", "get"
+          "post",
+          "get"
         ]
       },
       "permissions": [
@@ -109,7 +112,8 @@
         "enabled": true,
         "path": "/countSamples",
         "methods": [
-          "post", "get"
+          "post",
+          "get"
         ]
       },
       "permissions": [
@@ -132,7 +136,8 @@
         "enabled": true,
         "path": "/latestSamples",
         "methods": [
-          "post", "get"
+          "post",
+          "get"
         ]
       },
       "permissions": [
@@ -147,7 +152,7 @@
       ]
     },
     "DeleteSample": {
-      "source":{
+      "source": {
         "object": "dbo.delete_sample",
         "type": "stored-procedure",
         "parameters": {

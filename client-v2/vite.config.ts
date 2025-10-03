@@ -12,15 +12,7 @@ export default defineConfig({
   plugins: [react()],
   server: {
     port: 3000,
-    open: true,
-    proxy: {
-      // Proxy API calls to your backend if needed
-      '/api': {
-        target: 'http://localhost:5000/api/',
-        changeOrigin: true,
-        secure: false,
-      },
-    },
+    open: true
   },
   build: {
     outDir: 'build',
@@ -29,7 +21,8 @@ export default defineConfig({
     rollupOptions: {
       output: {
         manualChunks: {
-          'vendor-fluentui': ['@fluentui/react-components', '@fluentui/react-icons'],
+          'fluentui': ['@fluentui/react-components', '@fluentui/react-icons'],
+          'markdown': ['react-markdown']
         },
       },
     },

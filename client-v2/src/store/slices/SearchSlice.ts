@@ -1,15 +1,15 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { HttpClient, getDataAPIUrl } from '../../utils/httpClient';
+import { HttpClient } from '../../utils/httpClient';
 import SearchState from './SearchState';
 import Sample from '../../types/Sample';
+import { RootState } from '../store';
 
 // Define the delay function
 const delay = (ms: number | undefined) => new Promise(resolve => setTimeout(resolve, ms));
 
 // async search total samples
 export const getTotalSamplesAsync = createAsyncThunk<number>('search/getTotalSamples', async () => {
-  const response = await HttpClient.get(`${getDataAPIUrl()}countSamples`, {
-    withCredentials: false,
+  const response = await HttpClient.get(`./api/countSamples`, {
     headers: {
       'Content-Type': 'application/json',
       'Accept': 'application/json',
@@ -20,8 +20,7 @@ export const getTotalSamplesAsync = createAsyncThunk<number>('search/getTotalSam
 
 // async list all samples
 export const getAllSamplesAsync = createAsyncThunk<Sample[]>('search/getAllSamplesAsync', async () => {
-  const response = await HttpClient.get(`${getDataAPIUrl()}samples`, {
-    withCredentials: false,
+  const response = await HttpClient.get(`./api/samples`, {
     headers: {
       'Content-Type': 'application/json',
       'Accept': 'application/json',
@@ -32,8 +31,7 @@ export const getAllSamplesAsync = createAsyncThunk<Sample[]>('search/getAllSampl
 
 // async list latest samples
 export const getLatestSamplesAsync = createAsyncThunk<Sample[]>('search/getLatestSamples', async () => {
-  const response = await HttpClient.get(`${getDataAPIUrl()}latestSamples`, {
-    withCredentials: false,
+  const response = await HttpClient.get(`./api/latestSamples`, {
     headers: {
       'Content-Type': 'application/json',
       'Accept': 'application/json',
@@ -44,8 +42,7 @@ export const getLatestSamplesAsync = createAsyncThunk<Sample[]>('search/getLates
 
 // async search specific samples
 export const searchSamplesAsync = createAsyncThunk<Sample[], string>('search/searchSamplesAsync', async (query: string) => {
-  const response = await HttpClient.get(`${getDataAPIUrl()}findSamples?text=${query}`, {
-    withCredentials: false,
+  const response = await HttpClient.get(`./api/findSamples?text=${query}`, {
     headers: {
       'Content-Type': 'application/json',
       'Accept': 'application/json',
@@ -55,15 +52,23 @@ export const searchSamplesAsync = createAsyncThunk<Sample[], string>('search/sea
 });
 
 // delete a sample
-export const deleteSampleAsync = createAsyncThunk<number, string>('search/deleteSampleAsync', async (id: string) => {
+export const deleteSampleAsync = createAsyncThunk<number, string, { state: RootState }>('search/deleteSampleAsync', async (id: string, { getState }) => {
+  const state = getState();
+  const isAdmin = state.user.isAdmin;
+  
+  const headers: Record<string, string> = {
+    'Content-Type': 'application/json',
+    'Accept': 'application/json',
+  };
+  
+  if (isAdmin) {
+    headers['X-MS-API-ROLE'] = 'admin';
+  }
+
   await delay(1000).then(async () => { // for better user experience
-    await HttpClient.delete(`${getDataAPIUrl()}deleteSample`, {
+    await HttpClient.delete(`./api/deleteSample`, {
       data: { id: id, url: null },
-      withCredentials: false,
-      headers: {
-        'Content-Type': 'application/json',
-        'Accept': 'application/json',
-      }
+      headers
     });
 
   });
@@ -72,8 +77,7 @@ export const deleteSampleAsync = createAsyncThunk<number, string>('search/delete
 
 // get the details
 export const getSampleDetailsAsync = createAsyncThunk<Sample, string>('search/getSampleDetailsAsync', async (id: string) => {
-  const response = await HttpClient.post(`${getDataAPIUrl()}sampleDetails`, { id: id, url: null }, {
-    // withCredentials: false,
+  const response = await HttpClient.post(`./api/sampleDetails`, { id: id, url: null }, {
     headers: {
       'Content-Type': 'application/json',
       'Accept': 'application/json',
@@ -83,28 +87,28 @@ export const getSampleDetailsAsync = createAsyncThunk<Sample, string>('search/ge
   return JSON.parse(sample);
 });
 
-// create a sample
-export const createSampleAsync = createAsyncThunk<number, string>('search/createSampleAsync', async (payload: string) => {
-  const response = await HttpClient.post(`${getDataAPIUrl()}createSample`, { payload: payload }, {
-    // withCredentials: false,
-    headers: {
-      'Content-Type': 'application/json',
-      'Accept': 'application/json',
-    }
-  });
-  return response.data;
-});
+// upsert a sample (create or update)
+export const upsertSampleAsync = createAsyncThunk<
+  { id: number; isCreate: boolean }, 
+  { payload: string; isCreate: boolean },
+  { state: RootState }
+>('search/upsertSampleAsync', async ({ payload, isCreate }, { getState }) => {
+  const state = getState();
+  const isAdmin = state.user.isAdmin;
+  
+  const headers: Record<string, string> = {
+    'Content-Type': 'application/json',
+    'Accept': 'application/json',
+  };
+  
+  if (isAdmin) {
+    headers['X-MS-API-ROLE'] = 'admin';
+  }
 
-// update a sample
-export const updateSampleAsync = createAsyncThunk<number, string>('search/updateSampleAsync', async (payload:string) => {
-  const response = await HttpClient.post(`${getDataAPIUrl()}createSample`, { payload: payload }, {
-    // withCredentials: false,
-    headers: {
-      'Content-Type': 'application/json',
-      'Accept': 'application/json',
-    }
+  const response = await HttpClient.post(`./api/upsertSample`, { payload: payload }, {
+    headers
   });
-  return response.data;
+  return { id: response.data, isCreate };
 });
 
 
@@ -128,15 +132,11 @@ const initialState: SearchState = {
     error: undefined,
     sample: undefined
   },
-  createSample: {
-    status: 'idle', 
-    error: undefined,
-    id: 0
-  },
-  updateSample: {
+  upsertSample: {
     status: 'idle',
     error: undefined,
-    id: 0
+    id: 0,
+    isCreate: false
   }
 };
 
@@ -150,11 +150,8 @@ const SearchSlice = createSlice({
     resetDeleteState: (state) => {
       state.delete = initialState.delete;
     },
-    resetUpdateState: (state) => {
-      state.updateSample = initialState.updateSample;
-    },
-    resetCreateState: (state) => {
-      state.createSample = initialState.createSample;
+    resetUpsertState: (state) => {
+      state.upsertSample = initialState.upsertSample;
     },
     resetSampleDetailsState: (state) => {
       state.sampleDetails = initialState.sampleDetails;
@@ -238,35 +235,33 @@ const SearchSlice = createSlice({
         state.sampleDetails.status = 'failed';
         state.sampleDetails.error = action.error.message;
       })
-      // create sample
-      .addCase(createSampleAsync.pending, (state) => {
-        state.createSample.status = 'loading'
+      // upsert sample (create or update)
+      .addCase(upsertSampleAsync.pending, (state) => {
+        state.upsertSample.status = 'loading';
       })
-      .addCase(createSampleAsync.fulfilled, (state, action) => {
-        state.createSample.status = 'succeeded';
-        state.createSample.id = action.payload;
-        // recount the total samples
-        state.totalSamples.total = state.totalSamples.total + 1;
+      .addCase(upsertSampleAsync.fulfilled, (state, action) => {
+        state.upsertSample.status = 'succeeded';
+        state.upsertSample.id = action.payload.id;
+        state.upsertSample.isCreate = action.payload.isCreate;
+        // increment total samples count only if it's a create operation
+        if (action.payload.isCreate) {
+          state.totalSamples.total = state.totalSamples.total + 1;
+        }
       })
-      .addCase(createSampleAsync.rejected, (state, action) => {
-        state.createSample.status = 'failed';
-        state.createSample.error = action.error.message;
-      })
-      // update sample
-      .addCase(updateSampleAsync.pending, (state) => {
-        state.updateSample.status = 'loading';
-      })
-      .addCase(updateSampleAsync.fulfilled, (state, action) => {
-        state.updateSample.status = 'succeeded';
-        state.updateSample.id = action.payload;
-      })
-      .addCase(updateSampleAsync.rejected, (state, action) => {
-        state.updateSample.status = 'failed';
-        state.updateSample.error = action.error.message;
+      .addCase(upsertSampleAsync.rejected, (state, action) => {
+        state.upsertSample.status = 'failed';
+        state.upsertSample.error = action.error.message;
       })
       ;
   }
 });
 
-export const { resetSearchState, resetDeleteState, resetUpdateState, resetCreateState, resetSampleDetailsState } = SearchSlice.actions;
+export const { resetSearchState, resetDeleteState, resetUpsertState, resetSampleDetailsState } = SearchSlice.actions;
+
+// Backward compatibility exports
+export const createSampleAsync = (payload: string) => upsertSampleAsync({ payload, isCreate: true });
+export const updateSampleAsync = (payload: string) => upsertSampleAsync({ payload, isCreate: false });
+export const resetCreateState = resetUpsertState;
+export const resetUpdateState = resetUpsertState;
+
 export default SearchSlice;

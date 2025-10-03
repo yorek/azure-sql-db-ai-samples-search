@@ -20,14 +20,10 @@ export default interface SearchState {
         error: string | undefined;
         sample: Sample | undefined;
     },
-    createSample: {
+    upsertSample: {
         status: 'idle' | 'loading' | 'succeeded' | 'failed';
         error: string | undefined;
         id: number;
-    },
-    updateSample: {
-        status: 'idle' | 'loading' | 'succeeded' | 'failed';
-        error: string | undefined;
-        id: number;
+        isCreate: boolean;
     }
 }

@@ -3,13 +3,10 @@ import UserState from "./UserState";
 import sha256 from "crypto-js/sha256";
 import { HttpClient } from "../../utils/httpClient";
 import { User } from "../../types/User";
-import { stat } from "fs";
-import { isDataView } from "util/types";
 
 // retrieve the current user and verify if it is authenticated
 export const getUserAsync = createAsyncThunk<User>('user/getUserAsync', async () => {
     const response = await HttpClient.get(`/.auth/me`, {
-      withCredentials: false,
       headers: {
         'Content-Type': 'application/json',
         'Accept': 'application/json',

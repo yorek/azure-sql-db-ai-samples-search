@@ -1,0 +1,1 @@
+$env:DAB_ENVIRONMENT="development"; dab start
