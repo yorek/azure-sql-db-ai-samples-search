@@ -20,7 +20,7 @@ export const getTotalSamplesAsync = createAsyncThunk<number>('search/getTotalSam
 
 // async list all samples
 export const getAllSamplesAsync = createAsyncThunk<Sample[]>('search/getAllSamplesAsync', async () => {
-  const response = await HttpClient.get(`./api/samples`, {
+  const response = await HttpClient.get(`./api/samples?$orderby=id%20desc`, {
     headers: {
       'Content-Type': 'application/json',
       'Accept': 'application/json',
