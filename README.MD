@@ -129,9 +129,16 @@ Data API builder may take a few seconds to run if you are using Azure SQL and En
 
 ### Azure deployment
 
-The easiest way to deploy the full-stack application is to fork the repository and then create a new Static Web Apps pointing to the forked repository. Once the Static Web App is deployed, configure the [Database Connection](https://learn.microsoft.com/en-us/azure/static-web-apps/database-overview) feature of Static Web Apps to connect to the Azure SQL database where you have deployed the database objects and the sample data.
+The easiest way to deploy the full-stack application is to fork the repository and use the GitHub repo as the deployment option for both
 
-Make sure you give the user thay you are using to connect to the database the permission to run the needed stored procedures:
+- Static Web Apps
+- Azure Container Apps
+
+When deploying Data API builder to Azure Container Apps, make sure to point to the `dab` folder, which contains the needed `Dockerfile`. Also, create a `MSSQL` environment variable for the Container in Container Apps, with the connection string to the Azure SQL database.
+
+Once the Static Web App is deployed, configure the [API](https://learn.microsoft.com/en-us/azure/static-web-apps/apis-overview) feature of Static Web Apps to connect to the Azure Container App that you have created.
+
+Make sure you give the user that you are using to connect to the database the permission to run the needed stored procedures:
 
 ```sql
 GRANT SELECT ON SCHEMA::[dbo] TO [<your user>]
@@ -142,8 +149,8 @@ GRANT REFERENCES ON DATABASE SCOPED CREDENTIAL::[<openai_url>] TO [<your user>];
 
 replace `<your user>` with the user you are using to connect to the database and `<openai_url>` with the name of the database scoped credential you are using to connect to Azure OpenAI, which is the same as the value you used for the `OPENAI_URL` variable in the `.env` file.
 
-That's it! You can now access the full-stack application deployed in Azure Static Web Apps.
+That's it! You can now access the full-stack application deployed in Azure Static Web Apps that will automatically route all API calls to Data API builder running in Azure Container Apps.
 
 ## Sample Data
 
-You can add some data do play with using the `sample-data.sql` file in the `db/sample` folder.
+You can add some data to play with using the `sample-data.sql` file in the `db-script/samples` folder.
