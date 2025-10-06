@@ -45,8 +45,9 @@ Clean, easy and efficient.
 
 The whole architecture is built using the following Azure services:
 
-- [Azure SQL Database](https://learn.microsoft.com/en-us/azure/azure-sql/database/sql-database-paas-overview?view=azuresql): to store and query the samples data and embeddings.
-- [Azure Static Web Apps](https://learn.microsoft.com/en-us/azure/static-web-apps/overview): to host the full-stack application, including the front-end and the [backend API for Azure SQL](https://learn.microsoft.com/en-us/azure/static-web-apps/database-overview).
+- [Azure SQL Database](https://learn.microsoft.com/azure/azure-sql/database/sql-database-paas-overview?view=azuresql): to store and query the samples data and embeddings.
+- [Azure Static Web Apps](https://learn.microsoft.com/azure/static-web-apps/overview): to host the front-end application, and to provide reverse proxy to Data API builder.
+- [Azure Container Apps](https://learn.microsoft.com/azure/container-apps/overview): to host [Data API builder](https://learn.microsoft.com/en-us/azure/data-api-builder/overview), which is used to expose the database stored procedures as REST API.
 - [Azure OpenAI](https://learn.microsoft.com/azure/ai-services/openai/): to generate the embeddings for the samples data and to generate the results using the RAG pattern.
 
 ## Solution
@@ -54,11 +55,12 @@ The whole architecture is built using the following Azure services:
 ### Pre-requisites
 
 Local development is possible, but you still have to have an Azure OpenAI subscription to generate the embeddings and the results.
-All you need to have to run the sample locally is 
+All you need to have to run the sample locally is:
 
 - [Node](https://nodejs.org/en) - to run the front-end application.
-- [DotNet SDK 8](https://dotnet.microsoft.com/en-us/download/dotnet/8.0) or later to run Data API builder and deploy the database.
-- [Static Web Apps CLI](https://learn.microsoft.com/en-us/azure/static-web-apps/static-web-apps-cli-overview) - to run the full-stack application locally.
+- [DotNet SDK 8](https://dotnet.microsoft.com/download/dotnet/8.0) or later to run Data API builder and deploy the database.
+- [Static Web Apps CLI](https://learn.microsoft.com/azure/static-web-apps/static-web-apps-cli-overview) - to run the full-stack application locally.
+- [Data API builder](https://learn.microsoft.com/azure/data-api-builder/how-to/install-cli) - to run the API locally.
 
 ### Azure Open AI
 
@@ -67,7 +69,7 @@ Make sure to have two models deployed, one for generating embeddings (*text-embe
 - Embedding model: `text-embedding-3-small`
 - Chat model: `gpt-4o`, version `2024-08-06`
 
-### Configure environment 
+### Configure environment
 
 Create a `.env` file starting from the `.env.sample` file:
 
@@ -79,14 +81,11 @@ Create a `.env` file starting from the `.env.sample` file:
 
 ### Database
 
-Since the database is using the new `vector` data type, you need use Azure SQL (you can use the [Free offer](https://learn.microsoft.com/en-us/azure/azure-sql/database/free-offer?view=azuresql)) or just announced [SQL database in Microsoft Fabric (Public Preview)](https://aka.ms/announcingsqlfabric) or the [SQL Server 2025 (EAP)](https://aka.ms/sqleapsignup).
-
-> [!NOTE]  
-> Vector Functions are in Public Preview. Learn the details about vectors in Azure SQL here: https://aka.ms/azure-sql-vector-public-preview
+Since the database is using the new `vector` data type, you need use Azure SQL (you can use the [Free offer](https://learn.microsoft.com/azure/azure-sql/database/free-offer?view=azuresql)) or just announced [SQL database in Microsoft Fabric (Public Preview)](https://aka.ms/announcingsqlfabric) or the [SQL Server 2025 (RC)](https://learn.microsoft.com/sql/sql-server/what-s-new-in-sql-server-2025?view=sql-server-ver17).
 
 To deploy the database, make sure you have created the `.env` file as explained in the previoud section, and then run the following command:
 
-```bash 
+```bash
 dotnet run --project ./db
 ```
 
@@ -112,7 +111,13 @@ Once the database has been deployed, you can run the full-stack application loca
 cd client && npm install && cd ..
 ```
 
-Then, you can run the application locally using the Static Web Apps CLI. Make sure you have the `.env` file created as explained in the previous section, and then run the following command:
+Run the back-end API using Data API builder. Make sure you have created the `.env` file as explained in the previous section, and then run the following Powershell command:
+
+```powershell
+dab start --config .\dab\dab-config.development.json  
+```
+
+Then, you can run the application locally using the Static Web Apps CLI. Make sure you have the `.env` file created as explained in the previous section, and then run the following command in a new terminal window:
 
 ```bash
 swa start
@@ -120,7 +125,7 @@ swa start
 
 Once the application is running, you can access it at `http://localhost:4280`.
 
-Data API builder may take a few seconds to run if you are using Azure SQL and EntraID authentication. You can check if Data API builde is running by accessing `http://localhost:4280/data-api/rest/countSamples`.
+Data API builder may take a few seconds to run if you are using Azure SQL and EntraID authentication. You can check if Data API builde is running by accessing `http://localhost:4280/api/countSamples`.
 
 ### Azure deployment
 

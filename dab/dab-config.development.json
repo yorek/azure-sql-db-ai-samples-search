@@ -1,5 +1,23 @@
 {
+  "$schema": "https://github.com/Azure/data-api-builder/releases/download/v1.5.56/dab.draft.schema.json",
+  "data-source": {
+    "database-type": "mssql",
+    "connection-string": "@env('MSSQL')",
+    "options": {
+      "set-session-context": false
+    }
+  },
   "runtime": {
+    "rest": {
+      "enabled": true,
+      "path": "/api",
+      "request-body-strict": true
+    },
+    "graphql": {
+      "enabled": false,
+      "path": "/graphql",
+      "allow-introspection": true
+    },
     "host": {
       "cors": {
         "origins": [],
@@ -9,6 +27,204 @@
         "provider": "StaticWebApps"
       },
       "mode": "development"
+    },
+    "cache": {
+      "enabled": true,
+      "ttl-seconds": 1
+    }
+  },
+  "entities": {
+    "Samples": {
+      "source": {
+        "object": "dbo.samples",
+        "type": "table"
+      },
+      "rest": {
+        "enabled": true,
+        "path": "/samples"
+      },
+      "permissions": [
+        {
+          "role": "anonymous",
+          "actions": [
+            {
+              "action": "read"
+            }
+          ]
+        }
+      ]
+    },
+    "FindSamples": {
+      "source": {
+        "object": "web.find_samples",
+        "type": "stored-procedure",
+        "parameters": {
+          "text": "",
+          "k": 50,
+          "debug": 0,
+          "nocache": 0
+        }
+      },
+      "graphql": {
+        "enabled": false,
+        "operation": "query",
+        "type": {
+          "singular": "FindSamples",
+          "plural": "FindSamples"
+        }
+      },
+      "rest": {
+        "enabled": true,
+        "path": "/findSamples",
+        "methods": [
+          "post", "get"
+        ]
+      },
+      "permissions": [
+        {
+          "role": "anonymous",
+          "actions": [
+            {
+              "action": "*"
+            }
+          ]
+        }
+      ]
+    },
+    "SamplesCount": {
+      "source": {
+        "object": "web.get_total_sample_count",
+        "type": "stored-procedure"
+      },
+      "graphql": {
+        "enabled": false,
+        "operation": "query",
+        "type": {
+          "singular": "SamplesCount",
+          "plural": "SamplesCounts"
+        }
+      },
+      "rest": {
+        "enabled": true,
+        "path": "/countSamples",
+        "methods": [
+          "post", "get"
+        ]
+      },
+      "permissions": [
+        {
+          "role": "anonymous",
+          "actions": [
+            {
+              "action": "*"
+            }
+          ]
+        }
+      ]
+    },
+    "FindLatestSamples": {
+      "source": {
+        "object": "web.get_latest_samples",
+        "type": "stored-procedure"
+      },
+      "rest": {
+        "enabled": true,
+        "path": "/latestSamples",
+        "methods": [
+          "post", "get"
+        ]
+      },
+      "permissions": [
+        {
+          "role": "anonymous",
+          "actions": [
+            {
+              "action": "*"
+            }
+          ]
+        }
+      ]
+    },
+    "DeleteSample": {
+      "source":{
+        "object": "dbo.delete_sample",
+        "type": "stored-procedure",
+        "parameters": {
+          "id": 0,
+          "url": ""
+        }
+      },
+      "rest": {
+        "enabled": true,
+        "path": "/deleteSample",
+        "methods": [
+          "delete"
+        ]
+      },
+      "permissions": [
+        {
+          "role": "admin",
+          "actions": [
+            {
+              "action": "*"
+            }
+          ]
+        }
+      ]
+    },
+    "SampleDetails": {
+      "source": {
+        "object": "dbo.get_sample",
+        "type": "stored-procedure",
+        "parameters": {
+          "id": 0,
+          "url": ""
+        }
+      },
+      "rest": {
+        "enabled": true,
+        "path": "/sampleDetails",
+        "methods": [
+          "get",
+          "post"
+        ]
+      },
+      "permissions": [
+        {
+          "role": "anonymous",
+          "actions": [
+            {
+              "action": "*"
+            }
+          ]
+        }
+      ]
+    },
+    "UpsertSample": {
+      "source": {
+        "object": "dbo.add_sample",
+        "type": "stored-procedure",
+        "parameters": {
+          "payload": ""
+        }
+      },
+      "rest": {
+        "enabled": true,
+        "path": "/upsertSample",
+        "methods": [
+          "post"
+        ]
+      },
+      "permissions": [
+        {
+          "role": "admin",
+          "actions": [
+            {
+              "action": "*"
+            }
+          ]
+        }
+      ]
     }
   }
 }
