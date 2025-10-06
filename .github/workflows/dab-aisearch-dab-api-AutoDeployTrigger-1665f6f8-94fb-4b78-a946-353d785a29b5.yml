@@ -1,4 +1,4 @@
-name: Trigger auto deployment for dab-aisearch-dab-api
+name: Azure Container Apps CI/CD
 
 # When this action will be executed
 on:
