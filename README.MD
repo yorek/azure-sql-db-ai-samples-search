@@ -108,7 +108,7 @@ if no error are returned, you'll get a vector as a result.
 Once the database has been deployed, you can run the full-stack application locally. Install the Node dependencies, by running the following commands from the root folder:
 
 ```bash
-cd client && npm install && cd ..
+cd client-v2 && npm install && cd ..
 ```
 
 Run the back-end API using Data API builder. Make sure you have created the `.env` file as explained in the previous section, and then run the following Powershell command:
