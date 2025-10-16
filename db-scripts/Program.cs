@@ -11,7 +11,7 @@ namespace Database.Deploy
 {
     class Program
     {
-        private static readonly string sqlFolder = "./db/sql";
+        private static readonly string sqlFolder = "./sql";
         private static string envFile = ".env";
 
         static int Main(string[] args)
