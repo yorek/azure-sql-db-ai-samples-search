@@ -23,7 +23,7 @@ var dbDeploy = builder.AddProject<Projects.Database_Deploy>("dbDeploy")
     .WithReference(db)
     .WaitFor(db);
 
-builder.AddDataAPIBuilder("dab", "../dab/dab-config.json")
+var dab = builder.AddDataAPIBuilder("dab", "../dab/dab-config.json")
     .WithImageTag("latest")
     .WithEnvironment(context =>
     {
@@ -32,5 +32,12 @@ builder.AddDataAPIBuilder("dab", "../dab/dab-config.json")
     .WithReference(db)
     .WaitFor(db)
     .WaitForCompletion(dbDeploy);
+
+builder.AddNpmApp("web-client", "../client-v2", "dev")
+    .WithReference(dab)
+    .WaitFor(dab)
+    .WithEnvironment("BROWSER", "none")
+    .WithHttpEndpoint(env: "PORT")
+    .WithExternalHttpEndpoints();
 
 builder.Build().Run();

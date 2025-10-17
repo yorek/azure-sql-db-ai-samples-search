@@ -10,10 +10,6 @@ const commitDate = execSync('git log -1 --format=%cd --date=iso8601-strict').toS
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [react()],
-  server: {
-    port: 3000,
-    open: true
-  },
   build: {
     outDir: 'build',
     sourcemap: false,
@@ -33,4 +29,15 @@ export default defineConfig({
     // Ensure compatibility with Create React App's process.env usage
     'process.env': {},
   },
+  server: {
+    host: true,
+    port: parseInt(process.env.PORT ?? "5173"),
+    proxy: {
+      '/api': {
+        target: process.env.services__dab__https__0 || process.env.services__dab__http__0,
+        changeOrigin: true,
+        secure: false
+      }
+    }
+  }
 })

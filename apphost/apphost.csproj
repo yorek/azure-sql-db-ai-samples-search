@@ -15,10 +15,21 @@
     <PackageReference Include="Aspire.Hosting.Azure.Sql" Version="9.5.1" />
     <PackageReference Include="Aspire.Hosting.SqlServer" Version="9.5.1" />
     <PackageReference Include="CommunityToolkit.Aspire.Hosting.Azure.DataApiBuilder" Version="9.8.0" />
+    <PackageReference Include="CommunityToolkit.Aspire.Hosting.NodeJS.Extensions" Version="9.8.0" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\db-scripts\Database.Deploy.csproj" />
   </ItemGroup>
+
+  <Target Name="RestoreNpm" BeforeTargets="Build" Condition=" '$(DesignTimeBuild)' != 'true' ">
+    <ItemGroup>
+      <PackageJsons Include="..\client-v2\package.json" />
+    </ItemGroup>
+
+    <!-- Install npm packages if node_modules is missing -->
+    <Message Importance="Normal" Text="Installing npm packages for %(PackageJsons.RelativeDir)" Condition="!Exists('%(PackageJsons.RootDir)%(PackageJsons.Directory)/node_modules')" />
+    <Exec Command="npm install" WorkingDirectory="%(PackageJsons.RootDir)%(PackageJsons.Directory)" Condition="!Exists('%(PackageJsons.RootDir)%(PackageJsons.Directory)/node_modules')" />
+  </Target>
 
 </Project>
