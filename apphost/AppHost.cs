@@ -23,6 +23,11 @@ var dbDeploy = builder.AddProject<Projects.database_deploy>("dbDeploy")
     .WithReference(db)
     .WaitFor(db);
 
+openAIKey.WithParentRelationship(dbDeploy);
+openAIURL.WithParentRelationship(dbDeploy);
+embeddingDeploymentName.WithParentRelationship(dbDeploy);
+chatDeploymentName.WithParentRelationship(dbDeploy);
+
 var dab = builder.AddDataAPIBuilder("dab", "../dab/dab-config.json")
     .WithImageTag("latest")
     .WithEnvironment(context =>
