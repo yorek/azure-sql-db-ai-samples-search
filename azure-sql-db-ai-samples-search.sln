@@ -7,7 +7,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "apphost", "apphost\apphost.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "service-defaults", "service-defaults\service-defaults.csproj", "{DE864DDA-176B-406B-A21C-3E17D6F82F82}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Database.Deploy", "db-scripts\Database.Deploy.csproj", "{78DDD7AB-8CA6-00DB-E8E2-E35BC73678D2}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "database-deploy", "db-scripts\database-deploy.csproj", "{78DDD7AB-8CA6-00DB-E8E2-E35BC73678D2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

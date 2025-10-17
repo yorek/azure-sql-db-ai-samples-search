@@ -19,7 +19,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\db-scripts\Database.Deploy.csproj" />
+    <ProjectReference Include="..\db-scripts\database-deploy.csproj" />
   </ItemGroup>
 
   <Target Name="RestoreNpm" BeforeTargets="Build" Condition=" '$(DesignTimeBuild)' != 'true' ">

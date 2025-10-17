@@ -11,7 +11,7 @@ var chatDeploymentName = builder.AddParameter("chat-deployment-name");
 
 var db = builder.AddConnectionString("db");
 
-var dbDeploy = builder.AddProject<Projects.Database_Deploy>("dbDeploy")
+var dbDeploy = builder.AddProject<Projects.database_deploy>("dbDeploy")
     .WithEnvironment(context =>
     {
         context.EnvironmentVariables["MSSQL"] = db.Resource.ConnectionStringExpression;
