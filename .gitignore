@@ -405,3 +405,4 @@ FodyWeavers.xsd
 .fabric.env
 dist/
 .vscode/settings.json
+*.Development.json
