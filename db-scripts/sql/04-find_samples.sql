@@ -6,8 +6,11 @@ declare @retval int;
 declare @samples nvarchar(max)
 declare @error nvarchar(max)
 
-declare @log table (
-    id int identity primary key nonclustered, 
+declare @rid int = next value for request_id;
+
+declare @log table (    
+    [id] int identity primary key nonclustered, 
+    [request_id] int not null,
     [event_time] datetime2(7) default (CURRENT_TIMESTAMP), 
     [message] nvarchar(1000), 
     [output] nvarchar(max)
@@ -21,30 +24,30 @@ begin try
     /* 
         Get the embedding for the requested text 
     */
-    if (@debug = 1) insert into @log ([message]) values ('Getting embeddings for query text...')
+    if (@debug = 1) insert into @log ([request_id], [message]) values (@rid, 'Getting embeddings for query text...')
 
     declare @qv vector(1536)
-    exec @retval = web.get_embedding @text, @qv output, @error output with result sets none 
+    exec @retval = web.get_embedding @rid, @text, @qv output, @error output with result sets none 
     if (@retval != 0) begin
-        if (@debug = 1) insert into @log ([message], [output]) values ('Error while getting embedding.', @error)
+        if (@debug = 1) insert into @log ([request_id], [message], [output]) values (@rid, 'Error while getting embedding.', @error)
         if (@debug = 1) select * from @log;
         select @error as error; 
         return;
     end
 
-    if (@debug = 1) insert into @log ([message]) values ('Done.')
+    if (@debug = 1) insert into @log ([request_id], [message]) values (@rid, 'Done.')
 
 
     /* 
         Check in the semantic cache to see if a similar question has been already answered 
     */
     if (@nocache != 1) begin
-        if (@debug = 1) insert into @log ([message]) values ('Searching semantic cache...')
+        if (@debug = 1) insert into @log ([request_id], [message]) values (@rid, 'Searching semantic cache...')
 
         exec web.query_semantic_cache @qv, @cached_response output with result sets none
         if (@cached_response is not null) begin
             set @response = @cached_response
-            if (@debug = 1) insert into @log ([message], [output]) values ('Found result in cache.', @response)
+            if (@debug = 1) insert into @log ([request_id], [message], [output]) values (@rid, 'Found result in cache.', @response)
         end
     end
 
@@ -54,48 +57,48 @@ begin try
         /* 
             Orchestrate answer 
         */
-        if (@debug = 1) insert into @log ([message], [output]) values ('Orchestrating resolution strategies...', @response)
+        if (@debug = 1) insert into @log ([request_id], [message], [output]) values (@rid, 'Orchestrating resolution strategies...', @response)
 
         declare @rt varchar(50), @rq nvarchar(max)    
-        exec @retval = [web].[orchestrate_request] @text, @rt output, @rq output, @error output with result sets none  
+        exec @retval = [web].[orchestrate_request] @rid, @text, @rt output, @rq output, @error output with result sets none  
         if (@retval != 0) begin
-            if (@debug = 1) insert into @log ([message], [output]) values ('Error during orchestration evaluation...', @error)
+            if (@debug = 1) insert into @log ([request_id], [message], [output]) values (@rid, 'Error during orchestration evaluation...', @error)
             if (@debug = 1) select * from @log;
             select @error as error; 
             return;
         end
 
-        if (@debug = 1) insert into @log ([message], [output]) values ('Strategy determined.', @rt)
-        if (@debug = 1) insert into @log ([message], [output]) values ('Query defined.', @rq)
+        if (@debug = 1) insert into @log ([request_id], [message], [output]) values (@rid, 'Strategy determined.', @rt)
+        if (@debug = 1) insert into @log ([request_id], [message], [output]) values (@rid, 'Query defined.', @rq)
 
-        if (@debug = 1) insert into @log ([message]) values ('Orchestration planning complete, moving to execution.')
+        if (@debug = 1) insert into @log ([request_id], [message]) values (@rid, 'Orchestration planning complete, moving to execution.')
 
         /* 
             Find the samples using generated T-SQL 
         */
         if (@rt = 'SQL') begin
-            if (@debug = 1) insert into @log ([message]) values ('Starting executing generated SQL query...')
+            if (@debug = 1) insert into @log ([request_id], [message]) values (@rid, 'Starting executing generated SQL query...')
 
             -- Simple sanitization
             declare @trq nvarchar(max) = trim(replace(replace(@rq, char(13), ' '), char(10), ' '));
             if (@trq like '%INSERT %' or @trq like '%UPDATE %' or @trq like '%DELETE %' or @trq like '%DROP %' or @trq like '%ALTER %' or @trq like '%CREATE %') begin
-                if (@debug = 1) insert into @log ([message]) values ('Unauthorized SQL command requested');
+                if (@debug = 1) insert into @log ([request_id], [message]) values (@rid, 'Unauthorized SQL command requested');
                 if (@debug = 1) select * from @log;
                 select 'NL2SQL' as [error], -1 as [error_code], 'Unauthorized SQL command requested' as [response]
                 return -1
             end
-            if (@debug = 1) insert into @log ([message], [output]) values ('Query sanitized.', @trq)
+            if (@debug = 1) insert into @log ([request_id], [message], [output]) values (@rid, 'Query sanitized.', @trq)
             
             -- Execute generate query
             create table #ts (id int, [name] nvarchar(100), [description] nvarchar(max), notes nvarchar(max), details json, created_on datetime2(0), updated_on datetime2(0), distance_score float);
             insert into #ts exec sp_executesql @rq 
             set @samples = cast((select * from #ts for json auto) as nvarchar(max))
-            if (@debug = 1) insert into @log ([message], [output]) values ('Query executed.', @samples)
+            if (@debug = 1) insert into @log ([request_id], [message], [output]) values (@rid, 'Query executed.', @samples)
 
             /* If not results coming from SQL execution, try SEMANTIC anyway */
             if (@samples is null) begin
                 set @rt = 'SEMANTIC'
-                if (@debug = 1) insert into @log ([message], [output]) values ('Empty resultset returned, switching strategy.', @rt)
+                if (@debug = 1) insert into @log ([request_id], [message], [output]) values (@rid, 'Empty resultset returned, switching strategy.', @rt)
             end
         end
 
@@ -103,11 +106,11 @@ begin try
             Find the samples using hybrid search
         */
         if (@rt like '%SEMANTIC%') begin
-            if (@debug = 1) insert into @log ([message]) values ('Running hybrid search...')
+            if (@debug = 1) insert into @log ([request_id], [message]) values (@rid, 'Running hybrid search...')
             set @k = coalesce(@k, 50)         
             
             -- Semantic Search
-            if (@debug = 1) insert into @log ([message]) values ('Running semantic search...')
+            if (@debug = 1) insert into @log ([request_id], [message]) values (@rid, 'Running semantic search...')
             drop table if exists #ss;
             select top(@k) 
                 s.id,
@@ -131,7 +134,7 @@ begin try
             --select * from #ss;
 
             -- Fulltext Search
-            if (@debug = 1) insert into @log ([message]) values ('Running fulltext search...')
+            if (@debug = 1) insert into @log ([request_id], [message]) values (@rid, 'Running fulltext search...')
             drop table if exists #ks;
             select top(@k)
                 id,                
@@ -147,7 +150,7 @@ begin try
             --select * from #ks;
 
             -- RRF
-            if (@debug = 1) insert into @log ([message]) values ('Executing RRF...')
+            if (@debug = 1) insert into @log ([request_id], [message]) values (@rid, 'Executing RRF...')
             drop table if exists #s;
             with semantic_search as
             (
@@ -203,17 +206,17 @@ begin try
                 order by similiarity_score desc for json path
             )
 
-            if (@debug = 1) insert into @log ([message], [output]) values ('Completed hybrid search.', @samples)
+            if (@debug = 1) insert into @log ([request_id], [message], [output]) values (@rid, 'Completed hybrid search.', @samples)
         end
         
         /*
             Send found samples to LLM for generating the final answer 
         */
-        if (@debug = 1) insert into @log ([message], [output]) values ('Generating answer...', null)
+        if (@debug = 1) insert into @log ([request_id], [message], [output]) values (@rid, 'Generating answer...', null)
         if (@samples is not null) begin               
-            exec @retval = [web].[generate_answer] @text, @samples, @response output, @error output with result sets none;
+            exec @retval = [web].[generate_answer] @rid, @text, @samples, @response output, @error output with result sets none;
             if (@retval != 0) begin
-                if (@debug = 1) insert into @log ([message], [output]) values ('Error while generating answer.', @error)
+                if (@debug = 1) insert into @log ([request_id], [message], [output]) values (@rid, 'Error while generating answer.', @error)
                 if (@debug = 1) select * from @log;
                 select @error as error; 
                 return;
@@ -223,7 +226,7 @@ begin try
             set @response = '{}'
         end
 
-        if (@debug = 1) insert into @log ([message], [output]) values ('Answer generated...', @response)
+        if (@debug = 1) insert into @log ([request_id], [message], [output]) values (@rid, 'Answer generated...', @response)
 
         /* 
             Cache results 

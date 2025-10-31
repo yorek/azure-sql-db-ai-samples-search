@@ -3,6 +3,23 @@ drop table if exists dbo.samples_embeddings;
 drop table if exists dbo.samples_notes_embeddings;
 drop table if exists dbo.samples_details_embeddings;
 drop table if exists dbo.samples;
+drop table if exists dbo.openai_used_tokens;
+go
+
+drop sequence if exists request_id;
+go
+
+create sequence request_id as int start with 1;
+go
+
+create table dbo.openai_used_tokens
+(
+    id int identity constraint pk__openai_used_tokens primary key,
+    request_id int not null,
+    request_time datetime2 default(sysdatetime()) not null,
+    source varchar(100),
+    total_tokens int
+)
 
 create table dbo.samples
 (

@@ -1,4 +1,5 @@
 create or alter procedure [web].[get_embedding]
+@rid int,
 @inputText nvarchar(max),
 @embedding vector(1536) output,
 @error nvarchar(max) output
@@ -24,6 +25,9 @@ if @retval != 0 begin
     set @error = json_object('error':'Embedding:OpenAI', 'error_code':@retval, 'error_message':@response)
     return @retval
 end
+
+insert into dbo.openai_used_tokens (request_id, source, total_tokens) 
+values (@rid, 'get_embeddings', json_value(@response, '$.result.usage.total_tokens'))
 
 declare @re nvarchar(max) = json_query(@response, '$.result.data[0].embedding')
 set @embedding = cast(@re as vector(1536));

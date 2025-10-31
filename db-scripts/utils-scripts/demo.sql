@@ -42,6 +42,7 @@ go
 exec [web].[find_samples] 'code samples used at the ai agent hackaton event in 2025', @debug=1, @nocache=1
 go
 
+select * from dbo.openai_used_tokens
 
 select  * from dbo.samples where id in (21, 14)
 
@@ -61,4 +62,5 @@ where json_value(details, '$.type') = 'code sample'
 order by [url]
 
 
+select * from sys.sequences
 

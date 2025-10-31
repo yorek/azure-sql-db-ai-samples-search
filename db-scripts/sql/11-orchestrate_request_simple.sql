@@ -1,4 +1,5 @@
 create or alter procedure [web].[orchestrate_request] 
+@rid int,
 @text nvarchar(max),
 @result_type varchar(50) output,
 @result_query nvarchar(max) output,
@@ -122,6 +123,9 @@ if @refusal != '' begin
     set @error = json_object('error':'Orchestrator:OpenAI/Refusal', 'refusal':@refusal, 'response':@response)
     return -1
 end
+
+insert into dbo.openai_used_tokens (request_id, source, total_tokens)  
+values (@rid, 'orchestrate_request', json_value(@response, '$.result.usage.total_tokens'))
 
 select top(1)
     @result_type = sr.response_type,
