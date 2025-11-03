@@ -5,14 +5,14 @@ set nocount on;
 set xact_abort on;
 begin tran;
 
-declare @dummy nvarchar(max) = cast(@payload as nvarchar(max)); -- Need to cast to nvarchar(max) to avoid error during JSON preview
+declare @rid int = next value for request_id;
 
 select top(1) 
     *
 into
     #samples
 from
-    openjson(@dummy) with (
+    openjson(@payload) with (
         [name] nvarchar(100),
         [description] nvarchar(max),
         [notes] nvarchar(max),
@@ -44,7 +44,7 @@ declare @retval int, @error nvarchar(max)
 select @name = [name], @description = [description] from #samples;
 
 declare @sample nvarchar(max) = @name + ': ' + @description;
-exec @retval = web.get_embedding @sample, @embedding output, @error output;
+exec @retval = web.get_embedding @rid, @sample, @embedding output, @error output;
 if (@retval != 0) begin
     select @error as error; 
     return;
@@ -62,7 +62,7 @@ if (exists(select * from #samples where [notes] is not null)) begin
     declare @notes_embedding vector(1536);
     declare @notes nvarchar(max) = (select [notes] from #samples);
     
-    exec @retval = web.get_embedding @notes, @notes_embedding output, @error output;
+    exec @retval = web.get_embedding @rid, @notes, @notes_embedding output, @error output;
     if (@retval != 0) begin
         select @error as error; 
         return;
@@ -81,7 +81,7 @@ if (exists(select * from #samples where [details] is not null)) begin
     declare @details_embedding vector(1536);
     declare @details nvarchar(max) = (select [details] from #samples);
     
-    exec @retval = web.get_embedding @details, @details_embedding output, @error output;
+    exec @retval = web.get_embedding @rid, @details, @details_embedding output, @error output;
     if (@retval != 0) begin
         select @error as error; 
         return;
