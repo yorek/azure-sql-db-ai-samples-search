@@ -5,8 +5,9 @@
       "rewrite": "/mcp"
     },
     {
-      "route": "/api/health",
-      "rewrite": "/health"
+      "route": "/health",
+      "rewrite": "/health",
+      "statusCode": 200
     }
   ],
   "globalHeaders": {
