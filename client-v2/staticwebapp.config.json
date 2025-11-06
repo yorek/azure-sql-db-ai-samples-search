@@ -1,7 +1,7 @@
 {
     "routes": [
         {
-            "route": "/health",
+            "route": "/api/health",
             "redirect": "/health",
             "statusCode": 301,
             "allowedRoles": [
@@ -9,7 +9,7 @@
             ]
         },
         {
-            "route": "/mcp",
+            "route": "/api/mcp",
             "redirect": "/mcp",
             "statusCode": 301,
             "allowedRoles": [
