@@ -1,8 +1,17 @@
 {
     "routes": [
         {
-            "route": "/mcp"           
-        }       
+            "route": "/health",
+            "allowedRoles": [
+                "anonymous"
+            ]
+        },
+        {
+            "route": "/mcp",
+            "allowedRoles": [
+                "anonymous"
+            ]
+        }
     ],
     "globalHeaders": {
         "Access-Control-Allow-Origin": "*",
