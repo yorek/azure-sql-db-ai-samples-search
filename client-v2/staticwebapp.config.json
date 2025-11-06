@@ -1,25 +1,29 @@
 {
-    "routes": [
-        {
-            "route": "/api/health",
-            "redirect": "/health",
-            "statusCode": 301,
-            "allowedRoles": [
-                "anonymous"
-            ]
-        },
-        {
-            "route": "/api/mcp",
-            "redirect": "/mcp",
-            "statusCode": 301,
-            "allowedRoles": [
-                "anonymous"
-            ]
-        }
-    ],
-    "globalHeaders": {
-        "Access-Control-Allow-Origin": "*",
-        "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
-        "Access-Control-Allow-Headers": "Content-Type, Authorization"
+  "routes": [
+    {
+      "route": "/api/health",
+      "redirect": "/health",
+      "statusCode": 301,
+      "allowedRoles": [
+        "anonymous"
+      ]
+    },
+    {
+      "route": "/api/mcp",
+      "redirect": "/mcp",
+      "statusCode": 301,
+      "allowedRoles": [
+        "anonymous"
+      ]
+    },
+    {
+      "route": "/api",
+      "rewrite": "/rest"
     }
+  ],
+  "globalHeaders": {
+    "Access-Control-Allow-Origin": "*",
+    "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
+    "Access-Control-Allow-Headers": "Content-Type, Authorization"
+  }
 }
