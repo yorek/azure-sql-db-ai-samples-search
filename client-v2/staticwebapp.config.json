@@ -2,12 +2,16 @@
     "routes": [
         {
             "route": "/health",
+            "redirect": "/health",
+            "statusCode": 301,
             "allowedRoles": [
                 "anonymous"
             ]
         },
         {
             "route": "/mcp",
+            "redirect": "/mcp",
+            "statusCode": 301,
             "allowedRoles": [
                 "anonymous"
             ]
