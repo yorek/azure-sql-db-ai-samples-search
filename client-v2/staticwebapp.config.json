@@ -3,11 +3,5 @@
     "Access-Control-Allow-Origin": "*",
     "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
     "Access-Control-Allow-Headers": "Content-Type, Authorization"
-  },
-  "routes": [
-    {
-      "route": "/health",
-      "redirect": "https://dab-aisearch-dab-api.victoriousglacier-546cea04.centralus.azurecontainerapps.io/health"
-    }
-  ]
+  } 
 }
