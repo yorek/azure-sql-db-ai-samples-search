@@ -10,7 +10,7 @@
   "runtime": {
     "rest": {
       "enabled": true,
-      "path": "/rest",
+      "path": "/api",
       "request-body-strict": true
     },
     "graphql": {
@@ -19,6 +19,7 @@
       "allow-introspection": true
     },
     "mcp": {
+      "path": "/mcp",
       "enabled": true,
       "dml-tools": { 
         "describe-entities": true,
