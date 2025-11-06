@@ -6,7 +6,7 @@
     },
     {
       "route": "/health",
-      "rewrite": "/health",
+      "redirect": "/health",
       "statusCode": 200
     }
   ],
