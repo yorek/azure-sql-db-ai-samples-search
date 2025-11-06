@@ -1,15 +1,4 @@
 {
-  "routes": [
-    {
-      "route": "/api/mcp",
-      "redirect": "/mcp"
-    },
-    {
-      "route": "/health",
-      "redirect": "/health",
-      "statusCode": 200
-    }
-  ],
   "globalHeaders": {
     "Access-Control-Allow-Origin": "*",
     "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
