@@ -1,8 +1,8 @@
 {
   "routes": [
     {
-      "route": "/mcp",
-      "rewrite": "/mcp"
+      "route": "/api/mcp",
+      "redirect": "/mcp"
     },
     {
       "route": "/health",
