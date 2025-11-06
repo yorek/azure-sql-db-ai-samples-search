@@ -7,7 +7,7 @@ on:
     branches: 
       [ main ]
     paths:
-    - '**'
+    - 'dab/**'
     - '.github/workflows/dab-aisearch-dab-api-AutoDeployTrigger-1665f6f8-94fb-4b78-a946-353d785a29b5.yml'
 
   # Allow manual trigger 
