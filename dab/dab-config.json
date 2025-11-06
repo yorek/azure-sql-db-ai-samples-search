@@ -1,5 +1,5 @@
 {
-  "$schema": "https://github.com/Azure/data-api-builder/releases/download/v1.5.56/dab.draft.schema.json",
+  "$schema": "https://raw.githubusercontent.com/Azure/data-api-builder/refs/heads/main/schemas/dab.draft.schema.json",
   "data-source": {
     "database-type": "mssql",
     "connection-string": "@env('MSSQL')",
@@ -17,6 +17,13 @@
       "enabled": false,
       "path": "/graphql",
       "allow-introspection": true
+    },
+    "mcp": {
+      "enabled": true,
+      "dml-tools": { 
+        "describe-entities": true,
+        "execute-entity": true
+      }
     },
     "host": {
       "cors": {

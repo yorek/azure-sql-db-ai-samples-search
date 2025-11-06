@@ -14,6 +14,7 @@ on:
     paths-ignore:
       - '**/*.sql'
       - '*.md'
+      - 'dab/**'
 
 jobs:
   build_and_deploy_job:
