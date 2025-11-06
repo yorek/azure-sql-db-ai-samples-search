@@ -3,6 +3,10 @@
     {
       "route": "/mcp",
       "rewrite": "/mcp"
+    },
+    {
+      "route": "/health",
+      "rewrite": "/health"
     }
   ],
   "globalHeaders": {
