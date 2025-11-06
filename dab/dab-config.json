@@ -19,7 +19,7 @@
       "allow-introspection": true
     },
     "mcp": {
-      "path": "/mcp",
+      "path": "/api/mcp",
       "enabled": true,
       "dml-tools": { 
         "describe-entities": true,
