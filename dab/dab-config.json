@@ -10,7 +10,7 @@
   "runtime": {
     "rest": {
       "enabled": true,
-      "path": "/api",
+      "path": "/rest",
       "request-body-strict": true
     },
     "graphql": {
