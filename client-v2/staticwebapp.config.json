@@ -5,7 +5,7 @@
       "rewrite": "/mcp"
     },
     {
-      "route": "/health",
+      "route": "/api/health",
       "rewrite": "/health"
     }
   ],
