@@ -4,7 +4,7 @@
   "private": true,
   "type": "module",
   "engines": {
-    "node": "=22"
+    "node": ">=22"
   },
   "dependencies": {
     "@fluentui/react-components": "^9.60.0",
