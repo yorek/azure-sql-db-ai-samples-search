@@ -120,6 +120,8 @@ const Searchbar = () => {
             <br/>
             You can read more on <Link className={classes.link} as="a" inline onClick={() => handleOpen()}>how it works here</Link>.
             You can visit our <Link className={classes.link} inline href="https://github.com/yorek/azure-sql-db-ai-samples-search" target='_blank'>GitHub repository here</Link>.
+            <br/>
+            Find resources and an extensive FAQ on using Azure SQL with AI at <Link className={classes.link} inline href="https://aka.ms/sqlai" target='_blank'>aka.ms/sqlai</Link>.
             </Subtitle2>
             <HowItWorks open={openDialog} setOpen={setOpenDialog} />
         </div>
