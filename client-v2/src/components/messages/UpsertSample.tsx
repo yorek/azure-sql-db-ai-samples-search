@@ -13,11 +13,10 @@ import {
     ProgressBar
 } from "@fluentui/react-components";
 
-import CodeEditor from '@uiw/react-textarea-code-editor';
 
 import * as Yup from 'yup';
 import { yupResolver } from "@hookform/resolvers/yup";
-import { useForm, Controller } from "react-hook-form";
+import { useForm } from "react-hook-form";
 
 import Styles from "./UpsertSample.style";
 import { upsertSampleAsync, searchSamplesAsync, getLatestSamplesAsync, getAllSamplesAsync, getTotalSamplesAsync, resetUpsertState, getSampleDetailsAsync, resetSampleDetailsState } from "../../store/slices/SearchSlice";
@@ -252,28 +251,19 @@ const UpsertSample = (props: UpsertProps) => {
                                 label="Details (JSON object)"
                                 validationState={errors.details ? 'error' : 'none'}
                                 validationMessage={errors.details?.message}>
-                                    <Controller
-                                        name="details"
-                                        control={control}
-                                        render={({ field }) => (
-                                            <CodeEditor
-                                                value={field.value}
-                                                onChange={(evn) => field.onChange(evn.target.value)}
-                                                language="json"
-                                                placeholder="Enter JSON details..."
-                                                padding={10}
-                                                rows={12}
-                                                minHeight={200}
-                                                style={{
-                                                    fontSize: 14,
-                                                    backgroundColor: "#f5f5f5",
-                                                    fontFamily:
-                                                      "ui-monospace,SFMono-Regular,SF Mono,Consolas,Liberation Mono,Menlo,monospace",
-                                                    maxHeight: "400px",
-                                                    overflow: "auto"
-                                                  }}
-                                            />
-                                        )}
+                                    <Textarea
+                                        {...register('details')}
+                                        placeholder="Enter JSON details..."
+                                        resize="vertical"
+                                        textarea={{
+                                            style: {
+                                                fontSize: 14,
+                                                fontFamily: "ui-monospace,SFMono-Regular,SF Mono,Consolas,Liberation Mono,Menlo,monospace",
+                                                minHeight: "200px",
+                                                maxHeight: "400px",
+                                                overflowY: "auto"
+                                            }
+                                        }}
                                     />
                             </Field>
                         </DialogContent>
