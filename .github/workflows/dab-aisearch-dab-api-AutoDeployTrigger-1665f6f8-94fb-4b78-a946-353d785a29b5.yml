@@ -22,17 +22,17 @@ jobs:
 
     steps:
       - name: Checkout to the branch
-        uses: actions/checkout@v2
+        uses: actions/checkout@0717577d45739eb3c851188b29f50ed6c0b2194e # v2.8.0
 
       - name: Azure Login
-        uses: azure/login@v2.3.0
+        uses: azure/login@a457da9ea143d694b1b9c7c869ebb04ebe844ef5 # v2.3.0
         with:
           client-id: ${{ secrets.DABAISEARCHDABAPI_AZURE_CLIENT_ID }}
           tenant-id: ${{ secrets.DABAISEARCHDABAPI_AZURE_TENANT_ID }}
           subscription-id: ${{ secrets.DABAISEARCHDABAPI_AZURE_SUBSCRIPTION_ID }}
 
       - name: Build and push container image to registry
-        uses: azure/container-apps-deploy-action@v2
+        uses: azure/container-apps-deploy-action@8dff69dac3367c32ceb2690d8f13adbeab462703 # v2
         with:
           appSourcePath: ${{ github.workspace }}/dab
           _dockerfilePathKey_: _dockerfilePath_
